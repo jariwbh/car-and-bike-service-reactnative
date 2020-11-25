@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ImageBackground, Dimensions, Platform, Image, View, StyleSheet, FlatList, Text, TextInput, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
 import * as Animatable from 'react-native-animatable';
 
-class SignUpScreen extends Component {
+class BookServiceScreen extends Component {
     render() {
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
@@ -11,48 +11,64 @@ class SignUpScreen extends Component {
                         animation="fadeInUpBig"
                     >
                         <View style={styles.header}>
-                            <Text style={styles.text_header}>Register Now!</Text>
+                            <Text style={styles.text_header}>Book Service</Text>
                         </View>
+                        <Text style={{ marginLeft: 50 }}>Name</Text>
                         <View style={{ alignItems: 'center' }}>
                             <View style={styles.inputView}>
-                                <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} />
                                 <TextInput
                                     style={styles.inputText}
-                                    placeholder="UserName"
+                                    placeholder="Enter Full Name"
                                     type='clear'
-                                    placeholderTextColor="#737373"
+                                    placeholderTextColor="#AAAAAA"
+
                                 />
+                                {/* <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} /> */}
                             </View>
+                        </View>
+                        <Text style={{ marginLeft: 50 }}>Phone Number</Text>
+                        <View style={{ alignItems: 'center' }}>
                             <View style={styles.inputView}>
-                                <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} />
                                 <TextInput
                                     style={styles.inputText}
-                                    placeholder="Email"
+                                    placeholder="Enter phone no"
                                     type='clear'
-                                    placeholderTextColor="#737373"
+                                    placeholderTextColor="#AAAAAA"
                                 />
+                                {/* <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} /> */}
                             </View>
+                        </View>
+                        <Text style={{ marginLeft: 50 }}>Service Date</Text>
+                        <View style={{ alignItems: 'center' }}>
                             <View style={styles.inputView} >
-                                <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} />
                                 <TextInput
                                     secureTextEntry
                                     style={styles.inputText}
-                                    placeholder="Mobile"
+                                    placeholder="MM-DD-YY"
                                     type='clear'
-                                    placeholderTextColor="#737373"
+                                    placeholderTextColor="#AAAAAA"
                                 />
+                                {/* <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} /> */}
                             </View>
-                            <TouchableOpacity style={styles.loginBtn} onPress={() => { }}>
-                                <Text style={styles.loginText} >Sign Up</Text>
+                        </View>
+                        <Text style={{ marginLeft: 50 }}>Service Time</Text>
+                        <View style={{ alignItems: 'center' }}>
+                            <View style={styles.inputView} >
+                                <TextInput
+                                    secureTextEntry
+                                    style={styles.inputText}
+                                    placeholder="HH-MM"
+                                    type='clear'
+                                    placeholderTextColor="#AAAAAA"
+                                />
+                                {/* <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} /> */}
+                            </View>
+                        </View>
+                        <View style={{ alignItems: 'center' }}>
+                            <TouchableOpacity style={styles.bookserviceBtn} onPress={() => { }}>
+                                <Text style={styles.bookserviceText} >Book Service</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={{ marginTop: 80, justifyContent: 'center', flexDirection: 'row' }} >
-                            <Text style={styles.innerText}> Already got an account? </Text>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignIn') }} >
-                                <Text style={styles.baseText}>SignIn</Text>
-                            </TouchableOpacity>
-                        </View>
-
                     </Animatable.View>
                 </View>
             </ImageBackground>
@@ -60,7 +76,7 @@ class SignUpScreen extends Component {
     }
 };
 
-export default SignUpScreen;
+export default BookServiceScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -71,19 +87,13 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
         paddingBottom: 30,
-        marginTop: 150
-    },
-    text_Or: {
-        color: '#000',
-        fontSize: 20,
-        textAlign: 'center',
-        marginBottom: 10,
+        //marginTop: 150
     },
     text_header: {
         color: '#000',
         fontSize: 30,
         textAlign: 'center',
-        fontFamily: 'monospace'
+        //fontFamily: 'monospace'
     },
     UserName_Image: {
         width: 20,
@@ -134,7 +144,7 @@ const styles = StyleSheet.create({
         color: "black",
         marginLeft: 15,
     },
-    loginBtn: {
+    bookserviceBtn: {
         width: "80%",
         backgroundColor: "#FFBA00",
         borderRadius: 25,
@@ -145,20 +155,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         margin: 10
     },
-    loginText: {
+    bookserviceText: {
         color: "white",
         fontWeight: 'bold',
         fontSize: 20
     },
-    baseText: {
-        fontWeight: 'normal',
-        color: '#183BAE',
-        fontSize: 15
-    },
-    innerText: {
-        color: '#737373',
-        fontSize: 15
-    },
+
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover'
