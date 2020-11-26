@@ -45,7 +45,7 @@ const SignInScreen = ({ navigation }) => {
                             />
                             <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} />
                         </View>
-                        <TouchableOpacity style={styles.loginBtn} onPress={() => { }}>
+                        <TouchableOpacity style={styles.loginBtn} onPress={() => { navigation.navigate('SelectType') }}>
                             <Text style={styles.loginText} >Login Now</Text>
                         </TouchableOpacity>
 

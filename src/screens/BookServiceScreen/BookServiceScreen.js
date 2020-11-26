@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 30,
         textAlign: 'center',
-        //fontFamily: 'monospace'
+        fontFamily: 'monospace'
     },
     UserName_Image: {
         width: 20,
