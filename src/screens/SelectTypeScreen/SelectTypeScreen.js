@@ -47,7 +47,7 @@ class SelectTypeScreen extends Component {
                             <Text>Conatct Number : +91 8574968574</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.loginBtn} onPress={() => { this.props.navigation.navigate('NearService') }}>
+                    <TouchableOpacity style={styles.loginBtn} onPress={() => { this.props.navigation.navigate('SelectService') }}>
                         <Text style={styles.loginText} >Next Step</Text>
                     </TouchableOpacity>
                 </View>

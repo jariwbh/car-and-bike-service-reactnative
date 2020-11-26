@@ -6,7 +6,9 @@ import SignInScreen from '../screens/SignInScreen/SignInScreen'
 import SplashScreen from '../screens/SplashScreen/SplashScreen'
 import BookServiceScreen from '../screens/BookServiceScreen/BookServiceScreen';
 import SelectTypeScreen from '../screens/SelectTypeScreen/SelectTypeScreen';
-import NearServiceScreen from '../screens/NearServiceScreen/NearServiceScreen';
+import SelectServiceScreen from '../screens/SelectServiceScreen/SelectServiceScreen';
+import SelectCompanyNameScreen from '../screens/SelectCompanyNameScreen/SelectCompanyNameScreen';
+import MyServiceScreen from '../screens/MyServiceScreen/MyServiceScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +21,9 @@ export default NavigationsApp = () => {
                 <Stack.Screen name="SignIn" component={SignInScreen} ></Stack.Screen>
                 <Stack.Screen name="BookService" component={BookServiceScreen} ></Stack.Screen>
                 <Stack.Screen name="SelectType" component={SelectTypeScreen} ></Stack.Screen>
-                <Stack.Screen name="NearService" component={NearServiceScreen} ></Stack.Screen>
+                <Stack.Screen name="SelectService" component={SelectServiceScreen} ></Stack.Screen>
+                <Stack.Screen name="SelectCompanyName" component={SelectCompanyNameScreen} ></Stack.Screen>
+                <Stack.Screen name="MyService" component={MyServiceScreen} ></Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     );
