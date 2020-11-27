@@ -10,46 +10,48 @@ class SelectTypeScreen extends Component {
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
-                    <View style={styles.header}>
-                        <Text style={styles.text_header}>Select Service Type</Text>
-                        <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
-                    </View>
-
-                    <View style={styles.Image_view}>
-                        <View style={{ flexDirection: 'column' }}>
-                            <View style={styles.carBtn}>
-                                <Text style={styles.carbtnText}>Car Service</Text>
-                            </View>
-                            <View style={{ alignItems: "center", marginTop: 20 }}>
-                                <Image source={require('../../../assets/icons/CarService.png')} style={{ height: 180, width: 180 }} />
-                                <Image source={require('../../../assets/icons/keyholeblue.png')} style={{ marginTop: 10, height: 30, width: 30 }} />
-                            </View>
+                    <ScrollView>
+                        <View style={styles.header}>
+                            <Text style={styles.text_header}>Select Service Type</Text>
+                            <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
                         </View>
 
-                        <View style={{ flexDirection: 'column' }}>
-                            <View style={styles.carBtn}>
-                                <Text style={styles.bikebtnText}>Bike Service</Text>
+                        <View style={styles.Image_view}>
+                            <View style={{ flexDirection: 'column' }}>
+                                <View style={styles.carBtn}>
+                                    <Text style={styles.carbtnText}>Car Service</Text>
+                                </View>
+                                <View style={{ alignItems: "center", marginTop: 20 }}>
+                                    <Image source={require('../../../assets/icons/CarService.png')} style={{ height: 180, width: 180 }} />
+                                    <Image source={require('../../../assets/icons/keyholeblue.png')} style={{ marginTop: 10, height: 30, width: 30 }} />
+                                </View>
                             </View>
-                            <View style={{ alignItems: "center", marginTop: 20 }}>
-                                <Image source={require('../../../assets/icons/BikeService.png')} style={{ height: 180, width: 180 }} />
-                                <Image source={require('../../../assets/icons/keyholewhite.png')} style={{ marginTop: 10, height: 30, width: 30 }} />
+
+                            <View style={{ flexDirection: 'column' }}>
+                                <View style={styles.carBtn}>
+                                    <Text style={styles.bikebtnText}>Bike Service</Text>
+                                </View>
+                                <View style={{ alignItems: "center", marginTop: 20 }}>
+                                    <Image source={require('../../../assets/icons/BikeService.png')} style={{ height: 180, width: 180 }} />
+                                    <Image source={require('../../../assets/icons/keyholewhite.png')} style={{ marginTop: 10, height: 30, width: 30 }} />
+                                </View>
                             </View>
                         </View>
-                    </View>
-                    <View style={styles.address_view}>
-                        <Image source={require('../../../assets/logo.png')} style={{ height: 100, width: 100, marginLeft: 20, marginTop: 10, marginRight: 30 }} />
-                        <View style={{ justifyContent: 'center', alignItems: "center" }}>
-                            <Text style={{ fontSize: 25, marginBottom: 10 }}>Krtya Infotech</Text>
-                            <Text>Address : </Text>
-                            <Text>A1-02/02 Habitat,</Text>
-                            <Text>surat-395002</Text>
-                            <Text>Gujarat,India</Text>
-                            <Text>Conatct Number : +91 8574968574</Text>
+                        <View style={styles.address_view}>
+                            <Image source={require('../../../assets/logo.png')} style={{ height: 100, width: 100, marginLeft: 20, marginTop: 10, marginRight: 30 }} />
+                            <View style={{ justifyContent: 'center', alignItems: "center" }}>
+                                <Text style={{ fontSize: 25, marginBottom: 10 }}>Krtya Infotech</Text>
+                                <Text>Address : </Text>
+                                <Text>A1-02/02 Habitat,</Text>
+                                <Text>surat-395002</Text>
+                                <Text>Gujarat,India</Text>
+                                <Text>Conatct Number : +91 8574968574</Text>
+                            </View>
                         </View>
-                    </View>
-                    <TouchableOpacity style={styles.loginBtn} onPress={() => { this.props.navigation.navigate('SelectService') }}>
-                        <Text style={styles.loginText} >Next Step</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.loginBtn} onPress={() => { this.props.navigation.navigate('SelectService') }}>
+                            <Text style={styles.loginText} >Next Step</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
                 </View>
             </ImageBackground>
         );
