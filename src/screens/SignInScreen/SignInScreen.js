@@ -1,69 +1,111 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { ImageBackground, Dimensions, Platform, Image, View, StyleSheet, FlatList, Text, TextInput, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
 import * as Animatable from 'react-native-animatable';
+import { LoginService } from '../../services/LoginService/LoginService';
 
-const SignInScreen = ({ navigation }) => {
-    return (
-        <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage}>
-            <View style={styles.container}>
-                {/* <StatusBar backgroundColor='#F9EEF3' barStyle="light-content" /> */}
-                <Animatable.View
-                    animation="fadeInUpBig"
-                >
-                    <ScrollView>
-                        <View style={styles.header}>
-                            <Text style={styles.text_header}>Welcome Back!</Text>
-                        </View>
-                        <View style={styles.Image_view} >
-                            <TouchableOpacity onPress={() => { alert('Facebook') }}>
-                                <Image source={require('../../../assets/icons/Facebook.png')} style={{ marginRight: 20 }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { alert('Google') }}>
-                                <Image source={require('../../../assets/icons/Google.png')} />
-                            </TouchableOpacity>
-                        </View>
-                        <View >
-                            <Text style={styles.text_Or}>Or</Text>
-                        </View>
-                        <View style={styles.inputView}>
-                            <TextInput
-                                style={styles.inputText}
-                                placeholder="Email Id or User Name"
-                                type='clear'
-                                placeholderTextColor="#737373"
-                            //onChangeText={text => this.setState({ email: text })}
-                            />
-                            <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} />
-                        </View>
-                        <View style={styles.inputView} >
-                            <TextInput
-                                secureTextEntry
-                                style={styles.inputText}
-                                placeholder="Password"
-                                placeholderTextColor="#737373"
-                            //onChangeText={text => this.setState({ password: text })}
-                            />
-                            <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} />
-                        </View>
-                        <TouchableOpacity style={styles.loginBtn} onPress={() => { navigation.navigate('SelectType') }}>
-                            <Text style={styles.loginText} >Login Now</Text>
-                        </TouchableOpacity>
+class SignInScreen extends Component {
+    constructor(props) {
+        super(props);
 
-                        <View style={{ marginTop: 80, justifyContent: 'center', flexDirection: 'row' }} >
-                            <TouchableOpacity onPress={() => { navigation.navigate('SignUp') }} >
-                                <Text style={styles.baseText}>Signup</Text>
+        this.state = {
+            username: '',
+            password: '',
+        }
+        this.setEmail = this.setEmail.bind(this);
+        this.setPassword = this.setPassword.bind(this);
+        this.onPressSubmit = this.onPressSubmit.bind(this);
+    }
+
+    setEmail(value) {
+        this.setState({ username: value })
+        console.log('value', value)
+    }
+    setPassword(value) {
+        this.setState({ password: value })
+        console.log('value', value)
+    }
+
+    onPressSubmit = () => {
+        //if (this.state.username != null || this.state.password != null) {
+        // const body = {
+        //     username: this.state.username,
+        //     password: this.state.password
+        // }
+        // const response = {}
+        // LoginService(body).then(response =>
+        //     this.setState({ response: response })
+        // )
+        // console.log(response)
+        // console.log('Login')
+        this.props.navigation.navigate('SelectType')
+        //}
+        //console.log('not Done')
+        //return;
+    }
+
+    render() {
+
+        return (
+            <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage}>
+                <View style={styles.container}>
+                    <Animatable.View
+                        animation="fadeInUpBig"
+                    >
+                        <ScrollView>
+                            <View style={styles.header}>
+                                <Text style={styles.text_header}>Welcome Back!</Text>
+                            </View>
+                            <View style={styles.Image_view} >
+                                <TouchableOpacity onPress={() => { alert('Facebook') }}>
+                                    <Image source={require('../../../assets/icons/Facebook.png')} style={{ marginRight: 20 }} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => { alert('Google') }}>
+                                    <Image source={require('../../../assets/icons/Google.png')} />
+                                </TouchableOpacity>
+                            </View>
+                            <View >
+                                <Text style={styles.text_Or}>Or</Text>
+                            </View>
+                            <View style={styles.inputView}>
+                                <TextInput
+                                    style={styles.inputText}
+                                    placeholder="Email Id"
+                                    type='clear'
+                                    placeholderTextColor="#737373"
+                                    onChangeText={(text) => this.setEmail(text)}
+                                />
+                                <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} />
+                            </View>
+                            <View style={styles.inputView} >
+                                <TextInput
+                                    secureTextEntry
+                                    style={styles.inputText}
+                                    placeholder="Password"
+                                    placeholderTextColor="#737373"
+                                    onChangeText={(text) => this.setPassword(text)}
+                                />
+                                <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} />
+                            </View>
+                            <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()}>
+                                <Text style={styles.loginText} >Login Now</Text>
                             </TouchableOpacity>
-                            <Text style={styles.innerText}> if you're New! or </Text>
-                            <TouchableOpacity onPress={() => { navigation.navigate('SignUp') }} >
-                                <Text style={styles.baseText}>Need Help</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView>
-                </Animatable.View>
-            </View>
-        </ImageBackground>
-    );
-};
+
+                            <View style={{ marginTop: 80, justifyContent: 'center', flexDirection: 'row' }} >
+                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignUp') }} >
+                                    <Text style={styles.baseText}>Signup</Text>
+                                </TouchableOpacity>
+                                <Text style={styles.innerText}> if you're New! or </Text>
+                                <TouchableOpacity onPress={() => { navigation.navigate('SignUp') }} >
+                                    <Text style={styles.baseText}>Need Help</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </Animatable.View>
+                </View>
+            </ImageBackground>
+        );
+    }
+}
 
 export default SignInScreen;
 

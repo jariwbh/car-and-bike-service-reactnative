@@ -1,16 +1,64 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { ImageBackground, Dimensions, Platform, Image, View, StyleSheet, FlatList, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native'
-import * as Animatable from 'react-native-animatable';
-import { Button } from 'react-native-paper';
+import {
+    ImageBackground, FlatList, Image, View,
+    StyleSheet, Text, TouchableOpacity, ScrollView, KeyboardAvoidingView
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-
+import { SelectTypeService } from '../../services/SelectTypeService/SelectTypeService';
+import { UserService } from '../../services/UserService/UserService';
 
 class SelectTypeScreen extends Component {
-    render() {
-        return (
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            serviceTypeList: [],
+            companyname: [],
+            companyicon: null,
+            companyaddress: '',
+            companycountry: '',
+            companycity: '',
+            companycontactNumber: ''
+        };
+    }
+
+    SelectServiceType() {
+        SelectTypeService()
+            .then(data => {
+                this.setState({ serviceTypeList: data });
+            })
+    }
+
+    UserDetails() {
+        UserService().then(data => {
+            this.setState({
+                companyname: data.branchid.branchname, companyicon: data.branchid.branchlogo,
+                companyaddress: data.branchid.address, companycity: data.branchid.city,
+                companycontactNumber: data.property.mobile_number, companycountry: data.property.country
+            });
+        })
+    }
+
+    componentDidMount() {
+        this.SelectServiceType();
+        this.UserDetails();
+    }
+
+    renderRecipes = ({ item }) => (
+        <View style={{ flexDirection: 'column' }}>
+            <View style={styles.carBtn}>
+                <Text style={styles.carbtnText}>{item && item.property.name}</Text>
+            </View>
+            <View style={{ alignItems: "center", marginTop: 20 }}>
+                <Image source={{ uri: item && item.property.img[0]['attachment'] }} style={{ height: 180, width: 180 }} />
+                <Image source={require('../../../assets/icons/keyholewhite.png')} style={{ marginTop: 10, height: 30, width: 30 }} />
+            </View>
+        </View>
+    );
+
+    render() {
+        const { serviceTypeList, companyname, companyicon, companyaddress, companycountry, companycity, companycontactNumber } = this.state;
+        return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <SafeAreaView style={styles.container}>
                     <KeyboardAvoidingView behavior='position' style={styles.container}>
@@ -22,35 +70,22 @@ class SelectTypeScreen extends Component {
                                 </View>
 
                                 <View style={styles.Image_view}>
-                                    <View style={{ flexDirection: 'column' }}>
-                                        <View style={styles.carBtn}>
-                                            <Text style={styles.carbtnText}>Car Service</Text>
-                                        </View>
-                                        <View style={{ alignItems: "center", marginTop: 20 }}>
-                                            <Image source={require('../../../assets/icons/CarService.png')} style={{ height: 180, width: 180 }} />
-                                            <Image source={require('../../../assets/icons/keyholeblue.png')} style={{ marginTop: 10, height: 30, width: 30 }} />
-                                        </View>
-                                    </View>
-
-                                    <View style={{ flexDirection: 'column' }}>
-                                        <View style={styles.carBtn}>
-                                            <Text style={styles.bikebtnText}>Bike Service</Text>
-                                        </View>
-                                        <View style={{ alignItems: "center", marginTop: 20 }}>
-                                            <Image source={require('../../../assets/icons/BikeService.png')} style={{ height: 180, width: 180 }} />
-                                            <Image source={require('../../../assets/icons/keyholewhite.png')} style={{ marginTop: 10, height: 30, width: 30 }} />
-                                        </View>
-                                    </View>
+                                    <FlatList
+                                        vertical
+                                        showsVerticalScrollIndicator={false}
+                                        numColumns={2}
+                                        data={serviceTypeList}
+                                        renderItem={this.renderRecipes}
+                                        keyExtractor={item => `${item._id}`}
+                                    />
                                 </View>
                                 <View style={styles.address_view}>
-                                    <Image source={require('../../../assets/logo.png')} style={{ height: 100, width: 100, marginLeft: 20, marginTop: 10, marginRight: 30 }} />
-                                    <View style={{ justifyContent: 'center', alignItems: "center" }}>
-                                        <Text style={{ fontSize: 25, marginBottom: 10 }}>Krtya Infotech</Text>
-                                        <Text>Address : </Text>
-                                        <Text>A1-02/02 Habitat,</Text>
-                                        <Text>surat-395002</Text>
-                                        <Text>Gujarat,India</Text>
-                                        {/* <Text>Conatct Number : +91 8574968574</Text> */}
+                                    <Image source={{ uri: companyicon }} style={{ height: 100, width: 100, marginLeft: 20, marginTop: 10, marginRight: 30 }} />
+                                    <View >
+                                        <Text style={{ fontSize: 22, marginBottom: 10, textTransform: 'capitalize' }}>{companyname}</Text>
+                                        <Text>{companyaddress && `Address : ${companyaddress}`}</Text>
+                                        <Text>{companycity && companycity + ', ' + companycountry}</Text>
+                                        <Text>{companycontactNumber && `Conatct Number : ${companycontactNumber}`}</Text>
                                     </View>
                                 </View>
                                 <TouchableOpacity style={styles.loginBtn} onPress={() => { this.props.navigation.navigate('SelectService') }}>
@@ -61,16 +96,14 @@ class SelectTypeScreen extends Component {
                     </KeyboardAvoidingView>
                 </SafeAreaView>
             </ImageBackground>
-
         );
     }
 };
 
 export default SelectTypeScreen;
-//const { width, height } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
     container: {
-        // marginTop: 80,
         flex: 1,
         justifyContent: 'center',
         alignItems: "center",
@@ -85,18 +118,16 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 25,
         textAlign: 'center',
-        //fontFamily: 'monospace'
     },
     text_header2: {
         margin: 10,
         color: '#000',
         fontSize: 15,
         textAlign: 'center',
-        //fontFamily: 'monospace'
     },
     Image_view: {
         flexDirection: 'row',
-        justifyContent: "center",
+        justifyContent: "space-around",
     },
     carBtn: {
         width: "80%",
@@ -109,13 +140,11 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     carbtnText: {
-        color: "#183BAE",
-        //fontFamily: 'monospace',
+        color: "#AAAAAA",
         fontWeight: 'bold',
     },
     bikebtnText: {
         color: "#AAAAAA",
-        //fontFamily: 'monospace',
         fontWeight: 'bold',
     },
     backgroundImage: {
@@ -123,13 +152,12 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     address_view: {
-        // flex: 1,
+        flex: 1,
         marginTop: 70,
-        width: "90%",
+        width: 300,
         backgroundColor: "#ffF",
         borderRadius: 25,
-        height: 160,
-        marginLeft: 17,
+        height: 150,
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
@@ -140,14 +168,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     loginBtn: {
-        width: "90%",
+        width: "100%",
         backgroundColor: "#FFBA00",
         borderRadius: 25,
         height: 55,
         alignItems: "center",
         justifyContent: "center",
         marginTop: 30,
-        marginLeft: 20,
     },
     loginText: {
         alignItems: "center",

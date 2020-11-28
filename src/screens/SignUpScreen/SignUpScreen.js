@@ -1,9 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { ImageBackground, Dimensions, Platform, Image, View, StyleSheet, FlatList, Text, TextInput, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
 import * as Animatable from 'react-native-animatable';
+import * as Validation from '../../components/Validation/validation';
 
 class SignUpScreen extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            name: '',
+            email: '',
+            mobilenumber: '',
+        }
+    }
+
     render() {
+        const { name, email, mobilenumber } = this.state;
+
+        const _onSignUpPressed = () => {
+            if (name === '' || email === '' || mobilenumber === '') {
+                return;
+            }
+            this.props.navigation.navigate('SignIn');
+        };
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
@@ -17,32 +36,44 @@ class SignUpScreen extends Component {
                             <View style={styles.inputView}>
                                 <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} />
                                 <TextInput
+                                    label="Name"
                                     style={styles.inputText}
                                     placeholder="UserName"
                                     type='clear'
                                     placeholderTextColor="#737373"
+                                    returnKeyType="next"
+
+                                //onChangeText={this.setState({ name: name.value })}
                                 />
                             </View>
                             <View style={styles.inputView}>
                                 <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} />
                                 <TextInput
                                     style={styles.inputText}
-                                    placeholder="Email"
+                                    placeholder="Email Id"
                                     type='clear'
                                     placeholderTextColor="#737373"
+
+                                    //onChangeText={this.setState({ email: name.value })}
+                                    autoCapitalize="none"
+                                    autoCompleteType="email"
+                                    textContentType="emailAddress"
+                                    keyboardType="email-address"
                                 />
                             </View>
                             <View style={styles.inputView} >
                                 <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} />
                                 <TextInput
-                                    secureTextEntry
                                     style={styles.inputText}
-                                    placeholder="Mobile"
+                                    placeholder="Mobile Number"
                                     type='clear'
                                     placeholderTextColor="#737373"
+
+                                    //onChangeText={this.setState({ mobilenumber: name.value })}
+                                    keyboardType="numeric"
                                 />
                             </View>
-                            <TouchableOpacity style={styles.loginBtn} onPress={() => { }}>
+                            <TouchableOpacity style={styles.loginBtn} onPress={_onSignUpPressed}>
                                 <Text style={styles.loginText} >Sign Up</Text>
                             </TouchableOpacity>
                         </View>
@@ -52,7 +83,6 @@ class SignUpScreen extends Component {
                                 <Text style={styles.baseText}>SignIn</Text>
                             </TouchableOpacity>
                         </View>
-
                     </Animatable.View>
                 </View>
             </ImageBackground>
