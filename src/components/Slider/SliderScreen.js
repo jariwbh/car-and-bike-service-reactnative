@@ -11,6 +11,7 @@ export default function SliderScreen() {
     ]
     return (
         <SliderBox
+
             images={images}
             sliderBoxHeight={250}
             dotColor="#2f408f"
@@ -18,6 +19,7 @@ export default function SliderScreen() {
             paginationBoxVerticalPadding={0}
             autoplay
             circleLoop
+
         />
     )
 }

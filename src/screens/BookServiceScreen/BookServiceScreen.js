@@ -65,7 +65,7 @@ class BookServiceScreen extends Component {
                             </View>
                         </View>
                         <View style={{ alignItems: 'center' }}>
-                            <TouchableOpacity style={styles.bookserviceBtn} onPress={() => { }}>
+                            <TouchableOpacity style={styles.bookserviceBtn} onPress={() => { this.props.navigation.navigate('MyService') }}>
                                 <Text style={styles.bookserviceText} >Book Service</Text>
                             </TouchableOpacity>
                         </View>

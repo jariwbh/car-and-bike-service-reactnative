@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, ImageBackground } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native'
 import SliderScreen from '../../components/Slider/SliderScreen'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export class SelectServiceScreen extends Component {
     render() {
         return (
+
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
                     <View style={styles.header}>
@@ -19,8 +20,8 @@ export class SelectServiceScreen extends Component {
                     <View>
                         <SliderScreen />
                     </View>
-                    <View style={styles.inputUpperview}>
-                        <View style={styles.inputView}>
+                    <View style={styles.inputUpperview} >
+                        <TouchableOpacity style={styles.inputView} onPress={() => this.props.navigation.navigate('SelectCompanyName')}>
                             <View style={styles.categoryIcon}>
                                 <MaterialIcons name="room-service" size={30} color='#ff0080' />
 
@@ -29,8 +30,8 @@ export class SelectServiceScreen extends Component {
                                 <Text >Genrel</Text>
                                 <Text>Service</Text>
                             </View>
-                        </View>
-                        <View style={styles.inputView}>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.inputView}>
                             <View style={styles.categoryIcon}>
                                 <MaterialIcons name="room-service" size={30} color='#ff0080' />
 
@@ -40,13 +41,14 @@ export class SelectServiceScreen extends Component {
                                 <Text>painting</Text>
                             </View>
 
-                        </View>
+                        </TouchableOpacity>
 
                     </View>
 
                 </View>
 
             </ImageBackground>
+
         )
     }
 }
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     header: {
-        padding: 50
+        padding: 30
     },
     text_header: {
         color: '#e6b800',
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
         margin: 10
     },
     inputText: {
-        paddingLeft: 25,
+        paddingLeft: 20,
         color: "black",
         fontSize: 27,
         flexDirection: 'column',
@@ -120,8 +122,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
-        width: 55,
-        height: 55,
+        width: 60,
+        height: 60,
         backgroundColor: '#ff99cc' /* '#FF6347' */,
         borderRadius: 50,
     },
