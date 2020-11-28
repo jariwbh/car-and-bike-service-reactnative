@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from 'react-native-paper';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 
 
@@ -16,7 +17,14 @@ export class SelectCompanyNameScreen extends Component {
                 <View>
 
                     <Image source={require('../../../assets/images/Image16.png')} style={{ width: "100%" }} />
+
                 </View>
+                <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.navigate('SelectService') }}>
+
+                    <AntDesign name="arrowleft" size={20} color="black" />
+
+
+                </TouchableOpacity>
                 {/* <View style={{ alignItems: "center" }}> */}
                 <View style={styles.inputView}>
                     <View style={styles.inputineerView}>
@@ -27,6 +35,7 @@ export class SelectCompanyNameScreen extends Component {
                         <View >
                             <Image source={require('../../../assets/images/img1.png')} style={{ borderRadius: 20, height: 50, width: 50, marginLeft: 30, }} />
                         </View>
+
                     </View>
                     <View >
                         <View style={styles.inputservice}>
@@ -176,5 +185,21 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: "#fff",
 
-    }
+    },
+    categoryIcon: {
+        borderWidth: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 55,
+        height: 55,
+        backgroundColor: '#fff',
+        borderRadius: 50,
+        position: 'absolute',
+        paddingHorizontal: 20,
+        paddingBottom: 5,
+        marginTop: 20,
+        marginLeft: 20,
+
+
+    },
 })

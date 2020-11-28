@@ -9,7 +9,7 @@ import SelectTypeScreen from '../screens/SelectTypeScreen/SelectTypeScreen';
 import SelectServiceScreen from '../screens/SelectServiceScreen/SelectServiceScreen';
 import SelectCompanyNameScreen from '../screens/SelectCompanyNameScreen/SelectCompanyNameScreen';
 import MyServiceScreen from '../screens/MyServiceScreen/MyServiceScreen';
-import { isAuthenticated } from '../Helpers/Auth';
+// import { isAuthenticated } from '../Helpers/Auth';
 
 const Stack = createStackNavigator();
 
