@@ -19,7 +19,7 @@ export class SelectCompanyNameScreen extends Component {
                     <Image source={require('../../../assets/images/Image16.png')} style={{ width: "100%" }} />
 
                 </View>
-                <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.navigate('SelectService') }}>
+                <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.goBack() }}>
 
                     <AntDesign name="arrowleft" size={20} color="black" />
 

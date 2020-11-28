@@ -1,18 +1,47 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, TouchableOpacity, FlatList, Image } from 'react-native'
 import SliderScreen from '../../components/Slider/SliderScreen'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { SelectService } from '../../services/SelectService/SelectService';
 
 export class SelectServiceScreen extends Component {
-    render() {
-        return (
+    constructor(props) {
+        super(props);
+        this.state = {
+            serviceList: []
+        }
+    }
 
+    SelectService() {
+        SelectService().then(data => { this.setState({ serviceList: data }) }
+        )
+    }
+
+    componentDidMount() {
+        this.SelectService();
+    }
+
+    onPressService = item => {
+        this.props.navigation.navigate('SelectCompanyName', { item })
+    }
+
+    renderService = ({ item }) => (
+        <TouchableOpacity style={styles.inputView} onPress={() => { this.onPressService(item) }}>
+            <View style={styles.categoryIcon}>
+                <Image source={{ uri: item && item.property.icon_logo }} style={{ height: 60, width: 60 }} />
+            </View>
+            <View style={styles.inputText}>
+                <Text >{item && item.property.title}</Text>
+            </View>
+        </TouchableOpacity>
+    );
+
+    render() {
+        const { serviceList } = this.state;
+        return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
                     <View style={styles.header}>
-                        <Text style={styles.text_header}> near
-                        <Text style={styles.text_hedinner}>servic</Text>
-                        </Text>
+                        <Text style={styles.text_header}> service</Text>
                     </View>
                     <View>
                         <Text style={styles.text_hedding}>Select Your Servic to Continue</Text>
@@ -20,35 +49,20 @@ export class SelectServiceScreen extends Component {
                     <View>
                         <SliderScreen />
                     </View>
-                    <View style={styles.inputUpperview} >
-                        <TouchableOpacity style={styles.inputView} onPress={() => this.props.navigation.navigate('SelectCompanyName')}>
-                            <View style={styles.categoryIcon}>
-                                <MaterialIcons name="room-service" size={30} color='#ff0080' />
-
-                            </View>
-                            <View style={styles.inputText}>
-                                <Text >Genrel</Text>
-                                <Text>Service</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.inputView}>
-                            <View style={styles.categoryIcon}>
-                                <MaterialIcons name="room-service" size={30} color='#ff0080' />
-
-                            </View>
-                            <View style={styles.inputText}>
-                                <Text >Full body</Text>
-                                <Text>painting</Text>
-                            </View>
-
-                        </TouchableOpacity>
-
+                    <View style={{ marginLeft: 25, alignItems: "center" }}>
+                        <View style={styles.inputUpperview} >
+                            <FlatList
+                                vertical
+                                showsVerticalScrollIndicator={false}
+                                numColumns={2}
+                                data={serviceList}
+                                renderItem={this.renderService}
+                                keyExtractor={item => `${item._id}`}
+                            />
+                        </View>
                     </View>
-
                 </View>
-
             </ImageBackground>
-
         )
     }
 }
@@ -57,10 +71,11 @@ export default SelectServiceScreen
 
 
 const styles = StyleSheet.create({
-    // container: {
-    //     flex: 1,
-    //     justifyContent: 'center'
-    // },
+    container: {
+        //flex: 1,
+        justifyContent: 'center',
+        //alignItems: "center",
+    },
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover'
@@ -87,7 +102,7 @@ const styles = StyleSheet.create({
     inputUpperview: {
         flexDirection: 'row',
         paddingTop: 20,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     inputView: {
         marginBottom: 20,
@@ -106,11 +121,11 @@ const styles = StyleSheet.create({
             height: 0,
             width: 0,
         },
-        elevation: 2,
+        elevation: 1,
         margin: 10
     },
     inputText: {
-        paddingLeft: 20,
+        paddingLeft: 5,
         color: "black",
         fontSize: 27,
         flexDirection: 'column',
@@ -124,7 +139,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: 60,
         height: 60,
-        backgroundColor: '#ff99cc' /* '#FF6347' */,
+        //backgroundColor: '#ff99cc',
         borderRadius: 50,
     },
 })

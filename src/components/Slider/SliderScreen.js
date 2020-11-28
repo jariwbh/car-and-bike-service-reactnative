@@ -11,15 +11,14 @@ export default function SliderScreen() {
     ]
     return (
         <SliderBox
-
             images={images}
             sliderBoxHeight={250}
-            dotColor="#2f408f"
+            //dotColor="#2f408f"
             inactiveDotColor="#90A4AE"
             paginationBoxVerticalPadding={0}
             autoplay
             circleLoop
-
+            ImageComponentStyle={{ borderRadius: 20, width: '90%' }}
         />
     )
 }

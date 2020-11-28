@@ -14,7 +14,7 @@ const SelectService = () => {
         body: JSON.stringify(body)
     };
 
-    return fetch(appConfig.baseUrl + 'formdatas/filter', requestOptions)
+    return fetch(appConfig.baseUrl + 'facilities/filter', requestOptions)
         .then(response => response.json())
         .catch(error => {
             console.error('There was an error!', error);
