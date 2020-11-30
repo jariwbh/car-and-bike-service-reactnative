@@ -7,25 +7,25 @@ export class SelectServiceScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            serviceList: []
+            serviceList: [],
         }
+        this.serviceType = this.props.route.params.selectServiceType
     }
 
-    SelectService() {
-        SelectService().then(data => { this.setState({ serviceList: data }) }
-        )
+    SelectService(serviceType) {
+        SelectService(serviceType).then(data => { this.setState({ serviceList: data }) })
     }
 
     componentDidMount() {
-        this.SelectService();
+        this.SelectService(this.serviceType);
     }
 
-    onPressService = item => {
+    onPressToSelectService = item => {
         this.props.navigation.navigate('SelectCompanyName', { item })
     }
 
     renderService = ({ item }) => (
-        <TouchableOpacity style={styles.inputView} onPress={() => { this.onPressService(item) }}>
+        <TouchableOpacity style={styles.inputView} onPress={() => { this.onPressToSelectService(item) }}>
             <View style={styles.categoryIcon}>
                 <Image source={{ uri: item && item.property.icon_logo }} style={{ height: 60, width: 60 }} />
             </View>
@@ -46,21 +46,24 @@ export class SelectServiceScreen extends Component {
                     <View>
                         <Text style={styles.text_hedding}>Select Your Servic to Continue</Text>
                     </View>
-                    <View>
-                        <SliderScreen />
-                    </View>
-                    <View style={{ marginLeft: 25, alignItems: "center" }}>
-                        <View style={styles.inputUpperview} >
-                            <FlatList
-                                vertical
-                                showsVerticalScrollIndicator={false}
-                                numColumns={2}
-                                data={serviceList}
-                                renderItem={this.renderService}
-                                keyExtractor={item => `${item._id}`}
-                            />
+                    {serviceList && <>
+                        <View>
+                            <SliderScreen />
                         </View>
-                    </View>
+                        <View style={{ marginLeft: 25, alignItems: "center" }}>
+                            <View style={styles.inputUpperview} >
+                                <FlatList
+                                    vertical
+                                    showsVerticalScrollIndicator={false}
+                                    numColumns={2}
+                                    data={serviceList}
+                                    renderItem={this.renderService}
+                                    keyExtractor={item => `${item._id}`}
+                                />
+                            </View>
+                        </View>
+                    </>
+                    }
                 </View>
             </ImageBackground>
         )
@@ -69,12 +72,9 @@ export class SelectServiceScreen extends Component {
 
 export default SelectServiceScreen
 
-
 const styles = StyleSheet.create({
     container: {
-        //flex: 1,
         justifyContent: 'center',
-        //alignItems: "center",
     },
     backgroundImage: {
         flex: 1,
@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
         fontSize: 27,
         flexDirection: 'column',
         fontWeight: 'bold',
-
     },
     categoryIcon: {
         borderWidth: 0,
@@ -139,7 +138,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: 60,
         height: 60,
-        //backgroundColor: '#ff99cc',
         borderRadius: 50,
     },
 })

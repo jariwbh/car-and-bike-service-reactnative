@@ -12,14 +12,19 @@ class SelectTypeScreen extends Component {
         super(props);
 
         this.state = {
+            selectServiceType: null,
             serviceTypeList: [],
             companyname: [],
             companyicon: null,
             companyaddress: '',
             companycountry: '',
             companycity: '',
-            companycontactNumber: ''
+            companycontactNumber: '',
+            userdata: null,
+            bike: false,
+            car: false,
         };
+        this.onPressToSelectService = this.onPressToSelectService.bind(this);
     }
 
     SelectServiceType() {
@@ -32,6 +37,7 @@ class SelectTypeScreen extends Component {
     UserDetails() {
         UserService().then(data => {
             this.setState({
+                companydata: data,
                 companyname: data.branchid.branchname, companyicon: data.branchid.branchlogo,
                 companyaddress: data.branchid.address, companycity: data.branchid.city,
                 companycontactNumber: data.property.mobile_number, companycountry: data.property.country
@@ -45,16 +51,43 @@ class SelectTypeScreen extends Component {
     }
 
     renderRecipes = ({ item }) => (
-        <View style={{ flexDirection: 'column' }}>
+        <TouchableOpacity style={{ flexDirection: 'column' }} onPress={() => { this.onPressToSelectService(item.property.name) }}>
             <View style={styles.carBtn}>
-                <Text style={styles.carbtnText}>{item && item.property.name}</Text>
+                <Text style={styles.bikebtnText}>{item && item.property.name}</Text>
             </View>
             <View style={{ alignItems: "center", marginTop: 20 }}>
                 <Image source={{ uri: item && item.property.img[0]['attachment'] }} style={{ height: 180, width: 180 }} />
                 <Image source={require('../../../assets/icons/keyholewhite.png')} style={{ marginTop: 10, height: 30, width: 30 }} />
             </View>
-        </View>
+        </TouchableOpacity>
     );
+
+    onPressToSelectService(type) {
+        this.setState({ selectServiceType: type })
+        // if (type === "Bike Service") {
+        //     _style = {
+        //         color: "#000",
+        //         fontWeight: 'bold',
+        //     }
+        //     //this.state.bike === true ? styles.carbtnText : styles.bikebtnText 
+        // } else if (type === "Car Service") {
+        //     //this.state.car === true ? styles.carbtnText : styles.bikebtnText 
+        //     // _style = {
+        //     //     color: "red",
+        //     //     fontWeight: 'bold',
+        //     // }
+        // }
+    }
+
+    onNextStep() {
+        const { selectServiceType } = this.state;
+        if (selectServiceType != null && selectServiceType != 'undefine') {
+            this.props.navigation.navigate('SelectService', { selectServiceType })
+            this.setState({ selectServiceType: null })
+        } else {
+            alert("Please Select your Service")
+        }
+    }
 
     render() {
         const { serviceTypeList, companyname, companyicon, companyaddress, companycountry, companycity, companycontactNumber } = this.state;
@@ -68,29 +101,31 @@ class SelectTypeScreen extends Component {
                                     <Text style={styles.text_header}>Select Service Type</Text>
                                     <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
                                 </View>
-
-                                <View style={styles.Image_view}>
-                                    <FlatList
-                                        vertical
-                                        showsVerticalScrollIndicator={false}
-                                        numColumns={2}
-                                        data={serviceTypeList}
-                                        renderItem={this.renderRecipes}
-                                        keyExtractor={item => `${item._id}`}
-                                    />
-                                </View>
-                                <View style={styles.address_view}>
-                                    <Image source={{ uri: companyicon }} style={{ height: 100, width: 100, marginLeft: 20, marginTop: 10, marginRight: 30 }} />
-                                    <View >
-                                        <Text style={{ fontSize: 22, marginBottom: 10, textTransform: 'capitalize' }}>{companyname}</Text>
-                                        <Text>{companyaddress && `Address : ${companyaddress}`}</Text>
-                                        <Text>{companycity && companycity + ', ' + companycountry}</Text>
-                                        <Text>{companycontactNumber && `Conatct Number : ${companycontactNumber}`}</Text>
+                                {this.state.companydata && <>
+                                    <View style={styles.Image_view}>
+                                        <FlatList
+                                            vertical
+                                            showsVerticalScrollIndicator={false}
+                                            numColumns={2}
+                                            data={serviceTypeList}
+                                            renderItem={this.renderRecipes}
+                                            keyExtractor={item => `${item._id}`}
+                                        />
                                     </View>
-                                </View>
-                                <TouchableOpacity style={styles.loginBtn} onPress={() => { this.props.navigation.navigate('SelectService') }}>
-                                    <Text style={styles.loginText} >Next Step</Text>
-                                </TouchableOpacity>
+                                    <View style={styles.address_view}>
+                                        <Image source={{ uri: companyicon }} style={{ height: 100, width: 100, marginLeft: 20, marginTop: 10, marginRight: 30 }} />
+                                        <View >
+                                            <Text style={{ fontSize: 22, marginBottom: 10, textTransform: 'capitalize' }}>{companyname}</Text>
+                                            <Text>{companyaddress && `Address : ${companyaddress}`}</Text>
+                                            <Text>{companycity && companycity + ', ' + companycountry}</Text>
+                                            <Text>{companycontactNumber && `Conatct Number : ${companycontactNumber}`}</Text>
+                                        </View>
+                                    </View>
+                                    <TouchableOpacity style={styles.loginBtn} onPress={() => this.onNextStep()}>
+                                        <Text style={styles.loginText} >Next Step</Text>
+                                    </TouchableOpacity>
+                                </>
+                                }
                             </ScrollView>
                         </View>
                     </KeyboardAvoidingView>
@@ -140,7 +175,7 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     carbtnText: {
-        color: "#AAAAAA",
+        color: "#000",
         fontWeight: 'bold',
     },
     bikebtnText: {

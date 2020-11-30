@@ -1,13 +1,13 @@
 import appConfig from '../../Helpers/appConfig'
 
-const SelectService = () => {
+const SelectService = (type) => {
+    console.log('type', type)
     const body =
     {
         "search": [
-            { "searchfield": "status", "searchvalue": "active", "criteria": "eq", "datatype": "text" }
+            { "searchfield": "marking.data.facility-type", "searchvalue": type, "criteria": "eq", "datatype": "objectid" }
         ]
     }
-
     const requestOptions = {
         method: 'POST',
         headers: appConfig.headers,
