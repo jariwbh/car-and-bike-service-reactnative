@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
 import { ImageBackground, Dimensions, Platform, Image, View, StyleSheet, FlatList, Text, TextInput, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
 import * as Animatable from 'react-native-animatable';
+import { AntDesign, } from '@expo/vector-icons';
 
 class BookServiceScreen extends Component {
+
     render() {
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
+                    <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.goBack() }}>
+                        <AntDesign name="arrowleft" size={20} color="black" />
+                    </TouchableOpacity>
                     <Animatable.View
                         animation="fadeInUpBig"
                     >
+
+
+
+
+
                         <View style={styles.header}>
                             <Text style={styles.text_header}>Book Service</Text>
                         </View>
@@ -164,5 +174,22 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover'
-    }
+    },
+    categoryIcon: {
+        borderWidth: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 55,
+        height: 55,
+        backgroundColor: '#fff',
+        borderRadius: 50,
+        position: 'relative',
+        paddingHorizontal: 20,
+        // paddingBottom: 50,
+        // marginTop: 50,
+        marginLeft: 20,
+
+
+
+    },
 });

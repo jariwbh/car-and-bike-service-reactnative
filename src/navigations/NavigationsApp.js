@@ -9,6 +9,8 @@ import SelectTypeScreen from '../screens/SelectTypeScreen/SelectTypeScreen';
 import SelectServiceScreen from '../screens/SelectServiceScreen/SelectServiceScreen';
 import SelectCompanyNameScreen from '../screens/SelectCompanyNameScreen/SelectCompanyNameScreen';
 import MyServiceScreen from '../screens/MyServiceScreen/MyServiceScreen';
+import MyProfileScreen from '../screens/MyProfileScreen/MyProfileScreen';
+import UpdateProfileScreen from '../screens/UpdateProfile/UpdateProfileScreen';
 // import { isAuthenticated } from '../Helpers/Auth';
 
 const Stack = createStackNavigator();
@@ -16,7 +18,7 @@ const Stack = createStackNavigator();
 export default NavigationsApp = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="SignIn" headerMode="none">
+            <Stack.Navigator initialRouteName="SignIn" headerMode='none'>
                 {/* {isAuthenticated() ?
                     (
                         <> */}
@@ -31,6 +33,8 @@ export default NavigationsApp = () => {
                 <Stack.Screen name="SelectService" component={SelectServiceScreen} ></Stack.Screen>
                 <Stack.Screen name="SelectCompanyName" component={SelectCompanyNameScreen} ></Stack.Screen>
                 <Stack.Screen name="MyService" component={MyServiceScreen} ></Stack.Screen>
+                <Stack.Screen name="MyProfile" component={MyProfileScreen} ></Stack.Screen>
+                <Stack.Screen name="UpdateProfile" component={UpdateProfileScreen} ></Stack.Screen>
                 {/* </>
                     )
                 } */}
