@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { ImageBackground, Dimensions, Platform, Image, View, StyleSheet, FlatList, Text, TextInput, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
 import * as Animatable from 'react-native-animatable';
 import { AntDesign, } from '@expo/vector-icons';
+import Calendar from 'react-native-calendar-datepicker';
+import Moment from 'moment';
 
 class BookServiceScreen extends Component {
 
@@ -51,6 +53,13 @@ class BookServiceScreen extends Component {
                                     placeholder="MM-DD-YY"
                                     type='clear'
                                     placeholderTextColor="#AAAAAA"
+                                />
+                                <Calendar
+                                    onChange={(date) => this.setState({ date })}
+                                    selected={this.state.date}
+                                    // We use Moment.js to give the minimum and maximum dates.
+                                    minDate={Moment().startOf('day')}
+                                    maxDate={Moment().add(10, 'years').startOf('day')}
                                 />
                                 {/* <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} /> */}
                             </View>
