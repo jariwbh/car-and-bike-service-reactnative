@@ -9,15 +9,9 @@ class BookServiceScreen extends Component {
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
-                    <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.goBack() }}>
-                        <AntDesign name="arrowleft" size={20} color="black" />
-                    </TouchableOpacity>
                     <Animatable.View
                         animation="fadeInUpBig"
                     >
-
-
-
 
 
                         <View style={styles.header}>
