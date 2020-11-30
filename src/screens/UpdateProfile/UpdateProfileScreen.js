@@ -148,12 +148,12 @@ const styles = StyleSheet.create({
     buttonContainer: {
 
         marginTop: 10,
-        height: 45,
+        height: 55,
         flexDirection: 'row',
         // justifyContent: 'space-around',
         // alignItems: 'stretch',
         marginBottom: 20,
-        width: "80%",
+        width: "90%",
         borderRadius: 30,
         backgroundColor: "#FFF",
         borderColor: '#fff',
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     inputView: {
         alignItems: "center",
         marginBottom: 20,
-        width: "80%",
+        width: "90%",
         flexDirection: 'row',
         backgroundColor: "#fff",
         borderColor: '#fff',
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
     },
     loginBtn: {
-        width: "80%",
+        width: "90%",
         backgroundColor: "#FFBA00",
         borderRadius: 25,
         height: 55,

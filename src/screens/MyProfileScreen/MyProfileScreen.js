@@ -93,12 +93,12 @@ const styles = StyleSheet.create({
     buttonContainer: {
 
         marginTop: 10,
-        height: 45,
+        height: 55,
         flexDirection: 'row',
         // justifyContent: 'space-around',
         // alignItems: 'stretch',
         marginBottom: 20,
-        width: "80%",
+        width: "90%",
         borderRadius: 30,
         backgroundColor: "#FFF",
         borderColor: '#fff',
@@ -114,10 +114,8 @@ const styles = StyleSheet.create({
 
     },
     textContainer: {
-        // flexDirection: 'row',
         padding: 8,
-        // justifyContent: 'space-between',
-        fontSize: 20,
+        fontSize: 25,
         color: '#737373'
     },
 });
