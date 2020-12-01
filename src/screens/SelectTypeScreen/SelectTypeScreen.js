@@ -21,8 +21,7 @@ class SelectTypeScreen extends Component {
             companycity: '',
             companycontactNumber: '',
             userdata: null,
-            bike: false,
-            car: false,
+
         };
         this.onPressToSelectService = this.onPressToSelectService.bind(this);
     }
@@ -50,33 +49,27 @@ class SelectTypeScreen extends Component {
         this.UserDetails();
     }
 
-    renderRecipes = ({ item }) => (
-        <TouchableOpacity style={{ flexDirection: 'column' }} onPress={() => { this.onPressToSelectService(item.property.name) }}>
+    renderRecipes = ({ item, index }) => (
+        <TouchableOpacity style={{ flexDirection: 'column' }} onPress={() => { this.onPressToSelectService(item.property.name, index) }}>
             <View style={styles.carBtn}>
-                <Text style={styles.bikebtnText}>{item && item.property.name}</Text>
+                <Text style={item.selected ? styles.carbtnText : styles.bikebtnText}>{item && item.property.name}</Text>
             </View>
             <View style={{ alignItems: "center", marginTop: 20 }}>
                 <Image source={{ uri: item && item.property.img[0]['attachment'] }} style={{ height: 180, width: 180 }} />
-                <Image source={require('../../../assets/icons/keyholewhite.png')} style={{ marginTop: 10, height: 30, width: 30 }} />
+                <Image source={require('../../../assets/icons/keyholewhite.png')} style={item.selected ? styles.OnChnageRenderIcon : styles.renderIcon} />
             </View>
         </TouchableOpacity>
     );
 
-    onPressToSelectService(type) {
+    onPressToSelectService(type, index) {
+        const { serviceTypeList } = this.state;
+        const services = serviceTypeList.map((item) => {
+            item.selected = false;
+            return item;
+        });
+        services[index].selected = true;
+        this.setState({ serviceTypeList: services })
         this.setState({ selectServiceType: type })
-        // if (type === "Bike Service") {
-        //     _style = {
-        //         color: "#000",
-        //         fontWeight: 'bold',
-        //     }
-        //     //this.state.bike === true ? styles.carbtnText : styles.bikebtnText 
-        // } else if (type === "Car Service") {
-        //     //this.state.car === true ? styles.carbtnText : styles.bikebtnText 
-        //     // _style = {
-        //     //     color: "red",
-        //     //     fontWeight: 'bold',
-        //     // }
-        // }
     }
 
     onNextStep() {
@@ -85,7 +78,7 @@ class SelectTypeScreen extends Component {
             this.props.navigation.navigate('SelectService', { selectServiceType })
             this.setState({ selectServiceType: null })
         } else {
-            alert("Please Select your Service")
+            alert("Please Select your Service Type")
         }
     }
 
@@ -175,7 +168,7 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     carbtnText: {
-        color: "#000",
+        color: "#183BAE",
         fontWeight: 'bold',
     },
     bikebtnText: {
@@ -218,4 +211,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 20
     },
+    renderIcon: {
+        marginTop: 10,
+        height: 30,
+        width: 30,
+        tintColor: '#AAAAAA'
+    },
+    OnChnageRenderIcon: {
+        marginTop: 10,
+        height: 30,
+        width: 30,
+        tintColor: '#183BAE'
+    }
 });
