@@ -11,10 +11,13 @@ import {
 import { Entypo } from '@expo/vector-icons';
 import { removeUser } from '../../Helpers/Auth';
 
-
 export default class Profile extends Component {
+    constructor(props) {
+        super(props);
+    }
 
     onPressLogout() {
+        console.log(this.props);
         removeUser()
         this.props.navigation.navigate('SignIn')
     }

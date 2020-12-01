@@ -71,8 +71,7 @@ class SignInScreen extends Component {
             if (response != null) {
                 authenticateUser(body)
                 this.props.navigation.navigate('Tabnavigation')
-                //this.resetScreen()
-                // this.setState({ response: response })
+                this.resetScreen()
             }
         })
     }

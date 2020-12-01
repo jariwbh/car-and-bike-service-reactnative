@@ -9,16 +9,16 @@ import TabNavigation from './TabNavigation';
 import { isAuthenticated } from '../Helpers/Auth';
 
 const Stack = createStackNavigator();
-//const AuthStack = createStackNavigator();
-// function AuthStackScreen() {
-//     return (
-//         <AuthStack.Navigator initialRouteName="SignIn" headerMode='none'>
-//             <AuthStack.Screen name="Splash" component={SplashScreen} />
-//             <AuthStack.Screen name="SignUp" component={SignUpScreen} />
-//             <AuthStack.Screen name="SignIn" component={SignInScreen} />
-//         </AuthStack.Navigator>
-//     );
-// }
+const AuthStack = createStackNavigator();
+function AuthStackScreen() {
+    return (
+        <AuthStack.Navigator initialRouteName="SignIn" headerMode='none'>
+            <AuthStack.Screen name="Splash" component={SplashScreen} />
+            <AuthStack.Screen name="SignUp" component={SignUpScreen} />
+            <AuthStack.Screen name="SignIn" component={SignInScreen} />
+        </AuthStack.Navigator>
+    );
+}
 
 export default NavigationsApp = () => {
     return (
@@ -31,11 +31,7 @@ export default NavigationsApp = () => {
                 </>
             ) : (
                     <>
-                        <Stack.Navigator initialRouteName="SignIn" headerMode='none'>
-                            <Stack.Screen name="Splash" component={SplashScreen} />
-                            <Stack.Screen name="SignUp" component={SignUpScreen} />
-                            <Stack.Screen name="SignIn" component={SignInScreen} />
-                        </Stack.Navigator>
+                        <AuthStackScreen />
                     </>
                 )
             }
