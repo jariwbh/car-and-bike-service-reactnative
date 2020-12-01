@@ -4,6 +4,7 @@ import {
     StyleSheet, Text, TouchableOpacity, ScrollView, KeyboardAvoidingView
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { getUser } from '../../Helpers/Auth';
 import { SelectTypeService } from '../../services/SelectTypeService/SelectTypeService';
 import { UserService } from '../../services/UserService/UserService';
 
@@ -47,6 +48,8 @@ class SelectTypeScreen extends Component {
     componentDidMount() {
         this.SelectServiceType();
         this.UserDetails();
+        const user = getUser()
+        console.log(user);
     }
 
     renderRecipes = ({ item, index }) => (
@@ -89,7 +92,7 @@ class SelectTypeScreen extends Component {
                 <SafeAreaView style={styles.container}>
                     <KeyboardAvoidingView behavior='position' style={styles.container}>
                         <View style={styles.container}>
-                            <ScrollView >
+                            <ScrollView>
                                 <View style={styles.header}>
                                     <Text style={styles.text_header}>Select Service Type</Text>
                                     <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>

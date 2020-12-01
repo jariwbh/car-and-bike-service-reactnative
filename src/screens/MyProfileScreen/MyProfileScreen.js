@@ -9,9 +9,15 @@ import {
     ImageBackground
 } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
+import { removeUser } from '../../Helpers/Auth';
 
 
 export default class Profile extends Component {
+
+    onPressLogout() {
+        removeUser()
+        this.props.navigation.navigate('SignIn')
+    }
 
     render() {
         return (
@@ -32,7 +38,7 @@ export default class Profile extends Component {
                                 <Entypo name="edit" size={27} color="#737373" style={{ padding: 7, paddingLeft: 20 }} />
                                 <Text style={styles.textContainer}> Update Profile</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('SignIn')}>
+                            <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressLogout()}>
                                 <Entypo name="log-out" size={27} color="#737373" style={{ padding: 7, paddingLeft: 20 }} />
                                 <Text style={styles.textContainer}> Log out</Text>
                             </TouchableOpacity>
