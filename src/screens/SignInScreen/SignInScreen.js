@@ -1,47 +1,80 @@
 import React, { Component } from 'react';
-import { ImageBackground, TextInput, KeyboardAvoidingView, Dimensions, Platform, Image, value, View, StyleSheet, FlatList, Text, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
+import {
+    ImageBackground, TextInput, Image, View,
+    StyleSheet, Text, TouchableOpacity, ScrollView
+} from 'react-native'
 import * as Animatable from 'react-native-animatable';
-import { LoginService } from '../../services/LoginService/LoginService';
-// import TextInput from 'react-native-textinput-with-icons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { authenticateUser } from '../../Helpers/Auth';
+import { LoginService } from '../../services/LoginService/LoginService';
+
 class SignInScreen extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            username: '',
-            password: '',
+            username: null,
+            usererror: null,
+            password: null,
+            passworderror: null,
         }
         this.setEmail = this.setEmail.bind(this);
         this.setPassword = this.setPassword.bind(this);
         this.onPressSubmit = this.onPressSubmit.bind(this);
     }
 
-    setEmail(value) {
-        this.setState({ username: value })
-        console.log('value', value)
-    }
-    setPassword(value) {
-        this.setState({ password: value })
-        console.log('value', value)
+    setEmail(email) {
+        const re = /\S+@\S+\.\S+/;
+
+        if (!email || email.length <= 0) {
+            return this.setState({ usererror: 'Email cannot be empty' });
+        }
+        if (!re.test(email)) {
+
+            return this.setState({ usererror: 'Ooops! We need a valid email address' });
+        }
+        console.log('email', email)
+        return this.setState({ username: email, usererror: null })
     }
 
-    onPressSubmit = () => {
-        //if (this.state.username != null || this.state.password != null) {
-        // const body = {
-        //     username: this.state.username,
-        //     password: this.state.password
-        // }
-        // const response = {}
-        // LoginService(body).then(response =>
-        //     this.setState({ response: response })
-        // )
-        // console.log(response)
-        // console.log('Login')
-        this.props.navigation.navigate('Tabnavigation')
-        //}
-        //console.log('not Done')
-        //return;
+    setPassword(password) {
+        if (!password || password.length <= 0) {
+            return this.setState({ passworderror: 'Password cannot be empty' });
+        }
+        console.log('password', password)
+        return this.setState({ password: password, passworderror: null })
+    }
+
+    resetScreen() {
+        this.setState({
+            username: null,
+            usererror: null,
+            password: null,
+            passworderror: null,
+        })
+    }
+
+    onPressSubmit = async () => {
+        const { username, password } = this.state;
+        if (!username || !password) {
+            this.setEmail(username)
+            this.setPassword(password)
+            return;
+        }
+
+        const body = {
+            username: username,
+            password: password
+        }
+
+        await LoginService(body).then(response => {
+            if (response != null) {
+                authenticateUser(body)
+                this.props.navigation.navigate('Tabnavigation')
+                //this.resetScreen()
+                // this.setState({ response: response })
+            }
+        })
     }
 
     render() {
@@ -52,7 +85,6 @@ class SignInScreen extends Component {
                     <Animatable.View
                         animation="fadeInUpBig"
                     >
-                        {/* <ScrollView> */}
 
                         <View style={styles.header}>
                             <Text style={styles.text_header}>Welcome Back!</Text>
@@ -68,6 +100,7 @@ class SignInScreen extends Component {
                         <View >
                             <Text style={styles.text_Or}>Or</Text>
                         </View>
+
                         <View style={styles.inputView}>
                             <FontAwesome5 name="user-alt" size={27} color="#737373" style={{ paddingLeft: 10 }} />
                             <TextInput
@@ -75,13 +108,9 @@ class SignInScreen extends Component {
                                 placeholder="Email"
                                 placeholderTextColor="#003f5c"
                                 onChangeText={(email) => this.setEmail(email)}
-                            // right={EeIcon}
-                            // left={< TextInput.Icon name="email" size={24} color="#737373" />}
-
                             />
-                            {/* <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ padding: 10, paddingLeft: 300 }} /> */}
+                            <Text>{this.state.usererror && this.state.usererror}</Text>
                         </View>
-
                         <View style={styles.inputView}>
                             <FontAwesome5 name="unlock-alt" size={27} color="#737373" style={{ paddingLeft: 10 }} />
                             <TextInput
@@ -91,7 +120,9 @@ class SignInScreen extends Component {
                                 secureTextEntry={true}
                                 onChangeText={(password) => this.setPassword(password)}
                             />
+                            <Text>{this.state.passworderror && this.state.passworderror}</Text>
                         </View>
+
                         <View>
                             <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()} >
                                 <Text style={styles.loginText}>Login Now</Text>
@@ -103,11 +134,11 @@ class SignInScreen extends Component {
                                 <Text style={styles.baseText}>Signup</Text>
                             </TouchableOpacity>
                             <Text style={styles.innerText}> if you're New! or </Text>
-                            <TouchableOpacity onPress={() => { navigation.navigate('SignUp') }} >
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignUp') }} >
                                 <Text style={styles.baseText}>Need Help</Text>
                             </TouchableOpacity>
                         </View>
-                        {/* </ScrollView> */}
+
                     </Animatable.View>
                 </View>
             </ImageBackground>
@@ -123,7 +154,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     header: {
-        //flex: 1,
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
         paddingBottom: 30,
@@ -190,12 +220,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         alignItems: "center",
     },
-
     TextInput: {
         height: 50,
         flex: 1,
         padding: 10,
-        marginLeft: 20,
+        //marginLeft: 20,
     },
     loginBtn: {
         width: "100%",
@@ -226,35 +255,3 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     }
 });
-
-
-//  <View style={styles.inputView}>
-//                                 <TextInput
-//                                     style={styles.inputText}
-//                                     placeholder="Email Id"
-//                                     type='clear'
-//                                     placeholderTextColor="#737373"
-//                                     editable
-//                                     maxLength={30}
-//                                     keyboardType="email-address"
-//                                     value={value}
-//                                     onChangeText={(text) => this.setEmail(text)}
-//                                 />
-//                                 <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ padding: 10, paddingLeft: 300 }} />
-//                                 {/* <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} /> */}
-//                             </View>
-//                             <View style={styles.inputView} >
-//                                 <TextInput
-//                                     secureTextEntry
-//                                     style={styles.inputText}
-//                                     placeholder="Password"
-//                                     placeholderTextColor="#737373"
-//                                     editable
-//                                     maxLength={10}
-//                                     onChangeText={(text) => this.setPassword(text)}
-//                                 />
-//                                 <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} />
-//                             </View>
-//                             <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()}>
-//                                 <Text style={styles.loginText} >Login Now</Text>
-//                             </TouchableOpacity>
