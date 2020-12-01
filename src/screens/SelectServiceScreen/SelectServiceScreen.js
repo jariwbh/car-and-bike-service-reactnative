@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     },
     inputView: {
         marginBottom: 20,
-        width: "40%",
+        width: "45%",
         flexDirection: 'row',
         borderRadius: 25,
         margin: 10,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 1,
-        margin: 10
+
     },
     inputText: {
         paddingLeft: 5,

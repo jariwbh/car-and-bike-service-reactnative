@@ -28,50 +28,45 @@ class UpdateProfileScreen extends Component {
                             <Text style={styles.name}>John Doe</Text>
 
                         </View>
-                        <View style={{
-                            flex: 1, flexDirection: 'column', alignItems: 'center', padding: 30,
-                        }}>
+                        <View
+                            style={{
+                                flex: 1, flexDirection: 'column', alignItems: 'center', padding: 30,
+                            }} >
                             <View style={styles.inputView}>
-                                <FontAwesome name="user" size={27} color="#737373" style={{ padding: 7, paddingLeft: 20 }} />
-                                {/* <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} /> */}
+                                <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: 15 }} />
                                 <TextInput
                                     label="Name"
-                                    style={styles.inputText}
-                                    placeholder="UserName"
+                                    style={styles.TextInput}
+                                    placeholder="User Name"
                                     type='clear'
                                     placeholderTextColor="#737373"
                                     returnKeyType="next"
-
-                                //onChangeText={this.setState({ name: name.value })}
+                                // onChangeText={(email) => this.setEmail(email)}
                                 />
                             </View>
                             <View style={styles.inputView}>
-                                <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ padding: 7, paddingLeft: 20 }} />
-                                {/* <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} /> */}
+                                <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ paddingLeft: 15 }} />
                                 <TextInput
-                                    style={styles.inputText}
+                                    style={styles.TextInput}
                                     placeholder="Email Id"
                                     type='clear'
                                     placeholderTextColor="#737373"
-
-                                    //onChangeText={this.setState({ email: name.value })}
                                     autoCapitalize="none"
                                     autoCompleteType="email"
                                     textContentType="emailAddress"
                                     keyboardType="email-address"
+                                // onChangeText={(email) => this.setEmail(email)}
                                 />
                             </View>
                             <View style={styles.inputView} >
-                                <FontAwesome name="phone" size={27} color="#737373" style={{ padding: 7, paddingLeft: 20 }} />
-                                {/* <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} /> */}
+                                <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: 15 }} />
                                 <TextInput
-                                    style={styles.inputText}
+                                    style={styles.TextInput}
                                     placeholder="Mobile Number"
                                     type='clear'
                                     placeholderTextColor="#737373"
-
-                                    //onChangeText={this.setState({ mobilenumber: name.value })}
                                     keyboardType="numeric"
+                                // onChangeText={(email) => this.setEmail(email)}
                                 />
                             </View>
                             <TouchableOpacity style={styles.loginBtn} onPress={() => this.props.navigation.navigate('MyProfile')}>
@@ -174,13 +169,8 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     inputView: {
-        alignItems: "center",
-        marginBottom: 20,
-        width: "90%",
         flexDirection: 'row',
         backgroundColor: "#fff",
-        borderColor: '#fff',
-        height: 55,
         borderRadius: 25,
         shadowOpacity: 0.5,
         shadowRadius: 3,
@@ -189,12 +179,19 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 2,
-        margin: 10
+        borderColor: '#fff',
+        width: "90%",
+        height: 55,
+        marginBottom: 20,
+        alignItems: "center",
     },
-    inputText: {
-        paddingLeft: 3,
-        color: "black",
-        marginLeft: 15,
+
+    TextInput: {
+        height: 50,
+        flex: 1,
+        padding: 17,
+
+
     },
     loginBtn: {
         width: "90%",

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler';
-import { Button } from 'react-native-paper';
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView } from 'react-native'
 import { AntDesign, } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -13,70 +11,74 @@ export class SelectCompanyNameScreen extends Component {
         return (
 
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
+                <View style={styles.container}>
 
-                <View>
+                    <View>
 
-                    <Image source={require('../../../assets/images/Image16.png')} style={{ width: "100%" }} />
+                        <Image source={require('../../../assets/images/Image16.png')} style={{ width: "100%" }} />
 
-                </View>
-                <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.goBack() }}>
+                    </View>
 
-                    <AntDesign name="arrowleft" size={20} color="black" />
+                    <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.goBack() }}>
+
+                        <AntDesign name="arrowleft" size={20} color="black" />
 
 
-                </TouchableOpacity>
-                {/* <View style={{ alignItems: "center" }}> */}
-                <View style={styles.inputView}>
-                    <View style={styles.inputineerView}>
-                        <View >
-                            <Text style={styles.inputineertext}>Brandon Dan CK </Text>
-                            <Text style={styles.inputtext}>Mechanic / Service </Text>
+                    </TouchableOpacity>
+
+                    {/* <View style={{ alignItems: "center" }}> */}
+                    <View style={styles.inputView}>
+                        <View style={styles.inputineerView}>
+                            <View >
+
+                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFBA00', paddingHorizontal: 20 }}> Service Company Name </Text>
+                                <Text style={{ fontSize: 20, fontWeight: 'bold', paddingHorizontal: 20 }}> Car General Service</Text>
+                                <Text style={{ fontSize: 12, fontWeight: 'bold', paddingHorizontal: 20 }}>  Expected Price - $ 400</Text>
+                            </View>
+
+
                         </View>
                         <View >
-                            <Image source={require('../../../assets/images/img1.png')} style={{ borderRadius: 20, height: 50, width: 50, marginLeft: 30, }} />
+                            <View style={styles.inputservice}>
+                                <Text style={styles.inputservicetext}>Service Includes</Text>
+
+                                <Text style={styles.inputinnerservice}>
+                                    <AntDesign name="check" size={20} color="#3357BC" /> Engine oil</Text>
+                                <Text style={styles.inputinnerservice}>
+                                    <AntDesign name="check" size={20} color="#3357BC" /> Readiator coolant</Text>
+                                <Text style={styles.inputinnerservice}>
+                                    <AntDesign name="check" size={20} color="#3357BC" /> Windscreens & mirrors - for cracks</Text>
+                                <Text style={styles.inputinnerservice}>
+                                    <AntDesign name="check" size={20} color="#3357BC" /> Power steering fluid</Text>
+                                <Text style={styles.inputinnerservice}>
+                                    <AntDesign name="check" size={20} color="#3357BC" /> Windscreens washer fluid</Text>
+                                <Text style={styles.inputinnerservice}>
+                                    <AntDesign name="check" size={20} color="#3357BC" /> Clutch fluid (manual cars)</Text>
+                                <Text style={styles.inputinnerservice} >
+                                    <AntDesign name="check" size={20} color="#3357BC" /> Gearbox oil</Text>
+                                <Text style={styles.inputinnerservice} >
+                                    <AntDesign name="check" size={20} color="#3357BC" /></Text>
+
+                            </View>
+                            <View>
+                                <Text style={styles.textview}>View All</Text>
+                            </View>
+                            <View>
+                                <TouchableOpacity style={styles.book} onPress={() => { this.props.navigation.navigate('BookService') }}>
+
+                                    <Text style={styles.textbook} >Book Service</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
                     </View>
-                    <View >
-                        <View style={styles.inputservice}>
-                            <Text style={styles.inputservicetext}>Service Includes</Text>
-
-                            <Text style={styles.inputinnerservice}>
-                                <AntDesign name="check" size={20} color="#3357BC" /> Engine oil</Text>
-                            <Text style={styles.inputinnerservice}>
-                                <AntDesign name="check" size={20} color="#3357BC" /> Readiator coolant</Text>
-                            <Text style={styles.inputinnerservice}>
-                                <AntDesign name="check" size={20} color="#3357BC" /> Windscreens & mirrors - for cracks</Text>
-                            <Text style={styles.inputinnerservice}>
-                                <AntDesign name="check" size={20} color="#3357BC" /> Power steering fluid</Text>
-                            <Text style={styles.inputinnerservice}>
-                                <AntDesign name="check" size={20} color="#3357BC" /> Windscreens washer fluid</Text>
-                            <Text style={styles.inputinnerservice}>
-                                <AntDesign name="check" size={20} color="#3357BC" /> Clutch fluid (manual cars)</Text>
-                            <Text style={styles.inputinnerservice} >
-                                <AntDesign name="check" size={20} color="#3357BC" /> Gearbox oil</Text>
-                            <Text style={styles.inputinnerservice} >
-                                <AntDesign name="check" size={20} color="#3357BC" /></Text>
-
-                        </View>
-                        <View>
-                            <Text style={styles.textview}>View All</Text>
-                        </View>
-                        <View>
-                            <TouchableOpacity style={styles.book} onPress={() => { this.props.navigation.navigate('BookService') }}>
-
-                                <Text style={styles.textbook} >Book Service</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
 
                 </View>
-                {/* </View> */}
 
 
             </ImageBackground>
-
         )
+
     }
 }
 
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
         margin: 10
     },
     inputineerView: {
-        aspectRatio: 3,
+        aspectRatio: 2,
         margin: 20,
         width: "70%",
         flexDirection: 'row',
@@ -133,14 +135,18 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 2,
+        // flex: 1,
+        // flexDirection: 'column',
+        // justifyContent: 'space-between',
+
 
     },
-    inputineertext: {
-        paddingLeft: 20,
-        color: "black",
-        fontSize: 17,
-        fontWeight: 'bold',
-    },
+    // inputineertext: {
+    //     paddingLeft: 20,
+    //     color: "black",
+    //     fontSize: 17,
+    //     fontWeight: 'bold',
+    // },
     inputtext: {
         paddingLeft: 20,
         color: "black",
@@ -199,7 +205,12 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         marginTop: 20,
         marginLeft: 20,
-
-
     },
+    // servicetext: {
+    //     position: 'absolute',
+    //     paddingHorizontal: 20,
+    //     // marginTop: 130,
+
+    // }
+
 })

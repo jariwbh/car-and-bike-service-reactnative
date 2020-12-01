@@ -55,7 +55,7 @@ export default function TabNavigation() {
                     } else if (route.name === 'Offers') {
                         return (
                             <MaterialCommunityIcons
-                                name={focused ? 'brightness-percent' : 'brightness-percent'}
+                                name={focused ? 'gift-outline' : 'gift-outline'}
                                 size={20}
                                 color={color}
                             />

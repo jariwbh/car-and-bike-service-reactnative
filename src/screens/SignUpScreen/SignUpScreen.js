@@ -2,7 +2,8 @@ import React, { Component, useState } from 'react';
 import { ImageBackground, Dimensions, Platform, Image, View, StyleSheet, FlatList, Text, TextInput, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
 import * as Animatable from 'react-native-animatable';
 import * as Validation from '../../components/Validation/validation';
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 class SignUpScreen extends Component {
     constructor(props) {
         super(props)
@@ -29,60 +30,59 @@ class SignUpScreen extends Component {
                     <Animatable.View
                         animation="fadeInUpBig"
                     >
-                        <View style={styles.header}>
-                            <Text style={styles.text_header}>Register Now!</Text>
-                        </View>
-                        <View style={{ alignItems: 'center' }}>
-                            <View style={styles.inputView}>
-                                <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} />
-                                <TextInput
-                                    label="Name"
-                                    style={styles.inputText}
-                                    placeholder="UserName"
-                                    type='clear'
-                                    placeholderTextColor="#737373"
-                                    returnKeyType="next"
-
-                                //onChangeText={this.setState({ name: name.value })}
-                                />
+                        <ScrollView>
+                            <View style={styles.header}>
+                                <Text style={styles.text_header}>Register Now!</Text>
                             </View>
-                            <View style={styles.inputView}>
-                                <Image source={require('../../../assets/icons/user.png')} style={styles.UserName_Image} />
-                                <TextInput
-                                    style={styles.inputText}
-                                    placeholder="Email Id"
-                                    type='clear'
-                                    placeholderTextColor="#737373"
-
-                                    //onChangeText={this.setState({ email: name.value })}
-                                    autoCapitalize="none"
-                                    autoCompleteType="email"
-                                    textContentType="emailAddress"
-                                    keyboardType="email-address"
-                                />
+                            <View style={{ alignItems: 'center' }}>
+                                <View style={styles.inputView}>
+                                    <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: 15 }} />
+                                    <TextInput
+                                        label="Name"
+                                        style={styles.TextInput}
+                                        placeholder="User Name"
+                                        type='clear'
+                                        placeholderTextColor="#737373"
+                                        returnKeyType="next"
+                                    // onChangeText={(email) => this.setEmail(email)}
+                                    />
+                                </View>
+                                <View style={styles.inputView}>
+                                    <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ paddingLeft: 15 }} />
+                                    <TextInput
+                                        style={styles.TextInput}
+                                        placeholder="Email Id"
+                                        type='clear'
+                                        placeholderTextColor="#737373"
+                                        autoCapitalize="none"
+                                        autoCompleteType="email"
+                                        textContentType="emailAddress"
+                                        keyboardType="email-address"
+                                    // onChangeText={(email) => this.setEmail(email)}
+                                    />
+                                </View>
+                                <View style={styles.inputView} >
+                                    <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: 15 }} />
+                                    <TextInput
+                                        style={styles.TextInput}
+                                        placeholder="Mobile Number"
+                                        type='clear'
+                                        placeholderTextColor="#737373"
+                                        keyboardType="numeric"
+                                    // onChangeText={(email) => this.setEmail(email)}
+                                    />
+                                </View>
+                                <TouchableOpacity style={styles.loginBtn} onPress={_onSignUpPressed}>
+                                    <Text style={styles.loginText} >Sign Up</Text>
+                                </TouchableOpacity>
                             </View>
-                            <View style={styles.inputView} >
-                                <Image source={require('../../../assets/icons/login.png')} style={styles.Passowrd_Image} />
-                                <TextInput
-                                    style={styles.inputText}
-                                    placeholder="Mobile Number"
-                                    type='clear'
-                                    placeholderTextColor="#737373"
-
-                                    //onChangeText={this.setState({ mobilenumber: name.value })}
-                                    keyboardType="numeric"
-                                />
+                            <View style={{ marginTop: 80, justifyContent: 'center', flexDirection: 'row' }} >
+                                <Text style={styles.innerText}> Already got an account? </Text>
+                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignIn') }} >
+                                    <Text style={styles.baseText}>SignIn</Text>
+                                </TouchableOpacity>
                             </View>
-                            <TouchableOpacity style={styles.loginBtn} onPress={_onSignUpPressed}>
-                                <Text style={styles.loginText} >Sign Up</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ marginTop: 80, justifyContent: 'center', flexDirection: 'row' }} >
-                            <Text style={styles.innerText}> Already got an account? </Text>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignIn') }} >
-                                <Text style={styles.baseText}>SignIn</Text>
-                            </TouchableOpacity>
-                        </View>
+                        </ScrollView>
                     </Animatable.View>
                 </View>
             </ImageBackground>
@@ -142,13 +142,8 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     inputView: {
-        alignItems: "center",
-        marginBottom: 20,
-        width: "80%",
         flexDirection: 'row',
         backgroundColor: "#fff",
-        borderColor: '#fff',
-        height: 55,
         borderRadius: 25,
         shadowOpacity: 0.5,
         shadowRadius: 3,
@@ -157,12 +152,19 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 2,
-        margin: 10
+        borderColor: '#fff',
+        width: "80%",
+        height: 55,
+        marginBottom: 20,
+        alignItems: "center",
     },
-    inputText: {
-        paddingLeft: 3,
-        color: "black",
-        marginLeft: 15,
+
+    TextInput: {
+        height: 50,
+        flex: 1,
+        padding: 17,
+
+
     },
     loginBtn: {
         width: "80%",

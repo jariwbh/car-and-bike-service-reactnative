@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import {
-    ImageBackground, FlatList, Image, View,
-    StyleSheet, Text, TouchableOpacity, ScrollView, KeyboardAvoidingView
+    ImageBackground, FlatList,
+    Image, View, StyleSheet,
+    Text, TouchableOpacity,
+    StatusBar, Dimensions,
+    ScrollView, KeyboardAvoidingView
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SelectTypeService } from '../../services/SelectTypeService/SelectTypeService';
 import { UserService } from '../../services/UserService/UserService';
-
+const { height } = Dimensions.get('window');
 class SelectTypeScreen extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +29,10 @@ class SelectTypeScreen extends Component {
         };
         this.onPressToSelectService = this.onPressToSelectService.bind(this);
     }
+    state = {
+        // We don't know the size of the content initially, and the probably won't instantly try to scroll, so set the initial content height to 0
+        screenHeight: 0,
+    };
 
     SelectServiceType() {
         SelectTypeService()
@@ -88,15 +95,31 @@ class SelectTypeScreen extends Component {
             alert("Please Select your Service")
         }
     }
+    onContentSizeChange = (contentWidth, contentHeight) => {
+        // Save the content height in state
+        this.setState({ screenHeight: contentHeight });
+    };
 
     render() {
+        const scrollEnabled = this.state.screenHeight > height;
         const { serviceTypeList, companyname, companyicon, companyaddress, companycountry, companycity, companycontactNumber } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <SafeAreaView style={styles.container}>
-                    <KeyboardAvoidingView behavior='position' style={styles.container}>
+                    <KeyboardAvoidingView behavior='' style={styles.container}>
+                        <StatusBar barStyle="light-content" backgroundColor="#468189" />
                         <View style={styles.container}>
-                            <ScrollView >
+                            <ScrollView
+                                style={{ flex: 1 }}
+                                contentInsetAdjustmentBehavior="automatic"
+                                contentContainerStyle={styles.scrollview}
+                                scrollEnabled={scrollEnabled}
+                                onContentSizeChange={this.onContentSizeChange}
+                            >
+                                {/* <SafeAreaView style={styles.container}> */}
+                                {/* <KeyboardAvoidingView behavior='' style={styles.container}> */}
+                                {/* <View style={styles.container}> */}
+                                {/* <ScrollView > */}
                                 <View style={styles.header}>
                                     <Text style={styles.text_header}>Select Service Type</Text>
                                     <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
@@ -126,6 +149,8 @@ class SelectTypeScreen extends Component {
                                     </TouchableOpacity>
                                 </>
                                 }
+
+                                {/* </View> */}
                             </ScrollView>
                         </View>
                     </KeyboardAvoidingView>
@@ -189,10 +214,11 @@ const styles = StyleSheet.create({
     address_view: {
         flex: 1,
         marginTop: 70,
-        width: 300,
-        backgroundColor: "#ffF",
+        // width: "100%",
+        width: 350,
+        backgroundColor: "#fff",
         borderRadius: 25,
-        height: 150,
+        height: 280,
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
@@ -200,7 +226,9 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 2,
-        flexDirection: 'row'
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingHorizontal: 20
     },
     loginBtn: {
         width: "100%",
