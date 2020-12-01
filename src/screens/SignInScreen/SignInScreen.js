@@ -38,7 +38,7 @@ class SignInScreen extends Component {
         // )
         // console.log(response)
         // console.log('Login')
-        this.props.navigation.navigate('SelectType')
+        this.props.navigation.navigate('Tabnavigation')
         //}
         //console.log('not Done')
         //return;
