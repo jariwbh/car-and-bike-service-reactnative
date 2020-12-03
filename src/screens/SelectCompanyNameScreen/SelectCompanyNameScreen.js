@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, ImageBackground, Image, ActivityIndicator } from 'react-native'
 import { AntDesign, } from '@expo/vector-icons';
 import HTML from 'react-native-render-html';
 import {
@@ -19,36 +19,40 @@ export class SelectCompanyNameScreen extends Component {
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <ScrollView>
                     <View style={styles.container}>
-                        <View>
-                            <Image source={require('../../../assets/images/Image16.png')} style={{ width: wp("100%"), resizeMode: 'cover' }} />
-                        </View>
 
-                        <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.goBack() }}>
-                            <AntDesign name="arrowleft" size={20} color="black" />
-                        </TouchableOpacity>
-
-                        <View style={styles.inputView}>
-                            <View style={styles.inputineerView}>
-                                <View >
-                                    <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', color: '#FFBA00', }}> Service Name </Text>
-                                    <Text style={{ fontSize: hp('3%'), fontWeight: 'bold', }}> {this.serviceDetails.property.title}</Text>
-                                    <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', }}>  Expected Price - $ {this.serviceDetails.charges}</Text>
-                                </View>
-                            </View>
-                            <View >
-                                <View style={styles.inputservice}>
-                                    <Text style={styles.inputservicetext}>Service Includes</Text>
-                                    <Text style={styles.inputinnerservice}>
-                                        <HTML html={this.serviceDetails.property.description} />
-                                    </Text>
-                                </View>
+                        {this.serviceDetails === null ? <ActivityIndicator size="large" color="#AAAAAA" /> :
+                            <>
                                 <View>
-                                    <TouchableOpacity style={styles.book} onPress={() => { this.props.navigation.navigate('BookService') }}>
-                                        <Text style={styles.textbook} >Book Service</Text>
-                                    </TouchableOpacity>
+                                    <Image source={require('../../../assets/images/Image16.png')} style={{ width: wp("100%"), resizeMode: 'cover' }} />
                                 </View>
-                            </View>
-                        </View>
+
+                                <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.goBack() }}>
+                                    <AntDesign name="arrowleft" size={20} color="black" />
+                                </TouchableOpacity>
+
+                                <View style={styles.inputView}>
+                                    <View style={styles.inputineerView}>
+                                        <View >
+                                            <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', color: '#FFBA00', }}> Service Name </Text>
+                                            <Text style={{ fontSize: hp('3%'), fontWeight: 'bold', }}> {this.serviceDetails.property.title}</Text>
+                                            <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', }}>  Expected Price - $ {this.serviceDetails.charges}</Text>
+                                        </View>
+                                    </View>
+                                    <View >
+                                        <View style={styles.inputservice}>
+                                            <Text style={styles.inputservicetext}>Service Includes</Text>
+                                            <Text style={styles.inputinnerservice}>
+                                                <HTML html={this.serviceDetails.property.description} />
+                                            </Text>
+                                        </View>
+                                        <View>
+                                            <TouchableOpacity style={styles.book} onPress={() => { this.props.navigation.navigate('BookService') }}>
+                                                <Text style={styles.textbook} >Book Service</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
+                            </>}
                     </View>
                 </ScrollView>
             </ImageBackground>

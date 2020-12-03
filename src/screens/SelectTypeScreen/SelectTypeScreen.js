@@ -109,7 +109,7 @@ class SelectTypeScreen extends Component {
                                     keyExtractor={item => `${item._id}`}
                                 />
                             </View>
-                            {companydata != null ?
+                            {companydata != null ? <>
                                 <View style={styles.address_view}>
                                     <Image source={{ uri: companyicon }} style={styles.companyicon} />
                                     <View >
@@ -119,10 +119,10 @@ class SelectTypeScreen extends Component {
                                         <Text>{companycontactNumber && `Conatct Number : ${companycontactNumber}`}</Text>
                                     </View>
                                 </View>
-                                : <ActivityIndicator size="large" color="#AAAAAA" />}
-                            <TouchableOpacity style={styles.loginBtn} onPress={() => this.onNextStep()}>
-                                <Text style={styles.loginText} >Next Step</Text>
-                            </TouchableOpacity>
+                                <TouchableOpacity style={styles.loginBtn} onPress={() => this.onNextStep()}>
+                                    <Text style={styles.loginText} >Next Step</Text>
+                                </TouchableOpacity>
+                            </> : <ActivityIndicator size="large" color="#AAAAAA" />}
                         </>
                             : <ActivityIndicator size="large" color="#AAAAAA" />}
                     </View>

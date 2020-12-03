@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, ImageBackground, TouchableOpacity, FlatList, Image, ActivityIndicator } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, ImageBackground, TouchableOpacity, FlatList, Image, ActivityIndicator } from 'react-native'
 import SliderScreen from '../../components/Slider/SliderScreen'
 import { SelectService } from '../../services/SelectService/SelectService';
 import {
@@ -45,7 +45,7 @@ export class SelectServiceScreen extends Component {
         const { serviceList } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
-                <ScrollView  >
+                <ScrollView >
                     <View style={styles.container}>
                         <View style={styles.header}>
                             <Text style={styles.text_header}> service</Text>
