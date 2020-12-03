@@ -89,7 +89,7 @@ class SelectTypeScreen extends Component {
     }
 
     render() {
-        const { serviceTypeList, companyname, companyicon, companyaddress, companycountry, companycity, companycontactNumber } = this.state;
+        const { serviceTypeList, companyname, companydata, companyicon, companyaddress, companycountry, companycity, companycontactNumber } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <ScrollView>
@@ -98,7 +98,7 @@ class SelectTypeScreen extends Component {
                             <Text style={styles.text_header}>Select Service Type</Text>
                             <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
                         </View>
-                        {!serviceTypeList ? <>
+                        {serviceTypeList != null ? <>
                             <View style={styles.Image_view}>
                                 <FlatList
                                     vertical
@@ -109,7 +109,7 @@ class SelectTypeScreen extends Component {
                                     keyExtractor={item => `${item._id}`}
                                 />
                             </View>
-                            {!companydata ?
+                            {companydata != null ?
                                 <View style={styles.address_view}>
                                     <Image source={{ uri: companyicon }} style={styles.companyicon} />
                                     <View >
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         width: wp("6%"),
         height: wp('6%'),
         marginTop: hp('3%'),
-        tintColor: '#AAAAAA',
+        tintColor: '#183BAE',
         marginLeft: wp('8%'),
     },
     bikebtnText: {
