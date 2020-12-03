@@ -6,7 +6,8 @@ import {
     Image,
     TouchableOpacity,
     ImageBackground,
-    ToastAndroid
+    ToastAndroid,
+    ActivityIndicator
 } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { removeUser } from '../../Helpers/Auth';
@@ -51,26 +52,28 @@ export default class Profile extends Component {
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
                     <View style={styles.header}></View>
-                    {companyData && <>
-                        <Image style={styles.avatar} source={{ uri: (companyProfile ? companyProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
-                        <View style={styles.body}>
-                            <View style={styles.bodyContent}>
-                                <Text style={styles.name}>{companyName && companyName}</Text>
+                    {companyData === null ?
+                        <ActivityIndicator size="large" color="#AAAAAA" />
+                        : <>
+                            <Image style={styles.avatar} source={{ uri: (companyProfile ? companyProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
+                            <View style={styles.body}>
+                                <View style={styles.bodyContent}>
+                                    <Text style={styles.name}>{companyName && companyName}</Text>
+                                </View>
+                                <View style={{
+                                    flex: 1, flexDirection: 'column', alignItems: 'center'
+                                }}>
+                                    <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressUpdateProfile()}>
+                                        <Entypo name="edit" size={27} color="#737373" style={{ padding: hp('1.5%'), paddingLeft: hp('1%'), }} />
+                                        <Text style={styles.textContainer}> Update Profile</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressLogout()}>
+                                        <Entypo name="log-out" size={27} color="#737373" style={{ padding: hp('1.5%'), paddingLeft: hp('1%') }} />
+                                        <Text style={styles.textContainer}> Log out</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                            <View style={{
-                                flex: 1, flexDirection: 'column', alignItems: 'center'
-                            }}>
-                                <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressUpdateProfile()}>
-                                    <Entypo name="edit" size={27} color="#737373" style={{ padding: hp('1.5%'), paddingLeft: hp('1%'), }} />
-                                    <Text style={styles.textContainer}> Update Profile</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressLogout()}>
-                                    <Entypo name="log-out" size={27} color="#737373" style={{ padding: hp('1.5%'), paddingLeft: hp('1%') }} />
-                                    <Text style={styles.textContainer}> Log out</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </>
+                        </>
                     }
                 </View>
             </ImageBackground>

@@ -100,63 +100,67 @@ class UpdateProfileScreen extends Component {
                         <View style={styles.header}>
                             <Text style={styles.text_header}>Update Profile</Text>
                         </View>
-                        <Image style={styles.avatar} source={{ uri: (userProfile ? userProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
-                        <View style={styles.body}>
-                            <View style={styles.bodyContent}>
-                                <Text style={styles.name}>{fullname && fullname}</Text>
-                            </View>
-                            <View
-                                style={{
-                                    flex: 1, flexDirection: 'column', alignItems: 'center'
-                                }} >
-                                <View style={styles.inputView}>
-                                    <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
-                                    <TextInput
-                                        label="Name"
-                                        value={fullname}
-                                        style={styles.TextInput}
-                                        placeholder="User Name"
-                                        type='clear'
-                                        placeholderTextColor="#737373"
-                                        returnKeyType="next"
-                                        onChangeText={(fullname) => this.setFullName(fullname)}
-                                    />
-                                    <Text>{this.state.fullnameError && this.state.fullnameError}</Text>
+                        {this.companyData === null ?
+                            <ActivityIndicator size="large" color="#AAAAAA" />
+                            : <>
+                                <Image style={styles.avatar} source={{ uri: (userProfile ? userProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
+                                <View style={styles.body}>
+                                    <View style={styles.bodyContent}>
+                                        <Text style={styles.name}>{fullname && fullname}</Text>
+                                    </View>
+                                    <View
+                                        style={{
+                                            flex: 1, flexDirection: 'column', alignItems: 'center'
+                                        }} >
+                                        <View style={styles.inputView}>
+                                            <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
+                                            <TextInput
+                                                label="Name"
+                                                value={fullname}
+                                                style={styles.TextInput}
+                                                placeholder="User Name"
+                                                type='clear'
+                                                placeholderTextColor="#737373"
+                                                returnKeyType="next"
+                                                onChangeText={(fullname) => this.setFullName(fullname)}
+                                            />
+                                            <Text>{this.state.fullnameError && this.state.fullnameError}</Text>
+                                        </View>
+                                        <View style={styles.inputView}>
+                                            <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
+                                            <TextInput
+                                                value={username}
+                                                style={styles.TextInput}
+                                                placeholder="Email Id"
+                                                type='clear'
+                                                placeholderTextColor="#737373"
+                                                autoCapitalize="none"
+                                                autoCompleteType="email"
+                                                textContentType="emailAddress"
+                                                keyboardType="email-address"
+                                                onChangeText={(username) => this.setUserName(username)}
+                                            />
+                                            <Text>{this.state.usernameError && this.state.usernameError}</Text>
+                                        </View>
+                                        <View style={styles.inputView} >
+                                            <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
+                                            <TextInput
+                                                value={mobilenumber}
+                                                style={styles.TextInput}
+                                                placeholder="Mobile Number"
+                                                type='clear'
+                                                placeholderTextColor="#737373"
+                                                keyboardType="numeric"
+                                                onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
+                                            />
+                                            <Text>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
+                                        </View>
+                                        <TouchableOpacity style={styles.update_Btn} onPress={() => this.onPressSubmit()}>
+                                            <Text style={styles.update_text} >Update Profile</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
-                                <View style={styles.inputView}>
-                                    <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
-                                    <TextInput
-                                        value={username}
-                                        style={styles.TextInput}
-                                        placeholder="Email Id"
-                                        type='clear'
-                                        placeholderTextColor="#737373"
-                                        autoCapitalize="none"
-                                        autoCompleteType="email"
-                                        textContentType="emailAddress"
-                                        keyboardType="email-address"
-                                        onChangeText={(username) => this.setUserName(username)}
-                                    />
-                                    <Text>{this.state.usernameError && this.state.usernameError}</Text>
-                                </View>
-                                <View style={styles.inputView} >
-                                    <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
-                                    <TextInput
-                                        value={mobilenumber}
-                                        style={styles.TextInput}
-                                        placeholder="Mobile Number"
-                                        type='clear'
-                                        placeholderTextColor="#737373"
-                                        keyboardType="numeric"
-                                        onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
-                                    />
-                                    <Text>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
-                                </View>
-                                <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()}>
-                                    <Text style={styles.loginText} >Update Profile</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+                            </>}
                     </View>
                 </ScrollView>
             </ImageBackground>
