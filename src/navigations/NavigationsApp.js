@@ -31,7 +31,7 @@ export default NavigationsApp = () => {
                 </>
             ) : (
                     <>
-                        <AuthStackScreen />
+                        <Stack.Screen name="auth" component={AuthStackScreen} />
                     </>
                 )
             }

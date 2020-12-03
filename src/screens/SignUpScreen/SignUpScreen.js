@@ -1,9 +1,13 @@
 import React, { Component, useState } from 'react';
-import { ImageBackground, Dimensions, Platform, Image, View, StyleSheet, FlatList, Text, TextInput, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
+import { ImageBackground, View, StyleSheet, ToastAndroid, Text, TextInput, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RegisterService } from '../../services/RegisterService/RegisterService';
+import {
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp,
+} from 'react-native-responsive-screen'
 
 class SignUpScreen extends Component {
     constructor(props) {
@@ -83,6 +87,7 @@ class SignUpScreen extends Component {
 
         await RegisterService(body).then(response => {
             if (response != null) {
+                ToastAndroid.show("SignUp Success!", ToastAndroid.SHORT);
                 this.props.navigation.navigate('SignIn')
                 this.resetScreen()
             }
@@ -102,7 +107,7 @@ class SignUpScreen extends Component {
                             </View>
                             <View style={{ alignItems: 'center' }}>
                                 <View style={styles.inputView}>
-                                    <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: 15 }} />
+                                    <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
                                         label="User Name"
                                         style={styles.TextInput}
@@ -115,7 +120,7 @@ class SignUpScreen extends Component {
                                     <Text>{this.state.fullnameError && this.state.fullnameError}</Text>
                                 </View>
                                 <View style={styles.inputView}>
-                                    <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ paddingLeft: 15 }} />
+                                    <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
                                         style={styles.TextInput}
                                         placeholder="Email Id"
@@ -130,7 +135,7 @@ class SignUpScreen extends Component {
                                     <Text>{this.state.usernameError && this.state.usernameError}</Text>
                                 </View>
                                 <View style={styles.inputView} >
-                                    <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: 15 }} />
+                                    <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
                                         style={styles.TextInput}
                                         placeholder="Mobile Number"
@@ -168,52 +173,17 @@ const styles = StyleSheet.create({
     },
     header: {
         justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        paddingBottom: 30,
-        marginTop: 150
-    },
-    text_Or: {
-        color: '#000',
-        fontSize: 20,
-        textAlign: 'center',
-        marginBottom: 10,
+        paddingBottom: hp('5%'),
     },
     text_header: {
         color: '#000',
-        fontSize: 30,
+        fontSize: hp('4%'),
         textAlign: 'center',
-        fontFamily: 'monospace'
-    },
-    UserName_Image: {
-        width: 20,
-        height: 25,
-        marginTop: 10,
-        marginLeft: 20
-    },
-    Passowrd_Image: {
-        width: 25,
-        height: 25,
-        marginTop: 10,
-        marginLeft: 20
-    },
-    emailStyle: {
-        padding: 8,
-        margin: 5,
-        height: 40,
-        width: 40,
-        marginLeft: 5,
-    },
-    passStyle: {
-        padding: 8,
-        margin: 5,
-        height: 40,
-        width: 40,
-        marginLeft: 5,
     },
     inputView: {
         flexDirection: 'row',
         backgroundColor: "#fff",
-        borderRadius: 25,
+        borderRadius: wp('8%'),
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
@@ -222,43 +192,38 @@ const styles = StyleSheet.create({
         },
         elevation: 2,
         borderColor: '#fff',
-        width: "80%",
-        height: 55,
-        marginBottom: 20,
+        width: wp('80%'),
+        height: hp('8%'),
+        marginBottom: hp('2.5%'),
         alignItems: "center",
     },
-
     TextInput: {
-        height: 50,
+        fontSize: hp('2%'),
         flex: 1,
-        padding: 17,
-
-
+        padding: hp('2%'),
     },
     loginBtn: {
-        width: "80%",
+        width: wp('80%'),
         backgroundColor: "#FFBA00",
-        borderRadius: 25,
-        height: 55,
+        borderRadius: wp('6%'),
+        height: hp('7%'),
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 15,
-        marginBottom: 10,
-        margin: 10
+        marginTop: hp('5%'),
     },
     loginText: {
         color: "white",
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: hp('3%'),
     },
     baseText: {
         fontWeight: 'normal',
         color: '#183BAE',
-        fontSize: 15
+        fontSize: hp('1.5%'),
     },
     innerText: {
         color: '#737373',
-        fontSize: 15
+        fontSize: hp('1.5%'),
     },
     backgroundImage: {
         flex: 1,

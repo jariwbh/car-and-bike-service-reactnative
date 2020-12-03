@@ -3,14 +3,16 @@ import {
     ImageBackground, FlatList,
     Image, View, StyleSheet,
     Text, TouchableOpacity,
-    StatusBar, Dimensions,
-    ScrollView, KeyboardAvoidingView
+    ActivityIndicator,
+    ScrollView
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { getUser } from '../../Helpers/Auth';
 import { SelectTypeService } from '../../services/SelectTypeService/SelectTypeService';
 import { UserService } from '../../services/UserService/UserService';
-const { height } = Dimensions.get('window');
+import {
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp,
+} from 'react-native-responsive-screen'
+
 class SelectTypeScreen extends Component {
     constructor(props) {
         super(props);
@@ -29,10 +31,6 @@ class SelectTypeScreen extends Component {
         };
         this.onPressToSelectService = this.onPressToSelectService.bind(this);
     }
-    state = {
-        // We don't know the size of the content initially, and the probably won't instantly try to scroll, so set the initial content height to 0
-        screenHeight: 0,
-    };
 
     SelectServiceType() {
         SelectTypeService()
@@ -55,17 +53,15 @@ class SelectTypeScreen extends Component {
     componentDidMount() {
         this.SelectServiceType();
         this.UserDetails();
-        const user = getUser()
-        console.log(user);
     }
 
     renderRecipes = ({ item, index }) => (
-        <TouchableOpacity style={{ flexDirection: 'column' }} onPress={() => { this.onPressToSelectService(item.property.name, index) }}>
+        <TouchableOpacity style={{ flexDirection: 'column' }} onPress={() => { this.onPressToSelectService(item._id, index) }}>
             <View style={styles.carBtn}>
-                <Text style={item.selected ? styles.carbtnText : styles.bikebtnText}>{item && item.property.name}</Text>
+                <Text style={item.selected ? styles.carbtnText : styles.bikebtnText}>{item && item.property.title}</Text>
             </View>
-            <View style={{ alignItems: "center", marginTop: 20 }}>
-                <Image source={{ uri: item && item.property.img[0]['attachment'] }} style={{ height: 180, width: 180 }} />
+            <View style={{ alignItems: "center", justifyContent: "center", marginTop: hp('2.5%') }}>
+                <Image source={{ uri: item && item.property.img[0]['attachment'] }} style={{ height: hp('20%'), width: wp('30%'), marginLeft: wp('7%') }} />
                 <Image source={require('../../../assets/icons/keyholewhite.png')} style={item.selected ? styles.OnChnageRenderIcon : styles.renderIcon} />
             </View>
         </TouchableOpacity>
@@ -91,67 +87,46 @@ class SelectTypeScreen extends Component {
             alert("Please Select your Service Type")
         }
     }
-    onContentSizeChange = (contentWidth, contentHeight) => {
-        // Save the content height in state
-        this.setState({ screenHeight: contentHeight });
-    };
 
     render() {
-        const scrollEnabled = this.state.screenHeight > height;
         const { serviceTypeList, companyname, companyicon, companyaddress, companycountry, companycity, companycontactNumber } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
-                <SafeAreaView style={styles.container}>
-                    <KeyboardAvoidingView behavior='' style={styles.container}>
-                        <StatusBar barStyle="light-content" backgroundColor="#468189" />
-                        <View style={styles.container}>
-                            <ScrollView
-                                style={{ flex: 1 }}
-                                contentInsetAdjustmentBehavior="automatic"
-                                contentContainerStyle={styles.scrollview}
-                                scrollEnabled={scrollEnabled}
-                                onContentSizeChange={this.onContentSizeChange}
-                            >
-                                {/* <SafeAreaView style={styles.container}> */}
-                                {/* <KeyboardAvoidingView behavior='' style={styles.container}> */}
-                                {/* <View style={styles.container}> */}
-                                {/* <ScrollView > */}
-
-                                <View style={styles.header}>
-                                    <Text style={styles.text_header}>Select Service Type</Text>
-                                    <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
-                                </View>
-                                {this.state.companydata && <>
-                                    <View style={styles.Image_view}>
-                                        <FlatList
-                                            vertical
-                                            showsVerticalScrollIndicator={false}
-                                            numColumns={2}
-                                            data={serviceTypeList}
-                                            renderItem={this.renderRecipes}
-                                            keyExtractor={item => `${item._id}`}
-                                        />
-                                    </View>
-                                    <View style={styles.address_view}>
-                                        <Image source={{ uri: companyicon }} style={{ height: 100, width: 100, marginLeft: 20, marginTop: 10, marginRight: 30 }} />
-                                        <View >
-                                            <Text style={{ fontSize: 22, marginBottom: 10, textTransform: 'capitalize' }}>{companyname}</Text>
-                                            <Text>{companyaddress && `Address : ${companyaddress}`}</Text>
-                                            <Text>{companycity && companycity + ', ' + companycountry}</Text>
-                                            <Text>{companycontactNumber && `Conatct Number : ${companycontactNumber}`}</Text>
-                                        </View>
-                                    </View>
-                                    <TouchableOpacity style={styles.loginBtn} onPress={() => this.onNextStep()}>
-                                        <Text style={styles.loginText} >Next Step</Text>
-                                    </TouchableOpacity>
-                                </>
-                                }
-
-                                {/* </View> */}
-                            </ScrollView>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <View style={styles.header}>
+                            <Text style={styles.text_header}>Select Service Type</Text>
+                            <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
                         </View>
-                    </KeyboardAvoidingView>
-                </SafeAreaView>
+                        {!serviceTypeList ? <>
+                            <View style={styles.Image_view}>
+                                <FlatList
+                                    vertical
+                                    showsVerticalScrollIndicator={false}
+                                    numColumns={2}
+                                    data={serviceTypeList}
+                                    renderItem={this.renderRecipes}
+                                    keyExtractor={item => `${item._id}`}
+                                />
+                            </View>
+                            {!companydata ?
+                                <View style={styles.address_view}>
+                                    <Image source={{ uri: companyicon }} style={styles.companyicon} />
+                                    <View >
+                                        <Text style={styles.company_name}>{companyname}</Text>
+                                        <Text>{companyaddress && `Address : ${companyaddress}`}</Text>
+                                        <Text>{companycity && companycity + ', ' + companycountry}</Text>
+                                        <Text>{companycontactNumber && `Conatct Number : ${companycontactNumber}`}</Text>
+                                    </View>
+                                </View>
+                                : <ActivityIndicator size="large" color="#AAAAAA" />}
+                            <TouchableOpacity style={styles.loginBtn} onPress={() => this.onNextStep()}>
+                                <Text style={styles.loginText} >Next Step</Text>
+                            </TouchableOpacity>
+                        </>
+                            : <ActivityIndicator size="large" color="#AAAAAA" />}
+                    </View>
+                </ScrollView>
             </ImageBackground>
         );
     }
@@ -166,39 +141,59 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     header: {
+        flex: 1,
         justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        paddingBottom: 30,
-        marginTop: 50
+        paddingHorizontal: wp('3%'),
+        paddingBottom: hp('2.5%'),
+        marginTop: hp('10%')
     },
     text_header: {
         color: '#000',
-        fontSize: 25,
         textAlign: 'center',
+        fontSize: hp('3%'),
     },
     text_header2: {
-        margin: 10,
         color: '#000',
-        fontSize: 15,
         textAlign: 'center',
+        marginTop: hp('2.5%'),
+        fontSize: hp('2.5%'),
     },
     Image_view: {
+        marginTop: hp('4%'),
         flexDirection: 'row',
         justifyContent: "space-around",
+        marginLeft: wp('9%'),
     },
     carBtn: {
-        width: "80%",
+        flex: 1,
+        width: wp("30%"),
         backgroundColor: "#fff",
-        borderRadius: 25,
-        height: 40,
+        borderRadius: wp('6%'),
+        height: hp('5%'),
         alignItems: "center",
         justifyContent: "center",
-        marginLeft: 15,
+        marginLeft: wp('8%'),
         position: 'absolute'
     },
     carbtnText: {
         color: "#183BAE",
         fontWeight: 'bold',
+    },
+    renderIcon: {
+        flex: 1,
+        width: wp("6%"),
+        height: wp('6%'),
+        marginTop: hp('3%'),
+        tintColor: '#AAAAAA',
+        marginLeft: wp('8%'),
+    },
+    OnChnageRenderIcon: {
+        flex: 1,
+        width: wp("6%"),
+        height: wp('6%'),
+        marginTop: hp('3%'),
+        tintColor: '#AAAAAA',
+        marginLeft: wp('8%'),
     },
     bikebtnText: {
         color: "#AAAAAA",
@@ -208,14 +203,19 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover'
     },
+    companyicon: {
+        height: hp('10%'),
+        width: wp('25%'),
+        justifyContent: 'center',
+        alignItems: "center",
+        marginTop: hp('1%'),
+    },
     address_view: {
         flex: 1,
-        marginTop: 70,
-        // width: "100%",
-        width: 350,
+        marginTop: hp('6%'),
+        width: wp('75%'),
         backgroundColor: "#fff",
-        borderRadius: 25,
-        height: 280,
+        borderRadius: wp('6%'),
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
@@ -225,34 +225,30 @@ const styles = StyleSheet.create({
         elevation: 2,
         flexDirection: 'column',
         alignItems: 'center',
-        paddingHorizontal: 20
+        paddingHorizontal: wp('8%'),
+        aspectRatio: 1,
     },
-    loginBtn: {
-        width: "100%",
+    company_name: {
+        fontSize: hp('2.5%'),
+        marginBottom: hp('0.5%'),
+        justifyContent: 'center',
+        alignItems: "center",
+        textTransform: 'capitalize',
+    },
+    next_Btn: {
+        width: wp("80%"),
         backgroundColor: "#FFBA00",
-        borderRadius: 25,
-        height: 55,
+        borderRadius: wp('6%'),
+        height: hp('6%'),
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 30,
+        marginTop: hp('7%'),
     },
-    loginText: {
+    next_text: {
         alignItems: "center",
         justifyContent: "center",
         color: "white",
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: hp('2.5%'),
     },
-    renderIcon: {
-        marginTop: 10,
-        height: 30,
-        width: 30,
-        tintColor: '#AAAAAA'
-    },
-    OnChnageRenderIcon: {
-        marginTop: 10,
-        height: 30,
-        width: 30,
-        tintColor: '#183BAE'
-    }
 });

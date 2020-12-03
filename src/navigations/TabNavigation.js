@@ -14,6 +14,7 @@ import SelectServiceScreen from '../screens/SelectServiceScreen/SelectServiceScr
 import SelectCompanyNameScreen from '../screens/SelectCompanyNameScreen/SelectCompanyNameScreen';
 import MyServiceScreen from '../screens/MyServiceScreen/MyServiceScreen';
 import BookServiceScreen from '../screens/BookServiceScreen/BookServiceScreen';
+import OffersScreen from '../screens/OffersScreen/OffersScreen';
 
 const ProfileStack = createStackNavigator();
 function ProfileStackScreen() {
@@ -34,6 +35,7 @@ function HomeStackScreen() {
             <HomeStack.Screen name="SelectCompanyName" component={SelectCompanyNameScreen} />
             <HomeStack.Screen name="MyService" component={MyServiceScreen} />
             <HomeStack.Screen name="BookService" component={BookServiceScreen} />
+            <HomeStack.Screen name="Offers" component={OffersScreen} />
         </HomeStack.Navigator>
     );
 }
@@ -82,7 +84,7 @@ export default function TabNavigation() {
             }}
         >
             <Tab.Screen name="Home" component={HomeStackScreen} />
-            <Tab.Screen name="Offers" component={BookServiceScreen} />
+            <Tab.Screen name="Offers" component={OffersScreen} />
             <Tab.Screen name="Profile" component={ProfileStackScreen} />
         </Tab.Navigator>
     );

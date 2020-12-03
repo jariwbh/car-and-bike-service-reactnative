@@ -1,37 +1,104 @@
 import React, { Component } from 'react';
-import { ImageBackground, Dimensions, View, StyleSheet, FlatList, Text, TextInput, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
+import { ImageBackground, View, StyleSheet, Text, TextInput, TouchableOpacity, ScrollView, ToastAndroid } from 'react-native'
 import * as Animatable from 'react-native-animatable';
-
-import Moment from 'moment';
-// import DateTimePickerModal from "react-native-modal-datetime-picker";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Fontisto, MaterialIcons } from '@expo/vector-icons';
+import { BookService } from '../../services/BookService/BookService';
+import {
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp,
+} from 'react-native-responsive-screen'
 
 class BookServiceScreen extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         isDatePickerVisible: [],
-    //         setDatePickerVisibility: []
-    //     }
-    //     const [isDatePickerVisible, setDatePickerVisibility] = this.state(false);
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            fullname: null,
+            fullnameError: null,
+            mobilenumber: null,
+            mobilenumberError: null,
+            serviceDate: null,
+            serviceDateError: null,
+            serviceTime: null,
+            serviceTimeError: null,
+        }
+        this.setFullName = this.setFullName.bind(this);
+        this.setMobileNumber = this.setMobileNumber.bind(this);
+        this.setServiceDate = this.setServiceDate.bind(this);
+        this.setServiceTime = this.setServiceTime.bind(this);
+        this.onPressSubmit = this.onPressSubmit.bind(this);
+    }
 
-    // static showDatePicker = () => {
-    //     setDatePickerVisibility(true);
-    // };
+    setFullName(fullname) {
+        if (!fullname || fullname.length <= 0) {
+            return this.setState({ fullnameError: 'User Name cannot be empty' });
+        }
+        return this.setState({ fullname: fullname, fullnameError: null })
+    }
 
-    // static hideDatePicker = () => {
-    //     setDatePickerVisibility(false);
-    // };
+    setMobileNumber(mobilenumber) {
+        const reg = /^[0]?[789]\d{9}$/;
+        if (!mobilenumber || mobilenumber.length <= 0) {
+            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty.' });
+        }
+        if (!reg.test(mobilenumber)) {
+            return this.setState({ mobilenumberError: 'Ooops! We need a valid Mobile Number.' });
+        }
+        return this.setState({ mobilenumber: mobilenumber, mobilenumberError: null })
+    }
 
-    // static handleConfirm = (date) => {
-    //     console.warn("A date has been picked: ", date);
-    //     hideDatePicker();
-    // };
+    setServiceDate(serviceDate) {
+        if (!serviceDate || serviceDate.length <= 0) {
+            return this.setState({ serviceDateError: 'service Date cannot be empty' });
+        }
+        return this.setState({ serviceDate: serviceDate, serviceDateError: null })
+    }
 
+    setServiceTime(serviceTime) {
+        if (!serviceTime || serviceTime.length <= 0) {
+            return this.setState({ serviceTimeError: 'service Time cannot be empty' });
+        }
+        return this.setState({ serviceTime: serviceTime, serviceTimeError: null })
+    }
 
+    resetScreen() {
+        this.setState({
+            fullname: null,
+            fullnameError: null,
+            mobilenumber: null,
+            mobilenumberError: null,
+            serviceDate: null,
+            serviceDateError: null,
+            serviceTime: null,
+            serviceTimeError: null,
+        })
+    }
 
+    onPressSubmit = async () => {
+        const { fullname, mobilenumber, serviceDate, serviceTime } = this.state;
+        if (!fullname || !mobilenumber || !serviceDate || !serviceTime) {
+            this.setFullName(fullname)
+            this.setMobileNumber(mobilenumber)
+            this.setServiceDate(serviceDate)
+            this.setServiceTime(serviceTime)
+            return;
+        }
+
+        const body = {
+            property: {
+                fullname: fullname,
+                mobile_number: mobilenumber,
+            }
+        }
+
+        await BookService(body).then(response => {
+            if (response != null) {
+                ToastAndroid.show("Book Your Service!", ToastAndroid.SHORT);
+                this.props.navigation.navigate('MyService')
+                this.resetScreen()
+            }
+        })
+    }
 
     render() {
         return (
@@ -40,73 +107,73 @@ class BookServiceScreen extends Component {
                     <Animatable.View
                         animation="fadeInUpBig"
                     >
-
                         <ScrollView>
                             <View style={styles.header}>
                                 <Text style={styles.text_header}>Book Service</Text>
                             </View>
-                            <Text style={{ marginLeft: 50, paddingBottom: 10 }}>Name</Text>
+                            <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Name</Text>
                             <View style={{ alignItems: 'center' }}>
                                 <View style={styles.inputView}>
-                                    <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: 15 }} />
+                                    <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
                                         style={styles.TextInput}
                                         placeholder="Enter Full Name"
                                         type='clear'
                                         placeholderTextColor="#737373"
-                                    // onChangeText={(email) => this.setEmail(email)}
+                                        onChangeText={(fullname) => this.setFullName(fullname)}
                                     />
+                                    <Text>{this.state.fullnameError && this.state.fullnameError}</Text>
                                 </View>
                             </View>
-                            <Text style={{ marginLeft: 50, paddingBottom: 10 }}>Phone Number</Text>
+                            <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Mobile Number</Text>
                             <View style={{ alignItems: 'center' }}>
                                 <View style={styles.inputView}>
-                                    <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: 15 }} />
+                                    <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
                                         style={styles.TextInput}
                                         placeholder="Mobile Number"
                                         type='clear'
                                         placeholderTextColor="#737373"
                                         keyboardType="numeric"
-                                    // onChangeText={(email) => this.setEmail(email)}
+                                        onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
                                     />
+                                    <Text>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
                                 </View>
                             </View>
-                            <Text style={{ marginLeft: 50, paddingBottom: 10 }}>Service Date</Text>
+                            <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Service Date</Text>
                             <View style={{ alignItems: 'center' }}>
                                 <View style={styles.inputView} >
-                                    <Fontisto name="date" size={27} color="#737373" style={{ paddingLeft: 15 }} />
+                                    <Fontisto name="date" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
-                                        secureTextEntry
                                         style={styles.TextInput}
-                                        placeholder="MM-DD-YY"
+                                        placeholder="DD-MM-YYYY"
                                         type='clear'
+                                        value={this.state.date}
                                         placeholderTextColor="#AAAAAA"
-                                    // onPress={this.state(showDatePicker)}
-                                    />
-                                    {/* <DateTimePickerModal
-                                        isVisible={isDatePickerVisible}
-                                        mode="date"
-                                        onConfirm={handleConfirm}
-                                        onCancel={hideDatePicker}
-                                    /> */}
+                                        onChangeText={this.showDatePicker}
+                                        onChangeText={(serviceDate) => this.set(serviceDate)}
+                                    >
+                                    </TextInput>
+                                    <Text>{this.state.serviceDateError && this.state.serviceDateError}</Text>
                                 </View>
                             </View>
-                            <Text style={{ marginLeft: 50, paddingBottom: 10 }}>Service Time</Text>
+                            <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Service Time</Text>
                             <View style={{ alignItems: 'center' }}>
                                 <View style={styles.inputView} >
-                                    <MaterialIcons name="timer" size={27} color="#737373" style={{ paddingLeft: 15 }} />
+                                    <MaterialIcons name="timer" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
-                                        secureTextEntry
                                         style={styles.TextInput}
                                         placeholder="HH-MM"
                                         type='clear'
                                         placeholderTextColor="#AAAAAA"
-                                    />
+                                        onChangeText={(serviceTime) => this.set(serviceTime)}
+                                    >
+                                    </TextInput>
+                                    <Text>{this.state.serviceTimeError && this.state.serviceTimeError}</Text>
                                 </View>
                             </View>
                             <View style={{ alignItems: 'center' }}>
-                                <TouchableOpacity style={styles.bookserviceBtn} onPress={() => { this.props.navigation.navigate('MyService') }}>
+                                <TouchableOpacity style={styles.bookserviceBtn} onPress={() => this.onPressSubmit()} >
                                     <Text style={styles.bookserviceText} >Book Service</Text>
                                 </TouchableOpacity>
                             </View>
@@ -126,47 +193,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     header: {
+        flex: 1,
         justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        paddingBottom: 30,
-        //marginTop: 150
+        paddingHorizontal: hp('3%'),
+        paddingBottom: hp('4%'),
+        marginTop: hp('2%')
     },
     text_header: {
         color: '#000',
-        fontSize: 30,
+        fontSize: hp('4%'),
         textAlign: 'center',
-        fontFamily: 'monospace'
-    },
-    UserName_Image: {
-        width: 20,
-        height: 25,
-        marginTop: 10,
-        marginLeft: 20
-    },
-    Passowrd_Image: {
-        width: 25,
-        height: 25,
-        marginTop: 10,
-        marginLeft: 20
-    },
-    emailStyle: {
-        padding: 8,
-        margin: 5,
-        height: 40,
-        width: 40,
-        marginLeft: 5,
-    },
-    passStyle: {
-        padding: 8,
-        margin: 5,
-        height: 40,
-        width: 40,
-        marginLeft: 5,
     },
     inputView: {
         flexDirection: 'row',
         backgroundColor: "#fff",
-        borderRadius: 25,
+        borderRadius: wp('6%'),
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
@@ -175,82 +216,35 @@ const styles = StyleSheet.create({
         },
         elevation: 2,
         borderColor: '#fff',
-        width: "80%",
-        height: 55,
-        marginBottom: 20,
+        width: wp('80%'),
+        height: hp('8%'),
+        marginBottom: hp('2.5%'),
         alignItems: "center",
     },
 
     TextInput: {
-        height: 50,
+        fontSize: hp('2%'),
         flex: 1,
-        padding: 17,
-
-
+        padding: hp('2%'),
     },
-    // inputView: {
-    //     alignItems: "center",
-    //     marginBottom: 20,
-    //     width: "80%",
-    //     flexDirection: 'row',
-    //     backgroundColor: "#fff",
-    //     borderColor: '#fff',
-    //     height: 55,
-    //     borderRadius: 25,
-    //     shadowOpacity: 0.5,
-    //     shadowRadius: 3,
-    //     shadowOffset: {
-    //         height: 0,
-    //         width: 0,
-    //     },
-    //     elevation: 2,
-    //     margin: 10
-    // },
-    // inputText: {
-    //     paddingLeft: 3,
-    //     color: "black",
-    //     marginLeft: 15,
-    // },
     bookserviceBtn: {
-        width: "80%",
+        width: wp('80%'),
         backgroundColor: "#FFBA00",
-        borderRadius: 25,
-        height: 55,
+        borderRadius: wp('6%'),
+        height: hp('7%'),
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 15,
-        marginBottom: 10,
-        margin: 10
+        marginTop: hp('5%'),
     },
     bookserviceText: {
         color: "white",
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: hp('3%'),
     },
-
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover'
     },
-    categoryIcon: {
-        borderWidth: 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 55,
-        height: 55,
-        backgroundColor: '#fff',
-        borderRadius: 50,
-        position: 'relative',
-        paddingHorizontal: 20,
-        // paddingBottom: 50,
-        // marginTop: 50,
-        marginLeft: 20,
 
 
-
-    },
-    // datePickerStyle: {
-    //     width: 200,
-    //     marginTop: 20,
-    // },
 });

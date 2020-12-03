@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {
     StyleSheet,
@@ -6,47 +5,73 @@ import {
     View,
     Image,
     TouchableOpacity,
-    ImageBackground
+    ImageBackground,
+    ToastAndroid
 } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { removeUser } from '../../Helpers/Auth';
+import { UserService } from '../../services/UserService/UserService';
+import {
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp,
+} from 'react-native-responsive-screen'
 
 export default class Profile extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            companyData: null,
+            companyName: null,
+            companyProfile: '',
+        }
+    }
+
+    componentDidMount() {
+        UserService().then(data => {
+            this.setState({ companyData: data, companyName: data.property.fullname, companyProfile: data.branchid.branchlogo })
+        })
+    }
+
+    onPressUpdateProfile() {
+        const { companyData } = this.state;
+        if (companyData != null) {
+            this.props.navigation.navigate('UpdateProfile', { companyData })
+        }
     }
 
     onPressLogout() {
-        console.log(this.props);
         removeUser()
-        this.props.navigation.navigate('SignIn')
+        ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT);
+        this.props.navigation.navigate('auth')
     }
 
     render() {
+        const { companyData, companyName, companyProfile } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
                     <View style={styles.header}></View>
-                    <Image style={styles.avatar} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} />
-                    <View style={styles.body}>
-                        <View style={styles.bodyContent}>
-                            <Text style={styles.name}>John Doe</Text>
-                            {/* <Text style={styles.info}>UX Designer / Mobile developer</Text>
-                            <Text style={styles.description}>Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text> */}
+                    {companyData && <>
+                        <Image style={styles.avatar} source={{ uri: (companyProfile ? companyProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
+                        <View style={styles.body}>
+                            <View style={styles.bodyContent}>
+                                <Text style={styles.name}>{companyName && companyName}</Text>
+                            </View>
+                            <View style={{
+                                flex: 1, flexDirection: 'column', alignItems: 'center'
+                            }}>
+                                <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressUpdateProfile()}>
+                                    <Entypo name="edit" size={27} color="#737373" style={{ padding: hp('1.5%'), paddingLeft: hp('1%'), }} />
+                                    <Text style={styles.textContainer}> Update Profile</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressLogout()}>
+                                    <Entypo name="log-out" size={27} color="#737373" style={{ padding: hp('1.5%'), paddingLeft: hp('1%') }} />
+                                    <Text style={styles.textContainer}> Log out</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        <View style={{
-                            flex: 1, flexDirection: 'column', alignItems: 'center', padding: 30,
-                        }}>
-                            <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('UpdateProfile')}>
-                                <Entypo name="edit" size={27} color="#737373" style={{ padding: 7, paddingLeft: 20 }} />
-                                <Text style={styles.textContainer}> Update Profile</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressLogout()}>
-                                <Entypo name="log-out" size={27} color="#737373" style={{ padding: 7, paddingLeft: 20 }} />
-                                <Text style={styles.textContainer}> Log out</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                    </>
+                    }
                 </View>
             </ImageBackground>
         );
@@ -54,64 +79,44 @@ export default class Profile extends Component {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        // backgroundColor: "#00BFFF",
-        height: 200,
+    container: {
+        flex: 1,
     },
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover'
     },
     avatar: {
-        width: 130,
-        height: 130,
-        borderRadius: 63,
-        borderWidth: 4,
-        borderColor: "white",
-        marginBottom: 10,
+        width: hp('20%'),
+        height: hp('20%'),
+        borderRadius: wp('20%'),
         alignSelf: 'center',
-        position: 'absolute',
-        marginTop: 130
-    },
-    name: {
-        fontSize: 22,
-        color: "#FFFFFF",
-        fontWeight: '600',
-
+        marginTop: wp('20%')
     },
     body: {
-        marginTop: 40,
+        marginTop: hp('3%'),
     },
     bodyContent: {
         flex: 1,
         alignItems: 'center',
-        padding: 30,
-
+        paddingBottom: hp('7%')
     },
     name: {
-        fontSize: 28,
+        fontSize: hp('4%'),
         color: "#737373",
-        fontWeight: "600"
+        fontWeight: 'bold',
     },
-    // updateContent: {
-    //     flex: 1,
-    //     alignItems: 'center',
-    //     padding: 30,
-
-    // },
     buttonContainer: {
 
-        marginTop: 10,
-        height: 55,
+        marginTop: hp('2%'),
+        height: hp('9%'),
         flexDirection: 'row',
-        // justifyContent: 'space-around',
-        // alignItems: 'stretch',
-        marginBottom: 20,
-        width: "90%",
-        borderRadius: 30,
+        marginBottom: hp('2%'),
+        width: wp("80%"),
+        alignItems: 'center',
+        borderRadius: wp('8%'),
         backgroundColor: "#FFF",
         borderColor: '#fff',
-        borderRadius: 20,
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
@@ -119,12 +124,10 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 2,
-
-
     },
     textContainer: {
-        padding: 8,
-        fontSize: 25,
+        padding: hp('1%'),
+        fontSize: hp('3%'),
         color: '#737373'
     },
 });

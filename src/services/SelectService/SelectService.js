@@ -5,7 +5,7 @@ const SelectService = (type) => {
     const body =
     {
         "search": [
-            { "searchfield": "marking.data.facility-type", "searchvalue": type, "criteria": "eq", "datatype": "objectid" }
+            { "searchfield": "category", "searchvalue": type, "criteria": "eq", "datatype": "objectid" }
         ]
     }
     const requestOptions = {
@@ -14,7 +14,7 @@ const SelectService = (type) => {
         body: JSON.stringify(body)
     };
 
-    return fetch(appConfig.baseUrl + 'facilities/filter', requestOptions)
+    return fetch(appConfig.baseUrl + 'services/filter', requestOptions)
         .then(response => response.json())
         .catch(error => {
             console.error('There was an error!', error);

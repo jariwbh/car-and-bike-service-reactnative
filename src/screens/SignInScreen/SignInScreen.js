@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import {
     ImageBackground, TextInput, Image, View,
-    StyleSheet, Text, TouchableOpacity, ScrollView
+    StyleSheet, Text, TouchableOpacity, ToastAndroid
 } from 'react-native'
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { authenticateUser } from '../../Helpers/Auth';
 import { LoginService } from '../../services/LoginService/LoginService';
+import {
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp,
+} from 'react-native-responsive-screen'
 
 class SignInScreen extends Component {
     constructor(props) {
@@ -70,6 +74,7 @@ class SignInScreen extends Component {
         await LoginService(body).then(response => {
             if (response != null) {
                 authenticateUser(body)
+                ToastAndroid.show("SignIn Success!", ToastAndroid.SHORT);
                 this.props.navigation.navigate('Tabnavigation')
                 this.resetScreen()
             }
@@ -80,66 +85,67 @@ class SignInScreen extends Component {
 
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage}>
-                <View style={styles.container}>
-                    <Animatable.View
-                        animation="fadeInUpBig"
-                    >
+                <ScrollView>
+                    <View style={styles.container}>
+                        <Animatable.View
+                            animation="fadeInUpBig"
+                        >
+                            <View style={styles.header}>
+                                <Text style={styles.text_header}>Welcome Back!</Text>
+                            </View>
+                            <View style={styles.Image_view} >
+                                <TouchableOpacity onPress={() => { alert('Facebook') }}>
+                                    <Image source={require('../../../assets/icons/Facebook.png')} style={{ marginRight: hp('3%') }} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => { alert('Google') }}>
+                                    <Image source={require('../../../assets/icons/Google.png')} />
+                                </TouchableOpacity>
+                            </View>
+                            <View >
+                                <Text style={styles.text_Or}>Or</Text>
+                            </View>
 
-                        <View style={styles.header}>
-                            <Text style={styles.text_header}>Welcome Back!</Text>
-                        </View>
-                        <View style={styles.Image_view} >
-                            <TouchableOpacity onPress={() => { alert('Facebook') }}>
-                                <Image source={require('../../../assets/icons/Facebook.png')} style={{ marginRight: 20 }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { alert('Google') }}>
-                                <Image source={require('../../../assets/icons/Google.png')} />
-                            </TouchableOpacity>
-                        </View>
-                        <View >
-                            <Text style={styles.text_Or}>Or</Text>
-                        </View>
+                            <View style={styles.inputView}>
+                                <FontAwesome5 name="user-alt" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
+                                <TextInput
+                                    style={styles.TextInput}
+                                    placeholder="Email"
+                                    placeholderTextColor="#003f5c"
+                                    onChangeText={(email) => this.setEmail(email)}
+                                />
+                                <Text>{this.state.usererror && this.state.usererror}</Text>
+                            </View>
+                            <View style={styles.inputView}>
+                                <FontAwesome5 name="unlock-alt" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
+                                <TextInput
+                                    style={styles.TextInput}
+                                    placeholder="******"
+                                    placeholderTextColor="#003f5c"
+                                    secureTextEntry={true}
+                                    onChangeText={(password) => this.setPassword(password)}
+                                />
+                                <Text>{this.state.passworderror && this.state.passworderror}</Text>
+                            </View>
 
-                        <View style={styles.inputView}>
-                            <FontAwesome5 name="user-alt" size={27} color="#737373" style={{ paddingLeft: 10 }} />
-                            <TextInput
-                                style={styles.TextInput}
-                                placeholder="Email"
-                                placeholderTextColor="#003f5c"
-                                onChangeText={(email) => this.setEmail(email)}
-                            />
-                            <Text>{this.state.usererror && this.state.usererror}</Text>
-                        </View>
-                        <View style={styles.inputView}>
-                            <FontAwesome5 name="unlock-alt" size={27} color="#737373" style={{ paddingLeft: 10 }} />
-                            <TextInput
-                                style={styles.TextInput}
-                                placeholder="******"
-                                placeholderTextColor="#003f5c"
-                                secureTextEntry={true}
-                                onChangeText={(password) => this.setPassword(password)}
-                            />
-                            <Text>{this.state.passworderror && this.state.passworderror}</Text>
-                        </View>
+                            <View>
+                                <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()} >
+                                    <Text style={styles.loginText}>Login Now</Text>
+                                </TouchableOpacity>
+                            </View>
 
-                        <View>
-                            <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()} >
-                                <Text style={styles.loginText}>Login Now</Text>
-                            </TouchableOpacity>
-                        </View>
+                            <View style={{ marginTop: 80, justifyContent: 'center', flexDirection: 'row' }} >
+                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignUp') }} >
+                                    <Text style={styles.baseText}>Signup</Text>
+                                </TouchableOpacity>
+                                <Text style={styles.innerText}> if you're New! or </Text>
+                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignUp') }} >
+                                    <Text style={styles.baseText}>Need Help</Text>
+                                </TouchableOpacity>
+                            </View>
 
-                        <View style={{ marginTop: 80, justifyContent: 'center', flexDirection: 'row' }} >
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignUp') }} >
-                                <Text style={styles.baseText}>Signup</Text>
-                            </TouchableOpacity>
-                            <Text style={styles.innerText}> if you're New! or </Text>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignUp') }} >
-                                <Text style={styles.baseText}>Need Help</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                    </Animatable.View>
-                </View>
+                        </Animatable.View>
+                    </View>
+                </ScrollView>
             </ImageBackground>
         );
     }
@@ -154,50 +160,22 @@ const styles = StyleSheet.create({
     },
     header: {
         justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        paddingBottom: 30,
-        marginTop: 150
+        paddingBottom: hp('5%'),
+        marginTop: hp('10%')
     },
     text_Or: {
         color: '#000',
-        fontSize: 20,
+        fontSize: hp('2.5%'),
         textAlign: 'center',
-        marginBottom: 10,
+        marginBottom: hp('2%'),
     },
     text_header: {
         color: '#000',
-        fontSize: 30,
+        fontSize: hp('4%'),
         textAlign: 'center',
-        fontFamily: 'monospace'
-    },
-    UserName_Image: {
-        width: 20,
-        height: 25,
-        marginTop: 8,
-        marginLeft: '48%'
-    },
-    Passowrd_Image: {
-        width: 25,
-        height: 25,
-        marginTop: 10,
-        marginLeft: '66%'
-    },
-    emailStyle: {
-        padding: 8,
-        margin: 5,
-        height: 40,
-        width: 40,
-        marginLeft: 5,
-    },
-    passStyle: {
-        padding: 8,
-        margin: 5,
-        height: 40,
-        width: 40,
-        marginLeft: 5,
     },
     Image_view: {
-        marginBottom: 10,
+        marginBottom: hp('3%'),
         flexDirection: 'row',
         alignItems: "center",
         justifyContent: "center",
@@ -205,7 +183,7 @@ const styles = StyleSheet.create({
     inputView: {
         flexDirection: 'row',
         backgroundColor: "#fff",
-        borderRadius: 25,
+        borderRadius: wp('8%'),
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
@@ -214,40 +192,39 @@ const styles = StyleSheet.create({
         },
         elevation: 2,
         borderColor: '#fff',
-        width: "80%",
-        height: 55,
-        marginBottom: 20,
+        width: wp('80%'),
+        height: hp('8%'),
+        marginBottom: hp('2.5%'),
         alignItems: "center",
     },
     TextInput: {
-        height: 50,
+        fontSize: hp('2%'),
         flex: 1,
-        padding: 10,
-        //marginLeft: 20,
+        padding: hp('2%'),
     },
     loginBtn: {
-        width: "100%",
-        borderRadius: 25,
-        height: 55,
+        width: wp('80%'),
+        backgroundColor: "#FFBA00",
+        borderRadius: wp('6%'),
+        height: hp('7%'),
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 20,
-        backgroundColor: "#FFBA00",
+        marginTop: hp('5%'),
 
     },
     loginText: {
         color: "white",
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: hp('3%'),
     },
     baseText: {
         fontWeight: 'normal',
         color: '#183BAE',
-        fontSize: 15
+        fontSize: hp('1.5%'),
     },
     innerText: {
         color: '#737373',
-        fontSize: 15
+        fontSize: hp('1.5%'),
     },
     backgroundImage: {
         flex: 1,

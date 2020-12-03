@@ -1,112 +1,83 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, StyleSheet, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView } from 'react-native'
 import { AntDesign, } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-
-
+import HTML from 'react-native-render-html';
+import {
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp,
+} from 'react-native-responsive-screen'
 
 export class SelectCompanyNameScreen extends Component {
+    constructor(props) {
+        super(props);
+        console.log('this.props.route.params.item', this.props.route.params.item)
+        this.serviceDetails = this.props.route.params.item
+    }
+
     render() {
         return (
-
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
-                <View style={styles.container}>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <View>
+                            <Image source={require('../../../assets/images/Image16.png')} style={{ width: wp("100%"), resizeMode: 'cover' }} />
+                        </View>
 
-                    <View>
+                        <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.goBack() }}>
+                            <AntDesign name="arrowleft" size={20} color="black" />
+                        </TouchableOpacity>
 
-                        <Image source={require('../../../assets/images/Image16.png')} style={{ width: "100%" }} />
-
-                    </View>
-
-                    <TouchableOpacity style={styles.categoryIcon} onPress={() => { this.props.navigation.goBack() }}>
-
-                        <AntDesign name="arrowleft" size={20} color="black" />
-
-
-                    </TouchableOpacity>
-
-                    {/* <View style={{ alignItems: "center" }}> */}
-                    <View style={styles.inputView}>
-                        <View style={styles.inputineerView}>
+                        <View style={styles.inputView}>
+                            <View style={styles.inputineerView}>
+                                <View >
+                                    <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', color: '#FFBA00', }}> Service Name </Text>
+                                    <Text style={{ fontSize: hp('3%'), fontWeight: 'bold', }}> {this.serviceDetails.property.title}</Text>
+                                    <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', }}>  Expected Price - $ {this.serviceDetails.charges}</Text>
+                                </View>
+                            </View>
                             <View >
-
-                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFBA00', paddingHorizontal: 20 }}> Service Company Name </Text>
-                                <Text style={{ fontSize: 20, fontWeight: 'bold', paddingHorizontal: 20 }}> Car General Service</Text>
-                                <Text style={{ fontSize: 12, fontWeight: 'bold', paddingHorizontal: 20 }}>  Expected Price - $ 400</Text>
-                            </View>
-
-
-                        </View>
-                        <View >
-                            <View style={styles.inputservice}>
-                                <Text style={styles.inputservicetext}>Service Includes</Text>
-
-                                <Text style={styles.inputinnerservice}>
-                                    <AntDesign name="check" size={20} color="#3357BC" /> Engine oil</Text>
-                                <Text style={styles.inputinnerservice}>
-                                    <AntDesign name="check" size={20} color="#3357BC" /> Readiator coolant</Text>
-                                <Text style={styles.inputinnerservice}>
-                                    <AntDesign name="check" size={20} color="#3357BC" /> Windscreens & mirrors - for cracks</Text>
-                                <Text style={styles.inputinnerservice}>
-                                    <AntDesign name="check" size={20} color="#3357BC" /> Power steering fluid</Text>
-                                <Text style={styles.inputinnerservice}>
-                                    <AntDesign name="check" size={20} color="#3357BC" /> Windscreens washer fluid</Text>
-                                <Text style={styles.inputinnerservice}>
-                                    <AntDesign name="check" size={20} color="#3357BC" /> Clutch fluid (manual cars)</Text>
-                                <Text style={styles.inputinnerservice} >
-                                    <AntDesign name="check" size={20} color="#3357BC" /> Gearbox oil</Text>
-                                <Text style={styles.inputinnerservice} >
-                                    <AntDesign name="check" size={20} color="#3357BC" /></Text>
-
-                            </View>
-                            <View>
-                                <Text style={styles.textview}>View All</Text>
-                            </View>
-                            <View>
-                                <TouchableOpacity style={styles.book} onPress={() => { this.props.navigation.navigate('BookService') }}>
-
-                                    <Text style={styles.textbook} >Book Service</Text>
-                                </TouchableOpacity>
+                                <View style={styles.inputservice}>
+                                    <Text style={styles.inputservicetext}>Service Includes</Text>
+                                    <Text style={styles.inputinnerservice}>
+                                        <HTML html={this.serviceDetails.property.description} />
+                                    </Text>
+                                </View>
+                                <View>
+                                    <TouchableOpacity style={styles.book} onPress={() => { this.props.navigation.navigate('BookService') }}>
+                                        <Text style={styles.textbook} >Book Service</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
-
                     </View>
-
-                </View>
-
-
+                </ScrollView>
             </ImageBackground>
         )
-
     }
 }
 
 export default SelectCompanyNameScreen
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: 'center'
     },
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover'
     },
     inputView: {
-        marginTop: 235,
-        position: 'absolute',
-        width: "80%",
-        borderRadius: 25,
+        flex: 1,
+        width: wp("80%"),
+        height: hp("85%"),
+        borderRadius: wp('6%'),
+        marginTop: wp('-15%'),
+        marginLeft: wp('10%'),
         alignContent: 'center',
         alignItems: "center",
         justifyContent: "center",
-        marginLeft: 45,
         backgroundColor: "#fff",
         borderColor: '#fff',
-        height: 600,
-        borderRadius: 25,
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
@@ -114,20 +85,16 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 2,
-        margin: 10
     },
     inputineerView: {
         aspectRatio: 2,
-        margin: 20,
-        width: "70%",
+        margin: wp('2%'),
+        width: wp("60%"),
         flexDirection: 'row',
-        borderRadius: 25,
-        marginLeft: 50,
+        borderRadius: wp('6%'),
         alignItems: "center",
-        position: 'relative',
         backgroundColor: "#fff",
         borderColor: '#fff',
-        borderRadius: 25,
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
@@ -135,82 +102,47 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 2,
-        // flex: 1,
-        // flexDirection: 'column',
-        // justifyContent: 'space-between',
-
-
-    },
-    // inputineertext: {
-    //     paddingLeft: 20,
-    //     color: "black",
-    //     fontSize: 17,
-    //     fontWeight: 'bold',
-    // },
-    inputtext: {
-        paddingLeft: 20,
-        color: "black",
-        fontSize: 13,
-
-    },
-    inputservice: {
-        paddingLeft: 0,
+        alignItems: "center",
+        justifyContent: "center",
     },
     inputinnerservice: {
-        paddingBottom: 15,
+        paddingBottom: hp('2%'),
         fontWeight: 'bold',
-        fontSize: 15,
-        paddingLeft: 25,
+        fontSize: hp('2%'),
+        paddingLeft: wp('2%'),
     },
     inputservicetext: {
-        paddingBottom: 10,
-        paddingLeft: 20,
+        paddingBottom: hp('2%'),
+        paddingLeft: wp('2%'),
         fontWeight: 'bold',
-        fontSize: 25,
-
-    },
-    textview: {
-        paddingLeft: 40,
-        fontWeight: 'bold',
-        fontSize: 20
+        fontSize: hp('4%'),
     },
     book: {
         aspectRatio: 6,
         backgroundColor: '#FFBA00',
-        borderRadius: 25,
-        width: "80%",
-        marginLeft: 35,
+        borderRadius: wp('6%'),
+        width: wp("7%"),
+        height: hp("5%"),
+        marginLeft: hp('4%'),
         alignItems: "center",
         justifyContent: 'center',
-        marginTop: 15,
-        marginBottom: 10,
-        margin: 10
+        marginTop: hp('2%'),
     },
     textbook: {
         fontWeight: 'bold',
         fontSize: 20,
         color: "#fff",
-
     },
     categoryIcon: {
         borderWidth: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        width: 55,
-        height: 55,
+        width: wp("7%"),
+        height: wp("7%"),
+        borderRadius: hp('6%'),
         backgroundColor: '#fff',
-        borderRadius: 50,
         position: 'absolute',
-        paddingHorizontal: 20,
-        paddingBottom: 5,
-        marginTop: 20,
-        marginLeft: 20,
+        marginTop: wp('8%'),
+        marginLeft: wp('5%'),
     },
-    // servicetext: {
-    //     position: 'absolute',
-    //     paddingHorizontal: 20,
-    //     // marginTop: 130,
-
-    // }
-
 })
