@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    TouchableOpacity,
-    ImageBackground,
-    ToastAndroid,
-    ActivityIndicator
+    StyleSheet, Text, View, Image,
+    TouchableOpacity, ImageBackground,
+    ToastAndroid, ActivityIndicator, Alert
 } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { removeUser } from '../../Helpers/Auth';
@@ -42,8 +37,21 @@ export default class Profile extends Component {
 
     onPressLogout() {
         removeUser()
-        ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT);
-        this.props.navigation.navigate('auth')
+        Alert.alert(
+            "Confirmation required",
+            "Do you really want to logout?",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => { ToastAndroid.show("Log Out cancle!", ToastAndroid.SHORT) },
+                    style: "cancel"
+                },
+                { text: "Yes", onPress: () => { ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT), this.props.navigation.navigate('auth') } }
+            ],
+            { cancelable: false }
+        );
+
+
     }
 
     render() {

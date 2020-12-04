@@ -10,11 +10,15 @@ import {
 export class SelectCompanyNameScreen extends Component {
     constructor(props) {
         super(props);
-        console.log('this.props.route.params.item', this.props.route.params.item)
+        //console.log('this.props.route.params.item', this.props.route.params.item)
         this.serviceDetails = this.props.route.params.item
+        this.state = {
+            serviceID: this.props.route.params.item._id
+        }
     }
 
     render() {
+        const { serviceID } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <ScrollView>
@@ -46,7 +50,7 @@ export class SelectCompanyNameScreen extends Component {
                                             </Text>
                                         </View>
                                         <View>
-                                            <TouchableOpacity style={styles.book} onPress={() => { this.props.navigation.navigate('BookService') }}>
+                                            <TouchableOpacity style={styles.book} onPress={() => { this.props.navigation.navigate('BookService', { serviceID }) }}>
                                                 <Text style={styles.textbook} >Book Service</Text>
                                             </TouchableOpacity>
                                         </View>

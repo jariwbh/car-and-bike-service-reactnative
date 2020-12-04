@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ImageBackground, View, StyleSheet, Text, TextInput, TouchableOpacity, ScrollView, ToastAndroid } from 'react-native'
-import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Fontisto, MaterialIcons } from '@expo/vector-icons';
 import { BookService } from '../../services/BookService/BookService';
@@ -22,9 +21,9 @@ class BookServiceScreen extends Component {
             serviceTime: null,
             serviceTimeError: null,
             vehicleNumber: null,
-            vehicleNumberError: null
+            vehicleNumberError: null,
+            serviceID: this.props.route.params.serviceID
         }
-
         this.setFullName = this.setFullName.bind(this);
         this.setMobileNumber = this.setMobileNumber.bind(this);
         this.setServiceDate = this.setServiceDate.bind(this);
@@ -87,13 +86,14 @@ class BookServiceScreen extends Component {
             serviceTime: null,
             serviceTimeError: null,
             vehicleNumber: null,
-            vehicleNumberError: null
+            vehicleNumberError: null,
         })
     }
 
     onPressSubmit = async () => {
-        const { fullname, mobilenumber, serviceDate, serviceTime, vehicleNumber } = this.state;
-        if (!fullname || !mobilenumber || !serviceDate || !serviceTime || vehicleNumber) {
+        console.log('clicked')
+        const { fullname, mobilenumber, serviceDate, serviceTime, vehicleNumber, serviceID } = this.state;
+        if (!fullname || !mobilenumber || !serviceDate || !serviceTime || !vehicleNumber) {
             this.setFullName(fullname)
             this.setMobileNumber(mobilenumber)
             this.setServiceDate(serviceDate)
@@ -103,13 +103,21 @@ class BookServiceScreen extends Component {
         }
 
         const body = {
+            attendee: "5fbf8f809c28220330088e84",
+            appointmentdate: serviceDate,
+            refid: serviceID,
+            refModel: "Service",
+            timeslot: {
+                starttime: serviceTime
+            },
             property: {
-                fullname: fullname,
-                mobile_number: mobilenumber,
+                vehicleno: vehicleNumber
             }
         }
 
         await BookService(body).then(response => {
+            console.log('body', body)
+            console.log(response);
             if (response != null) {
                 ToastAndroid.show("Book Your Service!", ToastAndroid.SHORT);
                 this.props.navigation.navigate('MyService')
@@ -122,9 +130,6 @@ class BookServiceScreen extends Component {
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
-                    {/* <Animatable.View
-                        animation="fadeInUpBig"
-                    > */}
                     <View style={styles.header}>
                         <Text style={styles.text_header}>Book Service</Text>
                     </View>
@@ -164,7 +169,7 @@ class BookServiceScreen extends Component {
                                 <Fontisto name="date" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                 <TextInput
                                     style={styles.TextInput}
-                                    placeholder="DD-MM-YYYY"
+                                    placeholder="YYYY-MM-DD"
                                     type='clear'
                                     value={this.state.date}
                                     placeholderTextColor="#AAAAAA"
@@ -211,7 +216,6 @@ class BookServiceScreen extends Component {
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
-                    {/* </Animatable.View> */}
                 </View>
             </ImageBackground>
         );
