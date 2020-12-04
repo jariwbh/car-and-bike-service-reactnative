@@ -61,7 +61,7 @@ class SelectTypeScreen extends Component {
                 <Text style={item.selected ? styles.carbtnText : styles.bikebtnText}>{item && item.property.title}</Text>
             </View>
             <View style={{ alignItems: "center", justifyContent: "center", marginTop: hp('2.5%') }}>
-                <Image source={{ uri: item && item.property.img[0]['attachment'] }} style={{ height: hp('20%'), width: wp('30%'), marginLeft: wp('7%') }} />
+                <Image source={{ uri: item && item.property.img[0]['attachment'] }} style={{ height: hp('15%'), width: wp('25%'), marginLeft: wp('9%') }} />
                 <Image source={require('../../../assets/icons/keyholewhite.png')} style={item.selected ? styles.OnChnageRenderIcon : styles.renderIcon} />
             </View>
         </TouchableOpacity>
@@ -92,41 +92,41 @@ class SelectTypeScreen extends Component {
         const { serviceTypeList, companyname, companydata, companyicon, companyaddress, companycountry, companycity, companycontactNumber } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
-                <ScrollView>
-                    <View style={styles.container}>
-                        <View style={styles.header}>
-                            <Text style={styles.text_header}>Select Service Type</Text>
-                            <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
-                        </View>
-                        {serviceTypeList != null ? <>
-                            <View style={styles.Image_view}>
-                                <FlatList
-                                    vertical
-                                    showsVerticalScrollIndicator={false}
-                                    numColumns={2}
-                                    data={serviceTypeList}
-                                    renderItem={this.renderRecipes}
-                                    keyExtractor={item => `${item._id}`}
-                                />
-                            </View>
-                            {companydata != null ? <>
-                                <View style={styles.address_view}>
-                                    <Image source={{ uri: companyicon }} style={styles.companyicon} />
-                                    <View >
-                                        <Text style={styles.company_name}>{companyname}</Text>
-                                        <Text>{companyaddress && `Address : ${companyaddress}`}</Text>
-                                        <Text>{companycity && companycity + ', ' + companycountry}</Text>
-                                        <Text>{companycontactNumber && `Conatct Number : ${companycontactNumber}`}</Text>
-                                    </View>
-                                </View>
-                                <TouchableOpacity style={styles.loginBtn} onPress={() => this.onNextStep()}>
-                                    <Text style={styles.loginText} >Next Step</Text>
-                                </TouchableOpacity>
-                            </> : <ActivityIndicator size="large" color="#AAAAAA" />}
-                        </>
-                            : <ActivityIndicator size="large" color="#AAAAAA" />}
+                {/* <ScrollView> */}
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <Text style={styles.text_header}>Select Service Type</Text>
+                        <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
                     </View>
-                </ScrollView>
+                    {serviceTypeList != null ? <>
+                        <View style={styles.Image_view}>
+                            <FlatList
+                                vertical
+                                showsVerticalScrollIndicator={false}
+                                numColumns={2}
+                                data={serviceTypeList}
+                                renderItem={this.renderRecipes}
+                                keyExtractor={item => `${item._id}`}
+                            />
+                        </View>
+                        {companydata != null ? <>
+                            <View style={styles.address_view}>
+                                <Image source={{ uri: companyicon }} style={styles.companyicon} />
+                                <View >
+                                    <Text style={styles.company_name}>{companyname}</Text>
+                                    <Text>{companyaddress && `Address : ${companyaddress}`}</Text>
+                                    <Text>{companycity && companycity + ', ' + companycountry}</Text>
+                                    <Text>{companycontactNumber && `Conatct Number : ${companycontactNumber}`}</Text>
+                                </View>
+                            </View>
+                            <TouchableOpacity style={styles.next_Btn} onPress={() => this.onNextStep()}>
+                                <Text style={styles.next_text} >Next Step</Text>
+                            </TouchableOpacity>
+                        </> : <ActivityIndicator size="large" color="#AAAAAA" />}
+                    </>
+                        : <ActivityIndicator size="large" color="#AAAAAA" />}
+                </View>
+                {/* </ScrollView> */}
             </ImageBackground>
         );
     }
@@ -141,11 +141,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     header: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        paddingHorizontal: wp('3%'),
-        paddingBottom: hp('2.5%'),
-        marginTop: hp('10%')
+        marginTop: hp('6%')
     },
     text_header: {
         color: '#000',
@@ -155,11 +151,11 @@ const styles = StyleSheet.create({
     text_header2: {
         color: '#000',
         textAlign: 'center',
-        marginTop: hp('2.5%'),
+        marginTop: hp('1%'),
         fontSize: hp('2.5%'),
     },
     Image_view: {
-        marginTop: hp('4%'),
+        marginTop: hp('3%'),
         flexDirection: 'row',
         justifyContent: "space-around",
         marginLeft: wp('9%'),
@@ -183,7 +179,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: wp("6%"),
         height: wp('6%'),
-        marginTop: hp('3%'),
+        marginTop: hp('1%'),
         tintColor: '#AAAAAA',
         marginLeft: wp('8%'),
     },
@@ -191,7 +187,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: wp("6%"),
         height: wp('6%'),
-        marginTop: hp('3%'),
+        marginTop: hp('1%'),
         tintColor: '#183BAE',
         marginLeft: wp('8%'),
     },
@@ -208,11 +204,11 @@ const styles = StyleSheet.create({
         width: wp('25%'),
         justifyContent: 'center',
         alignItems: "center",
-        marginTop: hp('1%'),
+
     },
     address_view: {
         flex: 1,
-        marginTop: hp('6%'),
+        marginTop: hp('4%'),
         width: wp('75%'),
         backgroundColor: "#fff",
         borderRadius: wp('6%'),
@@ -226,7 +222,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         paddingHorizontal: wp('8%'),
-        aspectRatio: 1,
+
     },
     company_name: {
         fontSize: hp('2.5%'),
@@ -242,7 +238,8 @@ const styles = StyleSheet.create({
         height: hp('6%'),
         alignItems: "center",
         justifyContent: "center",
-        marginTop: hp('7%'),
+        marginTop: hp('4%'),
+        marginBottom: hp('3%')
     },
     next_text: {
         alignItems: "center",

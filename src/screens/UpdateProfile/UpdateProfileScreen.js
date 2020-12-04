@@ -95,11 +95,11 @@ class UpdateProfileScreen extends Component {
         const { fullname, username, mobilenumber, userProfile } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
-                <ScrollView>
-                    <View style={styles.container}>
-                        <View style={styles.header}>
-                            <Text style={styles.text_header}>Update Profile</Text>
-                        </View>
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <Text style={styles.text_header}>Update Profile</Text>
+                    </View>
+                    <ScrollView>
                         {this.companyData === null ?
                             <ActivityIndicator size="large" color="#AAAAAA" />
                             : <>
@@ -161,8 +161,8 @@ class UpdateProfileScreen extends Component {
                                     </View>
                                 </View>
                             </>}
-                    </View>
-                </ScrollView>
+                    </ScrollView>
+                </View>
             </ImageBackground>
         );
     }
@@ -174,17 +174,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    header: {
-        // justifyContent: 'flex-start',
-        // // backgroundColor: "#00BFFF",
-        // height: 100,
-    },
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover'
     },
     text_header: {
-        marginTop: wp('9%'),
+        marginTop: wp('6%'),
         color: '#000',
         fontSize: hp('4%'),
         textAlign: 'center',
@@ -195,15 +190,12 @@ const styles = StyleSheet.create({
         height: hp('20%'),
         borderRadius: wp('20%'),
         alignSelf: 'center',
-        marginTop: wp('10%')
-    },
-    body: {
-        marginTop: hp('3%'),
+        marginTop: wp('1%')
     },
     bodyContent: {
         flex: 1,
         alignItems: 'center',
-        paddingBottom: hp('7%')
+        paddingBottom: hp('3%')
     },
     name: {
         fontSize: hp('4%'),

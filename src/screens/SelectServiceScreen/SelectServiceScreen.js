@@ -33,7 +33,7 @@ export class SelectServiceScreen extends Component {
     renderService = ({ item }) => (
         <TouchableOpacity style={styles.inputView} onPress={() => { this.onPressToSelectService(item) }}>
             <View style={styles.categoryIcon}>
-                <Image source={{ uri: item.property && item.property.icon_logo }} style={{ height: hp('8%'), width: wp('14%') }} />
+                <Image source={{ uri: item.property && item.property.icon_logo }} style={{ height: 60, width: 60 }} />
             </View>
             <View style={styles.inputText}>
                 <Text >{item && item.title}</Text>
@@ -45,36 +45,35 @@ export class SelectServiceScreen extends Component {
         const { serviceList } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
-                <ScrollView >
-                    <View style={styles.container}>
-                        <View style={styles.header}>
-                            <Text style={styles.text_header}> service</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.text_hedding}>Select Your Servic to Continue</Text>
-                        </View>
-
-                        {serviceList === null ?
-                            <ActivityIndicator size="large" color="#AAAAAA" />
-                            : <>
-                                <View>
-                                    <SliderScreen />
-                                </View>
-                                <View style={{ marginLeft: hp('1%'), alignItems: "center" }}>
-                                    <View style={styles.inputUpperview} >
-                                        <FlatList
-                                            vertical
-                                            showsVerticalScrollIndicator={false}
-                                            numColumns={2}
-                                            data={serviceList}
-                                            renderItem={this.renderService}
-                                            keyExtractor={item => `${item._id}`}
-                                        />
-                                    </View>
-                                </View>
-                            </>}
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <Text style={styles.text_header}> service</Text>
                     </View>
-                </ScrollView>
+                    <View>
+                        <Text style={styles.text_hedding}>Select Your Servic to Continue</Text>
+                    </View>
+                    {/* <ScrollView> */}
+                    {serviceList === null ?
+                        <ActivityIndicator size="large" color="#AAAAAA" />
+                        : <>
+                            <View>
+                                <SliderScreen />
+                            </View>
+                            <View style={{ marginLeft: hp('1%'), alignItems: "center" }}>
+                                <View style={styles.inputUpperview} >
+                                    <FlatList
+                                        vertical
+                                        showsVerticalScrollIndicator={false}
+                                        numColumns={2}
+                                        data={serviceList}
+                                        renderItem={this.renderService}
+                                        keyExtractor={item => `${item._id}`}
+                                    />
+                                </View>
+                            </View>
+                        </>}
+                    {/* </ScrollView> */}
+                </View>
             </ImageBackground>
         )
     }
@@ -91,12 +90,9 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     header: {
-
-        padding: hp('1.5%')
-
+        marginTop: hp('2%'),
     },
     text_header: {
-
         color: '#e6b800',
         fontSize: hp('4%'),
         textAlign: 'center',
@@ -110,21 +106,21 @@ const styles = StyleSheet.create({
         fontSize: hp('2.5%'),
         textAlign: 'center',
         fontFamily: 'monospace',
-        paddingBottom: hp('3%')
+        paddingBottom: hp('2%')
 
     },
     inputUpperview: {
         flexDirection: 'row',
-        paddingTop: hp('3%'),
+        paddingTop: hp('2%'),
         justifyContent: 'center',
     },
     inputView: {
         flex: 1,
-        margin: wp('3%'),
+        margin: wp('2%'),
         flexDirection: 'row',
-        borderRadius: wp('10%'),
+        borderRadius: wp('11%'),
         alignItems: "center",
-        backgroundColor: "pink",
+        backgroundColor: "#fff",
         borderColor: '#fff',
         shadowOpacity: 0.5,
         shadowRadius: 3,

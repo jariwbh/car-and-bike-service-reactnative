@@ -150,7 +150,7 @@ class SignUpScreen extends Component {
                                     <Text style={styles.loginText} >Sign Up</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={{ marginTop: 80, justifyContent: 'center', flexDirection: 'row' }} >
+                            <View style={{ marginTop: hp('5%'), justifyContent: 'center', flexDirection: 'row' }} >
                                 <Text style={styles.innerText}> Already got an account? </Text>
                                 <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignIn') }} >
                                     <Text style={styles.baseText}>SignIn</Text>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     ImageBackground, TextInput, Image, View,
-    StyleSheet, Text, TouchableOpacity, ToastAndroid
+    StyleSheet, Text, TouchableOpacity, ToastAndroid, ScrollView
 } from 'react-native'
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -110,7 +110,7 @@ class SignInScreen extends Component {
                                 <TextInput
                                     style={styles.TextInput}
                                     placeholder="Email"
-                                    placeholderTextColor="#003f5c"
+                                    placeholderTextColor="#737373"
                                     onChangeText={(email) => this.setEmail(email)}
                                 />
                                 <Text>{this.state.usererror && this.state.usererror}</Text>
@@ -120,7 +120,7 @@ class SignInScreen extends Component {
                                 <TextInput
                                     style={styles.TextInput}
                                     placeholder="******"
-                                    placeholderTextColor="#003f5c"
+                                    placeholderTextColor="#737373"
                                     secureTextEntry={true}
                                     onChangeText={(password) => this.setPassword(password)}
                                 />
@@ -133,12 +133,12 @@ class SignInScreen extends Component {
                                 </TouchableOpacity>
                             </View>
 
-                            <View style={{ marginTop: 80, justifyContent: 'center', flexDirection: 'row' }} >
+                            <View style={{ marginTop: hp('5%'), justifyContent: 'center', flexDirection: 'row' }} >
                                 <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignUp') }} >
                                     <Text style={styles.baseText}>Signup</Text>
                                 </TouchableOpacity>
                                 <Text style={styles.innerText}> if you're New! or </Text>
-                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignUp') }} >
+                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('HelpCenter') }} >
                                     <Text style={styles.baseText}>Need Help</Text>
                                 </TouchableOpacity>
                             </View>
