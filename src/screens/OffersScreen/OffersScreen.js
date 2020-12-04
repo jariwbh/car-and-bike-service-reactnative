@@ -7,7 +7,7 @@ export class OffersScreen extends Component {
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
                     <Text style={{ fontSize: 30 }}> No Offers </Text>
-                    <ActivityIndicator size="large" color="#AAAAAA" />
+                    {/* <ActivityIndicator size="large" color="#AAAAAA" /> */}
                 </View>
             </ImageBackground>
         )

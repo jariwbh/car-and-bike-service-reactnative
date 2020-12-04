@@ -21,11 +21,15 @@ class BookServiceScreen extends Component {
             serviceDateError: null,
             serviceTime: null,
             serviceTimeError: null,
+            vehicleNumber: null,
+            vehicleNumberError: null
         }
+
         this.setFullName = this.setFullName.bind(this);
         this.setMobileNumber = this.setMobileNumber.bind(this);
         this.setServiceDate = this.setServiceDate.bind(this);
         this.setServiceTime = this.setServiceTime.bind(this);
+        this.setVehicleNumber = this.setVehicleNumber.bind(this);
         this.onPressSubmit = this.onPressSubmit.bind(this);
     }
 
@@ -39,10 +43,10 @@ class BookServiceScreen extends Component {
     setMobileNumber(mobilenumber) {
         const reg = /^[0]?[789]\d{9}$/;
         if (!mobilenumber || mobilenumber.length <= 0) {
-            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty.' });
+            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty' });
         }
         if (!reg.test(mobilenumber)) {
-            return this.setState({ mobilenumberError: 'Ooops! We need a valid Mobile Number.' });
+            return this.setState({ mobilenumberError: 'Ooops! We need a valid Mobile Number' });
         }
         return this.setState({ mobilenumber: mobilenumber, mobilenumberError: null })
     }
@@ -56,9 +60,20 @@ class BookServiceScreen extends Component {
 
     setServiceTime(serviceTime) {
         if (!serviceTime || serviceTime.length <= 0) {
-            return this.setState({ serviceTimeError: 'service Time cannot be empty' });
+            return this.setState({ serviceTimeError: 'S-ervice Time cannot be empty' });
         }
         return this.setState({ serviceTime: serviceTime, serviceTimeError: null })
+    }
+
+    setVehicleNumber(vehicleNumber) {
+        //const reg = /^[0]?[789]\d{9}$/;
+        if (!vehicleNumber || vehicleNumber.length <= 0) {
+            return this.setState({ vehicleNumberError: 'Vehicle Number cannot be empty' });
+        }
+        // if (!reg.test(vehicleNumber)) {
+        //     return this.setState({ vehicleNumberError: 'Ooops! We need a valid Vehicle Number' });
+        // }
+        return this.setState({ vehicleNumber: vehicleNumber, vehicleNumberError: null })
     }
 
     resetScreen() {
@@ -71,16 +86,19 @@ class BookServiceScreen extends Component {
             serviceDateError: null,
             serviceTime: null,
             serviceTimeError: null,
+            vehicleNumber: null,
+            vehicleNumberError: null
         })
     }
 
     onPressSubmit = async () => {
-        const { fullname, mobilenumber, serviceDate, serviceTime } = this.state;
-        if (!fullname || !mobilenumber || !serviceDate || !serviceTime) {
+        const { fullname, mobilenumber, serviceDate, serviceTime, vehicleNumber } = this.state;
+        if (!fullname || !mobilenumber || !serviceDate || !serviceTime || vehicleNumber) {
             this.setFullName(fullname)
             this.setMobileNumber(mobilenumber)
             this.setServiceDate(serviceDate)
             this.setServiceTime(serviceTime)
+            this.setVehicleNumber(vehicleNumber)
             return;
         }
 
@@ -107,10 +125,10 @@ class BookServiceScreen extends Component {
                     <Animatable.View
                         animation="fadeInUpBig"
                     >
+                        <View style={styles.header}>
+                            <Text style={styles.text_header}>Book Service</Text>
+                        </View>
                         <ScrollView>
-                            <View style={styles.header}>
-                                <Text style={styles.text_header}>Book Service</Text>
-                            </View>
                             <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Name</Text>
                             <View style={{ alignItems: 'center' }}>
                                 <View style={styles.inputView}>
@@ -151,7 +169,7 @@ class BookServiceScreen extends Component {
                                         value={this.state.date}
                                         placeholderTextColor="#AAAAAA"
                                         onChangeText={this.showDatePicker}
-                                        onChangeText={(serviceDate) => this.set(serviceDate)}
+                                        onChangeText={(serviceDate) => this.setServiceDate(serviceDate)}
                                     >
                                     </TextInput>
                                     <Text>{this.state.serviceDateError && this.state.serviceDateError}</Text>
@@ -166,10 +184,25 @@ class BookServiceScreen extends Component {
                                         placeholder="HH-MM"
                                         type='clear'
                                         placeholderTextColor="#AAAAAA"
-                                        onChangeText={(serviceTime) => this.set(serviceTime)}
+                                        onChangeText={(serviceTime) => this.setServiceTime(serviceTime)}
                                     >
                                     </TextInput>
                                     <Text>{this.state.serviceTimeError && this.state.serviceTimeError}</Text>
+                                </View>
+                            </View>
+                            <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>vehicle Number</Text>
+                            <View style={{ alignItems: 'center' }}>
+                                <View style={styles.inputView} >
+                                    <MaterialIcons name="timer" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
+                                    <TextInput
+                                        style={styles.TextInput}
+                                        placeholder="XX-XX-XX-XX"
+                                        type='clear'
+                                        placeholderTextColor="#AAAAAA"
+                                        onChangeText={(vehicleNumber) => this.setVehicleNumber(vehicleNumber)}
+                                    >
+                                    </TextInput>
+                                    <Text>{this.state.vehicleNumberError && this.state.vehicleNumberError}</Text>
                                 </View>
                             </View>
                             <View style={{ alignItems: 'center' }}>
@@ -194,10 +227,10 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 1,
-        justifyContent: 'flex-end',
         paddingHorizontal: hp('3%'),
         paddingBottom: hp('4%'),
-        marginTop: hp('2%')
+        marginTop: hp('7%'),
+        marginBottom: hp('7%')
     },
     text_header: {
         color: '#000',
@@ -221,7 +254,6 @@ const styles = StyleSheet.create({
         marginBottom: hp('2.5%'),
         alignItems: "center",
     },
-
     TextInput: {
         fontSize: hp('2%'),
         flex: 1,
@@ -234,7 +266,8 @@ const styles = StyleSheet.create({
         height: hp('7%'),
         alignItems: "center",
         justifyContent: "center",
-        marginTop: hp('5%'),
+        marginTop: hp('3%'),
+        marginBottom: hp('3%'),
     },
     bookserviceText: {
         color: "white",
@@ -245,6 +278,4 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover'
     },
-
-
 });
