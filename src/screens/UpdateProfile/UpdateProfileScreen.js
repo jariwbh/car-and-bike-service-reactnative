@@ -58,10 +58,10 @@ class UpdateProfileScreen extends Component {
     setMobileNumber(mobilenumber) {
         const reg = /^[0]?[789]\d{9}$/;
         if (!mobilenumber || mobilenumber.length <= 0) {
-            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty.' });
+            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty' });
         }
         if (!reg.test(mobilenumber)) {
-            return this.setState({ mobilenumberError: 'Ooops! We need a valid Mobile Number.' });
+            return this.setState({ mobilenumberError: 'Ooops! We need a valid Mobile Number' });
         }
         return this.setState({ mobilenumber: mobilenumber, mobilenumberError: null })
     }
@@ -124,8 +124,8 @@ class UpdateProfileScreen extends Component {
                                                 returnKeyType="next"
                                                 onChangeText={(fullname) => this.setFullName(fullname)}
                                             />
-                                            <Text>{this.state.fullnameError && this.state.fullnameError}</Text>
                                         </View>
+                                        <Text style={{ marginTop: hp('-3%'), marginRight: wp('28%'), color: '#ff0000' }}>{this.state.fullnameError && this.state.fullnameError}</Text>
                                         <View style={styles.inputView}>
                                             <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
                                             <TextInput
@@ -140,8 +140,8 @@ class UpdateProfileScreen extends Component {
                                                 keyboardType="email-address"
                                                 onChangeText={(username) => this.setUserName(username)}
                                             />
-                                            <Text>{this.state.usernameError && this.state.usernameError}</Text>
                                         </View>
+                                        <Text style={{ marginTop: hp('-3%'), marginRight: wp('13%'), color: '#ff0000' }}>{this.state.usernameError && this.state.usernameError}</Text>
                                         <View style={styles.inputView} >
                                             <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
                                             <TextInput
@@ -153,8 +153,8 @@ class UpdateProfileScreen extends Component {
                                                 keyboardType="numeric"
                                                 onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
                                             />
-                                            <Text>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
                                         </View>
+                                        <Text style={{ marginTop: hp('-3%'), marginRight: wp('10%'), color: '#ff0000' }}>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
                                         <TouchableOpacity style={styles.update_Btn} onPress={() => this.onPressSubmit()}>
                                             <Text style={styles.update_text} >Update Profile</Text>
                                         </TouchableOpacity>
@@ -216,8 +216,10 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         width: wp('80%'),
         height: hp('8%'),
-        marginBottom: hp('2.5%'),
+        margin: hp('3%'),
+        // marginBottom: hp('2.5%'),
         alignItems: "center",
+
     },
 
     TextInput: {

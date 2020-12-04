@@ -59,7 +59,7 @@ class BookServiceScreen extends Component {
 
     setServiceTime(serviceTime) {
         if (!serviceTime || serviceTime.length <= 0) {
-            return this.setState({ serviceTimeError: 'S-ervice Time cannot be empty' });
+            return this.setState({ serviceTimeError: 'Service Time cannot be empty' });
         }
         return this.setState({ serviceTime: serviceTime, serviceTimeError: null })
     }
@@ -146,7 +146,7 @@ class BookServiceScreen extends Component {
                                     onChangeText={(fullname) => this.setFullName(fullname)}
                                 />
                             </View>
-                            <Text style={{ marginTop: hp('-3%') }}>{this.state.fullnameError && this.state.fullnameError}</Text>
+                            <Text style={{ marginTop: hp('-4%'), marginRight: wp('27%'), color: '#ff0000' }}>{this.state.fullnameError && this.state.fullnameError}</Text>
                         </View>
                         <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Mobile Number</Text>
                         <View style={{ alignItems: 'center' }}>
@@ -160,8 +160,8 @@ class BookServiceScreen extends Component {
                                     keyboardType="numeric"
                                     onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
                                 />
-                                <Text>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
                             </View>
+                            <Text style={{ marginTop: hp('-4%'), marginRight: wp('21%'), color: '#ff0000' }}>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
                         </View>
                         <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Service Date</Text>
                         <View style={{ alignItems: 'center' }}>
@@ -177,8 +177,8 @@ class BookServiceScreen extends Component {
                                     onChangeText={(serviceDate) => this.setServiceDate(serviceDate)}
                                 >
                                 </TextInput>
-                                <Text>{this.state.serviceDateError && this.state.serviceDateError}</Text>
                             </View>
+                            <Text style={{ marginTop: hp('-4%'), marginRight: wp('27%'), color: '#ff0000' }}>{this.state.serviceDateError && this.state.serviceDateError}</Text>
                         </View>
                         <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Service Time</Text>
                         <View style={{ alignItems: 'center' }}>
@@ -192,8 +192,8 @@ class BookServiceScreen extends Component {
                                     onChangeText={(serviceTime) => this.setServiceTime(serviceTime)}
                                 >
                                 </TextInput>
-                                <Text>{this.state.serviceTimeError && this.state.serviceTimeError}</Text>
                             </View>
+                            <Text style={{ marginTop: hp('-4%'), marginRight: wp('27%'), color: '#ff0000' }}>{this.state.serviceTimeError && this.state.serviceTimeError}</Text>
                         </View>
                         <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>vehicle Number</Text>
                         <View style={{ alignItems: 'center' }}>
@@ -207,8 +207,8 @@ class BookServiceScreen extends Component {
                                     onChangeText={(vehicleNumber) => this.setVehicleNumber(vehicleNumber)}
                                 >
                                 </TextInput>
-                                <Text>{this.state.vehicleNumberError && this.state.vehicleNumberError}</Text>
                             </View>
+                            <Text style={{ marginTop: hp('-4%'), marginRight: wp('21%'), color: '#ff0000' }}>{this.state.vehicleNumberError && this.state.vehicleNumberError}</Text>
                         </View>
                         <View style={{ alignItems: 'center' }}>
                             <TouchableOpacity style={styles.bookserviceBtn} onPress={() => this.onPressSubmit()} >

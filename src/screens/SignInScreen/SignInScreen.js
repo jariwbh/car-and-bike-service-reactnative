@@ -93,17 +93,6 @@ class SignInScreen extends Component {
                             <View style={styles.header}>
                                 <Text style={styles.text_header}>Welcome Back!</Text>
                             </View>
-                            <View style={styles.Image_view} >
-                                <TouchableOpacity onPress={() => { alert('Facebook') }}>
-                                    <Image source={require('../../../assets/icons/Facebook.png')} style={{ marginRight: hp('3%') }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => { alert('Google') }}>
-                                    <Image source={require('../../../assets/icons/Google.png')} />
-                                </TouchableOpacity>
-                            </View>
-                            <View >
-                                <Text style={styles.text_Or}>Or</Text>
-                            </View>
 
                             <View style={styles.inputView}>
                                 <FontAwesome5 name="user-alt" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
@@ -113,8 +102,8 @@ class SignInScreen extends Component {
                                     placeholderTextColor="#737373"
                                     onChangeText={(email) => this.setEmail(email)}
                                 />
-                                <Text>{this.state.usererror && this.state.usererror}</Text>
                             </View>
+                            <Text style={{ marginTop: hp('-3%'), marginLeft: wp('10%'), color: '#ff0000' }}>{this.state.usererror && this.state.usererror}</Text>
                             <View style={styles.inputView}>
                                 <FontAwesome5 name="unlock-alt" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                 <TextInput
@@ -124,8 +113,8 @@ class SignInScreen extends Component {
                                     secureTextEntry={true}
                                     onChangeText={(password) => this.setPassword(password)}
                                 />
-                                <Text>{this.state.passworderror && this.state.passworderror}</Text>
                             </View>
+                            <Text style={{ marginTop: hp('-3%'), marginLeft: wp('10%'), color: '#ff0000' }}>{this.state.passworderror && this.state.passworderror}</Text>
 
                             <View>
                                 <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()} >
@@ -163,22 +152,10 @@ const styles = StyleSheet.create({
         paddingBottom: hp('5%'),
         marginTop: hp('10%')
     },
-    text_Or: {
-        color: '#000',
-        fontSize: hp('2.5%'),
-        textAlign: 'center',
-        marginBottom: hp('2%'),
-    },
     text_header: {
         color: '#000',
         fontSize: hp('4%'),
         textAlign: 'center',
-    },
-    Image_view: {
-        marginBottom: hp('3%'),
-        flexDirection: 'row',
-        alignItems: "center",
-        justifyContent: "center",
     },
     inputView: {
         flexDirection: 'row',
@@ -194,7 +171,8 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         width: wp('80%'),
         height: hp('8%'),
-        marginBottom: hp('2.5%'),
+        margin: hp('3%'),
+        // marginBottom: hp('4%'),
         alignItems: "center",
     },
     TextInput: {
@@ -210,6 +188,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginTop: hp('5%'),
+        marginLeft: wp('7%')
 
     },
     loginText: {
