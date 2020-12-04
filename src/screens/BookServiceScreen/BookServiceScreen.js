@@ -122,96 +122,96 @@ class BookServiceScreen extends Component {
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
-                    <Animatable.View
+                    {/* <Animatable.View
                         animation="fadeInUpBig"
-                    >
-                        <View style={styles.header}>
-                            <Text style={styles.text_header}>Book Service</Text>
+                    > */}
+                    <View style={styles.header}>
+                        <Text style={styles.text_header}>Book Service</Text>
+                    </View>
+                    <ScrollView>
+                        <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Name</Text>
+                        <View style={{ alignItems: 'center' }}>
+                            <View style={styles.inputView}>
+                                <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
+                                <TextInput
+                                    style={styles.TextInput}
+                                    placeholder="Enter Full Name"
+                                    type='clear'
+                                    placeholderTextColor="#737373"
+                                    onChangeText={(fullname) => this.setFullName(fullname)}
+                                />
+                                <Text>{this.state.fullnameError && this.state.fullnameError}</Text>
+                            </View>
                         </View>
-                        <ScrollView>
-                            <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Name</Text>
-                            <View style={{ alignItems: 'center' }}>
-                                <View style={styles.inputView}>
-                                    <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
-                                    <TextInput
-                                        style={styles.TextInput}
-                                        placeholder="Enter Full Name"
-                                        type='clear'
-                                        placeholderTextColor="#737373"
-                                        onChangeText={(fullname) => this.setFullName(fullname)}
-                                    />
-                                    <Text>{this.state.fullnameError && this.state.fullnameError}</Text>
-                                </View>
+                        <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Mobile Number</Text>
+                        <View style={{ alignItems: 'center' }}>
+                            <View style={styles.inputView}>
+                                <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
+                                <TextInput
+                                    style={styles.TextInput}
+                                    placeholder="Mobile Number"
+                                    type='clear'
+                                    placeholderTextColor="#737373"
+                                    keyboardType="numeric"
+                                    onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
+                                />
+                                <Text>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
                             </View>
-                            <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Mobile Number</Text>
-                            <View style={{ alignItems: 'center' }}>
-                                <View style={styles.inputView}>
-                                    <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
-                                    <TextInput
-                                        style={styles.TextInput}
-                                        placeholder="Mobile Number"
-                                        type='clear'
-                                        placeholderTextColor="#737373"
-                                        keyboardType="numeric"
-                                        onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
-                                    />
-                                    <Text>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
-                                </View>
+                        </View>
+                        <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Service Date</Text>
+                        <View style={{ alignItems: 'center' }}>
+                            <View style={styles.inputView} >
+                                <Fontisto name="date" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
+                                <TextInput
+                                    style={styles.TextInput}
+                                    placeholder="DD-MM-YYYY"
+                                    type='clear'
+                                    value={this.state.date}
+                                    placeholderTextColor="#AAAAAA"
+                                    onChangeText={this.showDatePicker}
+                                    onChangeText={(serviceDate) => this.setServiceDate(serviceDate)}
+                                >
+                                </TextInput>
+                                <Text>{this.state.serviceDateError && this.state.serviceDateError}</Text>
                             </View>
-                            <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Service Date</Text>
-                            <View style={{ alignItems: 'center' }}>
-                                <View style={styles.inputView} >
-                                    <Fontisto name="date" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
-                                    <TextInput
-                                        style={styles.TextInput}
-                                        placeholder="DD-MM-YYYY"
-                                        type='clear'
-                                        value={this.state.date}
-                                        placeholderTextColor="#AAAAAA"
-                                        onChangeText={this.showDatePicker}
-                                        onChangeText={(serviceDate) => this.setServiceDate(serviceDate)}
-                                    >
-                                    </TextInput>
-                                    <Text>{this.state.serviceDateError && this.state.serviceDateError}</Text>
-                                </View>
+                        </View>
+                        <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Service Time</Text>
+                        <View style={{ alignItems: 'center' }}>
+                            <View style={styles.inputView} >
+                                <MaterialIcons name="timer" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
+                                <TextInput
+                                    style={styles.TextInput}
+                                    placeholder="HH-MM"
+                                    type='clear'
+                                    placeholderTextColor="#AAAAAA"
+                                    onChangeText={(serviceTime) => this.setServiceTime(serviceTime)}
+                                >
+                                </TextInput>
+                                <Text>{this.state.serviceTimeError && this.state.serviceTimeError}</Text>
                             </View>
-                            <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Service Time</Text>
-                            <View style={{ alignItems: 'center' }}>
-                                <View style={styles.inputView} >
-                                    <MaterialIcons name="timer" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
-                                    <TextInput
-                                        style={styles.TextInput}
-                                        placeholder="HH-MM"
-                                        type='clear'
-                                        placeholderTextColor="#AAAAAA"
-                                        onChangeText={(serviceTime) => this.setServiceTime(serviceTime)}
-                                    >
-                                    </TextInput>
-                                    <Text>{this.state.serviceTimeError && this.state.serviceTimeError}</Text>
-                                </View>
+                        </View>
+                        <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>vehicle Number</Text>
+                        <View style={{ alignItems: 'center' }}>
+                            <View style={styles.inputView} >
+                                <MaterialIcons name="timer" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
+                                <TextInput
+                                    style={styles.TextInput}
+                                    placeholder="XX-XX-XX-XX"
+                                    type='clear'
+                                    placeholderTextColor="#AAAAAA"
+                                    onChangeText={(vehicleNumber) => this.setVehicleNumber(vehicleNumber)}
+                                >
+                                </TextInput>
+                                <Text>{this.state.vehicleNumberError && this.state.vehicleNumberError}</Text>
                             </View>
-                            <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>vehicle Number</Text>
-                            <View style={{ alignItems: 'center' }}>
-                                <View style={styles.inputView} >
-                                    <MaterialIcons name="timer" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
-                                    <TextInput
-                                        style={styles.TextInput}
-                                        placeholder="XX-XX-XX-XX"
-                                        type='clear'
-                                        placeholderTextColor="#AAAAAA"
-                                        onChangeText={(vehicleNumber) => this.setVehicleNumber(vehicleNumber)}
-                                    >
-                                    </TextInput>
-                                    <Text>{this.state.vehicleNumberError && this.state.vehicleNumberError}</Text>
-                                </View>
-                            </View>
-                            <View style={{ alignItems: 'center' }}>
-                                <TouchableOpacity style={styles.bookserviceBtn} onPress={() => this.onPressSubmit()} >
-                                    <Text style={styles.bookserviceText} >Book Service</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </ScrollView>
-                    </Animatable.View>
+                        </View>
+                        <View style={{ alignItems: 'center' }}>
+                            <TouchableOpacity style={styles.bookserviceBtn} onPress={() => this.onPressSubmit()} >
+                                <Text style={styles.bookserviceText} >Book Service</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                    {/* </Animatable.View> */}
                 </View>
             </ImageBackground>
         );
@@ -229,8 +229,8 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: hp('3%'),
         paddingBottom: hp('4%'),
-        marginTop: hp('7%'),
-        marginBottom: hp('7%')
+        marginTop: hp('6%'),
+        marginBottom: hp('5%')
     },
     text_header: {
         color: '#000',
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginTop: hp('3%'),
-        marginBottom: hp('3%'),
+        marginBottom: hp('6%'),
     },
     bookserviceText: {
         color: "white",
@@ -276,6 +276,7 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         flex: 1,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+
     },
 });
