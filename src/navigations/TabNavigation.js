@@ -70,6 +70,14 @@ export default function TabNavigation() {
                                 color={color}
                             />
                         );
+                    } else if (route.name === 'My Service') {
+                        return (
+                            <Ionicons
+                                name={focused ? 'ios-list' : 'ios-list'}
+                                size={20}
+                                color={color}
+                            />
+                        );
                     }
                 },
             })}
@@ -84,8 +92,9 @@ export default function TabNavigation() {
             }}
         >
             <Tab.Screen name="Home" component={HomeStackScreen} />
-            <Tab.Screen name="Offers" component={OffersScreen} />
+            <Tab.Screen name="Offers" component={BookServiceScreen} />
             <Tab.Screen name="Profile" component={ProfileStackScreen} />
+            <Tab.Screen name="My Service" component={MyServiceScreen} />
         </Tab.Navigator>
     );
 }
