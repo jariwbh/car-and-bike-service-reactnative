@@ -92,7 +92,7 @@ export default function TabNavigation() {
             }}
         >
             <Tab.Screen name="Home" component={HomeStackScreen} />
-            <Tab.Screen name="Offers" component={BookServiceScreen} />
+            <Tab.Screen name="Offers" component={OffersScreen} />
             <Tab.Screen name="Profile" component={ProfileStackScreen} />
             <Tab.Screen name="My Service" component={MyServiceScreen} />
         </Tab.Navigator>
