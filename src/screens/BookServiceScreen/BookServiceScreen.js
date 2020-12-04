@@ -140,8 +140,8 @@ class BookServiceScreen extends Component {
                                     placeholderTextColor="#737373"
                                     onChangeText={(fullname) => this.setFullName(fullname)}
                                 />
-                                <Text>{this.state.fullnameError && this.state.fullnameError}</Text>
                             </View>
+                            <Text style={{ marginTop: hp('-3%') }}>{this.state.fullnameError && this.state.fullnameError}</Text>
                         </View>
                         <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Mobile Number</Text>
                         <View style={{ alignItems: 'center' }}>
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         width: wp('80%'),
         height: hp('8%'),
-        marginBottom: hp('2.5%'),
+        marginBottom: hp('4%'),
         alignItems: "center",
     },
     TextInput: {
