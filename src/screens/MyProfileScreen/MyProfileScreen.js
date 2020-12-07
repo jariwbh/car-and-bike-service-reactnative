@@ -11,6 +11,8 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 export default class Profile extends Component {
     constructor(props) {
@@ -35,8 +37,11 @@ export default class Profile extends Component {
         }
     }
 
+    removeUser() {
+        AsyncStorage.removeItem("auth_key")
+    }
+
     onPressLogout() {
-        removeUser()
         Alert.alert(
             "Confirmation required",
             "Do you really want to logout?",
@@ -46,12 +51,16 @@ export default class Profile extends Component {
                     onPress: () => { ToastAndroid.show("Log Out cancle!", ToastAndroid.SHORT) },
                     style: "cancel"
                 },
-                { text: "Yes", onPress: () => { ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT), this.props.navigation.navigate('auth') } }
+                {
+                    text: "Yes", onPress: () => {
+                        ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT),
+                            removeUser()
+                        this.props.navigation.replace('Auth')
+                    }
+                }
             ],
             { cancelable: false }
         );
-
-
     }
 
     render() {
@@ -61,7 +70,7 @@ export default class Profile extends Component {
                 <View style={styles.container}>
                     <View style={styles.header}></View>
                     {companyData === null ?
-                        <ActivityIndicator size="large" color="#AAAAAA" />
+                        <ActivityIndicator size="large" color="#AAAAAA" style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }} />
                         : <>
                             <Image style={styles.avatar} source={{ uri: (companyProfile ? companyProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
                             <View style={styles.body}>

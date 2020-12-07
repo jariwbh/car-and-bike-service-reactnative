@@ -1,6 +1,7 @@
 import appConfig from '../../Helpers/appConfig'
 
 const LoginService = (data) => {
+    console.log('data', data)
     const body = JSON.stringify(data)
     const requestOptions = {
         method: 'POST',

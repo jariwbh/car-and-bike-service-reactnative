@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "car-and-bike-service",
+    "name": "car and bike service",
     "slug": "car-and-bike-service",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,12 +10,12 @@
       "resizeMode": "cover"
     },
     "ios": {
-      "bundleIdentifier": "com.yourcompany.yourappme",
+      "bundleIdentifier": "com.membroz.serviceapp",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.yourcompany.yourappme",
+      "package": "com.membroz.serviceapp",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
