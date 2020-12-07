@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: hp('2.5%'),
         textAlign: 'center',
-        fontFamily: 'monospace',
         paddingBottom: hp('2%')
 
     },

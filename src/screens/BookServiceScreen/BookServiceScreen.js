@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginTop: hp('3%'),
-        marginBottom: hp('6%'),
+        marginBottom: hp('12%'),
     },
     bookserviceText: {
         color: "white",
