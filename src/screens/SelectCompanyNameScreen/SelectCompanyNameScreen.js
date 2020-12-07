@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 2,
-
+        marginBottom: hp('15%')
     },
     inputineerView: {
         aspectRatio: 2.5,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         paddingBottom: hp('2%'),
         paddingLeft: wp('2%'),
         fontWeight: 'bold',
-        fontSize: hp('4%'),
+        fontSize: hp('3%'),
     },
     book: {
         backgroundColor: '#FFBA00',
