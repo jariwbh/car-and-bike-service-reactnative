@@ -28,7 +28,8 @@ class UpdateProfileScreen extends Component {
             usernameError: null,
             mobilenumber: this.companyData.property.mobile_number,
             mobilenumberError: null,
-            userProfile: this.companyData.branchid.branchlogo
+            userProfile: this.companyData.branchid.branchlogo,
+            profileName: this.companyData.fullname
         }
         this.setFullName = this.setFullName.bind(this);
         this.setUserName = this.setUserName.bind(this);
@@ -92,7 +93,7 @@ class UpdateProfileScreen extends Component {
     }
 
     render() {
-        const { fullname, username, mobilenumber, userProfile } = this.state;
+        const { fullname, username, mobilenumber, userProfile, profileName } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
@@ -106,7 +107,7 @@ class UpdateProfileScreen extends Component {
                                 <Image style={styles.avatar} source={{ uri: (userProfile ? userProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
                                 <View style={styles.body}>
                                     <View style={styles.bodyContent}>
-                                        <Text style={styles.name}>{fullname && fullname}</Text>
+                                        <Text style={styles.name}>{profileName && profileName}</Text>
                                     </View>
                                     <View
                                         style={{

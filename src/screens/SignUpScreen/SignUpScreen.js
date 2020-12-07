@@ -78,6 +78,7 @@ class SignUpScreen extends Component {
         }
 
         const body = {
+            fullname: fullname,
             property: {
                 fullname: fullname,
                 email: username,
