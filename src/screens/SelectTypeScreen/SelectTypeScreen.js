@@ -4,7 +4,6 @@ import {
     Image, View, StyleSheet,
     Text, TouchableOpacity,
     ActivityIndicator,
-    ScrollView
 } from 'react-native'
 import { SelectTypeService } from '../../services/SelectTypeService/SelectTypeService';
 import { UserService } from '../../services/UserService/UserService';
@@ -12,6 +11,7 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class SelectTypeScreen extends Component {
     constructor(props) {
@@ -50,9 +50,15 @@ class SelectTypeScreen extends Component {
         })
     }
 
+    authenticateUser() {
+        AsyncStorage.getItem("auth_key")
+    }
+
     componentDidMount() {
         this.SelectServiceType();
         this.UserDetails();
+        let user = this.authenticateUser()
+        console.log('user', user)
     }
 
     renderRecipes = ({ item, index }) => (
@@ -92,7 +98,6 @@ class SelectTypeScreen extends Component {
         const { serviceTypeList, companyname, companydata, companyicon, companyaddress, companycountry, companycity, companycontactNumber } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
-                {/* <ScrollView> */}
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <Text style={styles.text_header}>Select Service Type</Text>
@@ -126,7 +131,6 @@ class SelectTypeScreen extends Component {
                     </>
                         : <ActivityIndicator size="large" color="#AAAAAA" />}
                 </View>
-                {/* </ScrollView> */}
             </ImageBackground>
         );
     }

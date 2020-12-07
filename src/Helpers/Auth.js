@@ -1,13 +1,13 @@
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from "@react-native-community/async-storage";
 
-export const SECRET_KEY = 'authuser'
-export const isAuthenticated = async () => await (
-   AsyncStorage.getItem(SECRET_KEY) != null
-   ||
-   AsyncStorage.getItem(SECRET_KEY) != undefined
+export const SECRET_KEY = '@authuser'
+
+export const isAuthenticated = () => (
+   AsyncStorage.getItem(SECRET_KEY) !== null
 )
 
-export const authenticateUser = async (user) => await (
+export const authenticateUser = (user) => (
+   console.log('user', user),
    AsyncStorage.setItem(SECRET_KEY, user)
 )
 

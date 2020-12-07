@@ -5,12 +5,12 @@ import {
 } from 'react-native'
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { authenticateUser } from '../../Helpers/Auth';
 import { LoginService } from '../../services/LoginService/LoginService';
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class SignInScreen extends Component {
     constructor(props) {
@@ -73,13 +73,18 @@ class SignInScreen extends Component {
 
         await LoginService(body).then(response => {
             if (response != null) {
-                authenticateUser(body)
+                this.authenticateUser(username)
                 ToastAndroid.show("SignIn Success!", ToastAndroid.SHORT);
                 this.props.navigation.navigate('Tabnavigation')
                 this.resetScreen()
             }
         })
     }
+
+    authenticateUser = (user) => (
+        console.log('user', user),
+        AsyncStorage.setItem("auth_key", user)
+    )
 
     render() {
 
@@ -199,11 +204,11 @@ const styles = StyleSheet.create({
     baseText: {
         fontWeight: 'normal',
         color: '#183BAE',
-        fontSize: hp('1.5%'),
+        fontSize: hp('2%'),
     },
     innerText: {
         color: '#737373',
-        fontSize: hp('1.5%'),
+        fontSize: hp('2%'),
     },
     backgroundImage: {
         flex: 1,

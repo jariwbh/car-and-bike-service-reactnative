@@ -1,24 +1,27 @@
-import React, { useEffect } from 'react'
-import { View, Image, StyleSheet } from 'react-native'
+import * as React from 'react';
+import { isAuthenticated } from '../../Helpers/Auth';
+import {
+    View, ActivityIndicator, StyleSheet
+} from 'react-native'
 
 const SplashScreen = ({ navigation }) => {
-    useEffect(() => {
-        setTimeout(() => {
-            navigation.navigate('SignIn')
-        }, 3000)
-    }, [])
+    navigation.replace(isAuthenticated() ? 'Auth' : 'Tabnavigation')
     return (
-        <View>
-            <Image source={require('../../../assets/images/splash.png')} style={styles.Splash} />
-        </View>
-    )
+        <View style={styles.container}>
+            <ActivityIndicator
+                color="#FFFFFF"
+                size="large"
+            />
+        </View>)
 };
 
 export default SplashScreen;
 
 const styles = StyleSheet.create({
-    Splash: {
+    container: {
         flex: 1,
-        resizeMode: "cover"
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#307ecc',
     }
-})
+});

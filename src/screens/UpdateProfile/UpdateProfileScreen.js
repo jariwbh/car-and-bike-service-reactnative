@@ -138,6 +138,7 @@ class UpdateProfileScreen extends Component {
                                                 autoCompleteType="email"
                                                 textContentType="emailAddress"
                                                 keyboardType="email-address"
+                                                returnKeyType="next"
                                                 onChangeText={(username) => this.setUserName(username)}
                                             />
                                         </View>

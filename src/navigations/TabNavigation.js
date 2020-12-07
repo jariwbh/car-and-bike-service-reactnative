@@ -15,6 +15,7 @@ import SelectCompanyNameScreen from '../screens/SelectCompanyNameScreen/SelectCo
 import MyServiceScreen from '../screens/MyServiceScreen/MyServiceScreen';
 import BookServiceScreen from '../screens/BookServiceScreen/BookServiceScreen';
 import OffersScreen from '../screens/OffersScreen/OffersScreen';
+import { isAuthenticated } from '../Helpers/Auth';
 
 const ProfileStack = createStackNavigator();
 function ProfileStackScreen() {
@@ -41,6 +42,7 @@ function HomeStackScreen() {
 }
 
 const Tab = createBottomTabNavigator();
+
 export default function TabNavigation() {
     return (
         <Tab.Navigator
@@ -86,9 +88,11 @@ export default function TabNavigation() {
                     backgroundColor: '#FFFFFF',
                     borderTopRightRadius: 21,
                     borderTopLeftRadius: 21,
+                    position: 'absolute',
                 },
                 activeTintColor: '#FFBA00',
                 inactiveTintColor: '#808B96',
+                keyboardHidesTabBar: true,
             }}
         >
             <Tab.Screen name="Home" component={HomeStackScreen} />
