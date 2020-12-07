@@ -221,11 +221,11 @@ const styles = StyleSheet.create({
     baseText: {
         fontWeight: 'normal',
         color: '#183BAE',
-        fontSize: hp('1.5%'),
+        fontSize: hp('2%'),
     },
     innerText: {
         color: '#737373',
-        fontSize: hp('1.5%'),
+        fontSize: hp('2%'),
     },
     backgroundImage: {
         flex: 1,
