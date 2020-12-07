@@ -118,7 +118,7 @@ class SignUpScreen extends Component {
                                         onChangeText={(fullname) => this.setFullName(fullname)}
                                     />
                                 </View>
-                                <Text style={{ marginTop: hp('-3%'), marginRight: wp('20%'), color: '#ff0000' }}>{this.state.fullnameError && this.state.fullnameError}</Text>
+                                <Text style={{ marginTop: hp('-3%'), marginLeft: wp('-20%'), color: '#ff0000' }}>{this.state.fullnameError && this.state.fullnameError}</Text>
                                 <View style={styles.inputView}>
                                     <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
@@ -133,7 +133,7 @@ class SignUpScreen extends Component {
                                         onChangeText={(username) => this.setUserName(username)}
                                     />
                                 </View>
-                                <Text style={{ marginTop: hp('-3%'), marginRight: wp('10%'), color: '#ff0000' }}>{this.state.usernameError && this.state.usernameError}</Text>
+                                <Text style={{ marginTop: hp('-3%'), marginLeft: wp('-32%'), color: '#ff0000' }}>{this.state.usernameError && this.state.usernameError}</Text>
                                 <View style={styles.inputView} >
                                     <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
@@ -145,7 +145,7 @@ class SignUpScreen extends Component {
                                         onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
                                     />
                                 </View>
-                                <Text style={{ marginTop: hp('-3%'), marginRight: wp('7%'), color: '#ff0000' }}>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
+                                <Text style={{ marginTop: hp('-3%'), marginLeft: wp('-15%'), color: '#ff0000' }}>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
                                 <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()}>
                                     <Text style={styles.loginText} >Sign Up</Text>
                                 </TouchableOpacity>
