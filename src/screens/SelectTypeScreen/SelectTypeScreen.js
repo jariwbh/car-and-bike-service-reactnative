@@ -4,6 +4,7 @@ import {
     Image, View, StyleSheet,
     Text, TouchableOpacity,
     ActivityIndicator,
+    SafeAreaView
 } from 'react-native'
 import { SelectTypeService } from '../../services/SelectTypeService/SelectTypeService';
 import { UserService } from '../../services/UserService/UserService';
@@ -12,6 +13,7 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import AsyncStorage from '@react-native-community/async-storage';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class SelectTypeScreen extends Component {
     constructor(props) {
@@ -98,39 +100,43 @@ class SelectTypeScreen extends Component {
         const { serviceTypeList, companyname, companydata, companyicon, companyaddress, companycountry, companycity, companycontactNumber } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
-                <View style={styles.container}>
-                    <View style={styles.header}>
-                        <Text style={styles.text_header}>Select Service Type</Text>
-                        <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
-                    </View>
-                    {serviceTypeList != null ? <>
-                        <View style={styles.Image_view}>
-                            <FlatList
-                                vertical
-                                showsVerticalScrollIndicator={false}
-                                numColumns={2}
-                                data={serviceTypeList}
-                                renderItem={this.renderRecipes}
-                                keyExtractor={item => `${item._id}`}
-                            />
-                        </View>
-                        {companydata != null ? <>
-                            <View style={styles.address_view}>
-                                <Image source={{ uri: companyicon }} style={styles.companyicon} />
-                                <View >
-                                    <Text style={styles.company_name}>{companyname}</Text>
-                                    <Text>{companyaddress && `Address : ${companyaddress}`}</Text>
-                                    <Text>{companycity && companycity + ', ' + companycountry}</Text>
-                                    <Text>{companycontactNumber && `Conatct Number : ${companycontactNumber}`}</Text>
-                                </View>
+                <SafeAreaView style={{ flex: 1 }}>
+                    <ScrollView>
+                        <View style={styles.container}>
+                            <View style={styles.header}>
+                                <Text style={styles.text_header}>Select Service Type</Text>
+                                <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
                             </View>
-                            <TouchableOpacity style={styles.next_Btn} onPress={() => this.onNextStep()}>
-                                <Text style={styles.next_text} >Next Step</Text>
-                            </TouchableOpacity>
-                        </> : <ActivityIndicator size="large" color="#AAAAAA" />}
-                    </>
-                        : <ActivityIndicator size="large" color="#AAAAAA" />}
-                </View>
+                            {serviceTypeList != null ? <>
+                                <View style={styles.Image_view}>
+                                    <FlatList
+                                        vertical
+                                        showsVerticalScrollIndicator={false}
+                                        numColumns={2}
+                                        data={serviceTypeList}
+                                        renderItem={this.renderRecipes}
+                                        keyExtractor={item => `${item._id}`}
+                                    />
+                                </View>
+                                {companydata != null ? <>
+                                    <View style={styles.address_view}>
+                                        <Image source={{ uri: companyicon }} style={styles.companyicon} />
+                                        <View >
+                                            <Text style={styles.company_name}>{companyname}</Text>
+                                            <Text>{companyaddress && `Address : ${companyaddress}`}</Text>
+                                            <Text>{companycity && companycity + ', ' + companycountry}</Text>
+                                            <Text>{companycontactNumber && `Conatct Number : ${companycontactNumber}`}</Text>
+                                        </View>
+                                    </View>
+                                    <TouchableOpacity style={styles.next_Btn} onPress={() => this.onNextStep()}>
+                                        <Text style={styles.next_text} >Next Step</Text>
+                                    </TouchableOpacity>
+                                </> : <ActivityIndicator size="large" color="#AAAAAA" />}
+                            </>
+                                : <ActivityIndicator size="large" color="#AAAAAA" />}
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
             </ImageBackground>
         );
     }
@@ -150,7 +156,7 @@ const styles = StyleSheet.create({
     text_header: {
         color: '#000',
         textAlign: 'center',
-        fontSize: hp('3%'),
+        fontSize: hp('3.5%'),
     },
     text_header2: {
         color: '#000',

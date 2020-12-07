@@ -47,7 +47,7 @@ export class SelectServiceScreen extends Component {
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
                     <View style={styles.header}>
-                        <Text style={styles.text_header}> service</Text>
+                        <Text style={styles.text_header}> Service</Text>
                     </View>
                     <View>
                         <Text style={styles.text_hedding}>Select Your Servic to Continue</Text>
@@ -90,13 +90,13 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     header: {
-        marginTop: hp('2%'),
+        marginTop: hp('5%'),
     },
     text_header: {
         color: '#e6b800',
         fontSize: hp('4%'),
         textAlign: 'center',
-        fontFamily: 'monospace'
+
     },
     text_hedinner: {
         color: '#0066ff',

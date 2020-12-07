@@ -37,14 +37,15 @@ export class MyService extends Component {
         <View style={styles.servicename}>
             <View style={{ flexDirection: 'column' }}>
                 <Text style={styles.servicetext}>Service Provider Name</Text>
-                <Text style={styles.bookingtext}> Booking ID - {item._id}</Text>
+                <Text style={styles.bookingtext}> Booking ID -</Text>
+                <Text style={styles.bookingtext}> {item._id} </Text>
                 <Text style={styles.genreltext}>{item.refid.title}</Text>
                 <Text>Vehicle Number - {item.property.vehicleno}</Text>
             </View>
-            <View style={{ flexDirection: 'column', marginLeft: wp('2%') }}>
-                <Text style={{ padding: hp('1%') }}>{moment(item.appointmentdate).format('ll')}</Text>
-                <MaterialCommunityIcons name="file-pdf" size={20} color="#3357BC" style={{ padding: hp('2%') }} />
-                <Text style={{ color: '#FF0045', padding: hp('1%') }}>{item.status}</Text>
+            <View style={{ flexDirection: 'column', marginLeft: wp('1%') }}>
+                <Text style={{ padding: hp('0.5%') }}>{moment(item.appointmentdate).format('ll')}</Text>
+                <MaterialCommunityIcons name="file-pdf" size={20} color="#3357BC" style={{ padding: hp('0.5%') }} />
+                <Text style={{ color: '#FF0045', padding: hp('0.5%') }}>{item.status}</Text>
             </View>
 
         </View>
@@ -55,13 +56,14 @@ export class MyService extends Component {
             <View style={styles.servicename}>
                 <View style={{ flexDirection: 'column' }}>
                     <Text style={styles.servicetext}>Service Provider Name</Text>
-                    <Text style={styles.bookingtext}> Booking ID - {item._id}</Text>
+                    <Text style={styles.bookingtext}> Booking ID -</Text>
+                    <Text style={styles.bookingtext}> {item._id} </Text>
                     <Text style={styles.genreltext}>{item.refid.title}</Text>
                     <Text>Vehicle Number - {item.property.vehicleno}</Text>
                 </View>
-                <View style={{ flexDirection: 'column', marginLeft: wp('2%') }}>
+                <View style={{ flexDirection: 'column', marginLeft: wp('1%') }}>
                     <Text style={{ padding: hp('1%') }}>{moment(item.appointmentdate).format('ll')}</Text>
-                    <MaterialCommunityIcons name="file-pdf" size={20} color="#3357BC" style={{ padding: hp('2%') }} />
+                    <MaterialCommunityIcons name="file-pdf" size={20} color="#3357BC" style={{ padding: hp('1%') }} />
                     <Text style={{ color: '#FF0045', padding: hp('1%') }}>{item.status}</Text>
                 </View>
             </View>
@@ -91,7 +93,7 @@ export class MyService extends Component {
                         </View>
                     </> : <ActivityIndicator size="large" color="#AAAAAA" />}
                     {lastService != null ? <>
-                        <View>
+                        <View style={{ marginBottom: hp('10%') }}>
                             <View style={styles.lastservice}>
                                 <Text style={styles.lastservicetext}> Last Service </Text>
                             </View>
@@ -157,6 +159,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     servicetext: {
+
         fontSize: hp('2.5%'),
 
     },
@@ -176,6 +179,8 @@ const styles = StyleSheet.create({
     },
     lastservicetext: {
         fontSize: hp('2.5%'),
+
+
     },
 
 

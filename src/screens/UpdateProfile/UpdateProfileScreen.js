@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     text_header: {
-        marginTop: wp('6%'),
+        marginTop: wp('15%'),
         color: '#000',
         fontSize: hp('4%'),
         textAlign: 'center',
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         width: wp('80%'),
         height: hp('8%'),
-        margin: hp('3%'),
+        margin: hp('1%'),
         // marginBottom: hp('2.5%'),
         alignItems: "center",
 
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     TextInput: {
         fontSize: hp('2%'),
         flex: 1,
-        padding: hp('2%'),
+        padding: hp('1%'),
     },
     update_Btn: {
         width: wp('80%'),
@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginTop: hp('5%'),
+        marginBottom: hp('15%')
     },
     update_text: {
         color: "white",
