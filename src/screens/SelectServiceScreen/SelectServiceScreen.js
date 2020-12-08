@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
         color: '#e6b800',
         fontSize: hp('4%'),
         textAlign: 'center',
-
     },
     text_hedinner: {
         color: '#0066ff',
@@ -106,7 +105,6 @@ const styles = StyleSheet.create({
         fontSize: hp('2.5%'),
         textAlign: 'center',
         paddingBottom: hp('2%')
-
     },
     inputUpperview: {
         flexDirection: 'row',
@@ -114,7 +112,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     inputView: {
-        flex: 1,
+        flex: 0.5,
         margin: wp('2%'),
         flexDirection: 'row',
         borderRadius: wp('11%'),
@@ -127,8 +125,8 @@ const styles = StyleSheet.create({
             height: 0,
             width: 0,
         },
-        elevation: 1,
-
+        elevation: 6,
+        marginBottom: 10,
     },
     inputText: {
         flex: 1,

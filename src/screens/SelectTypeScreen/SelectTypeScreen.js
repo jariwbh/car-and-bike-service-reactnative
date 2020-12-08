@@ -242,10 +242,10 @@ const styles = StyleSheet.create({
         textTransform: 'capitalize',
     },
     next_Btn: {
-        width: wp("80%"),
+        width: wp("75%"),
         backgroundColor: "#FFBA00",
         borderRadius: wp('6%'),
-        height: hp('6%'),
+        height: hp('8%'),
         alignItems: "center",
         justifyContent: "center",
         marginTop: hp('4%'),

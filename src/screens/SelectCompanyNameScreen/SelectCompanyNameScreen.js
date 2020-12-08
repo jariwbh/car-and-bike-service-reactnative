@@ -10,7 +10,7 @@ import {
 export class SelectCompanyNameScreen extends Component {
     constructor(props) {
         super(props);
-        //console.log('this.props.route.params.item', this.props.route.params.item)
+        console.log('this.props.route.params.item', this.props.route.params.item)
         this.serviceDetails = this.props.route.params.item
         this.state = {
             serviceID: this.props.route.params.item._id
@@ -40,6 +40,7 @@ export class SelectCompanyNameScreen extends Component {
                                             <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', color: '#FFBA00', }}> Service Name </Text>
                                             <Text style={{ fontSize: hp('3%'), fontWeight: 'bold', }}> {this.serviceDetails.property.title}</Text>
                                             <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', }}>  Expected Price - $ {this.serviceDetails.charges}</Text>
+                                            <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', }}>  Time : {this.serviceDetails.availability.starttime + ' - ' + this.serviceDetails.availability.endtime}</Text>
                                         </View>
                                     </View>
                                     <View >
@@ -77,10 +78,10 @@ const styles = StyleSheet.create({
     inputView: {
         flex: 1,
         width: wp("80%"),
-        height: hp("70%"),
+        height: hp("78%"),
         borderRadius: wp('6%'),
-        marginTop: wp('-15%'),
         marginLeft: wp('10%'),
+        marginTop: wp('-60%'),
         alignContent: 'center',
         alignItems: "center",
         justifyContent: "center",
@@ -122,6 +123,7 @@ const styles = StyleSheet.create({
         paddingLeft: wp('2%'),
     },
     inputservicetext: {
+        marginTop: hp('1%'),
         paddingBottom: hp('2%'),
         paddingLeft: wp('2%'),
         fontWeight: 'bold',

@@ -11,6 +11,7 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../../components/Loader/Loader';
 
 class SignInScreen extends Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class SignInScreen extends Component {
             usererror: null,
             password: null,
             passworderror: null,
+            loading: false,
         }
         this.setEmail = this.setEmail.bind(this);
         this.setPassword = this.setPassword.bind(this);
@@ -55,6 +57,7 @@ class SignInScreen extends Component {
             usererror: null,
             password: null,
             passworderror: null,
+            loading: false,
         })
     }
 
@@ -70,7 +73,7 @@ class SignInScreen extends Component {
             username: username,
             password: password
         }
-
+        this.setState({ loading: true })
         await LoginService(body).then(response => {
             if (response != null) {
                 this.authenticateUser(username)
@@ -98,7 +101,6 @@ class SignInScreen extends Component {
                             <View style={styles.header}>
                                 <Text style={styles.text_header}>Welcome Back!</Text>
                             </View>
-
                             <View style={styles.inputView}>
                                 <FontAwesome5 name="user-alt" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                 <TextInput
@@ -120,13 +122,11 @@ class SignInScreen extends Component {
                                 />
                             </View>
                             <Text style={{ marginTop: hp('-3%'), marginLeft: wp('10%'), color: '#ff0000' }}>{this.state.passworderror && this.state.passworderror}</Text>
-
                             <View>
                                 <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()} >
-                                    <Text style={styles.loginText}>Login Now</Text>
+                                    {this.state.loading === true ? <Loader /> : <Text style={styles.loginText}>Login Now</Text>}
                                 </TouchableOpacity>
                             </View>
-
                             <View style={{ marginTop: hp('5%'), justifyContent: 'center', flexDirection: 'row' }} >
                                 <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignUp') }} >
                                     <Text style={styles.baseText}>Signup</Text>
@@ -136,7 +136,6 @@ class SignInScreen extends Component {
                                     <Text style={styles.baseText}>Need Help</Text>
                                 </TouchableOpacity>
                             </View>
-
                         </Animatable.View>
                     </View>
                 </ScrollView>

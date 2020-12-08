@@ -11,7 +11,6 @@ import {
     ScrollView
 } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import { UserService } from '../../services/UserService/UserService';
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
@@ -117,7 +116,7 @@ class UpdateProfileScreen extends Component {
                                             <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
                                             <TextInput
                                                 label="Name"
-                                                value={fullname}
+                                                defaultValue={fullname}
                                                 style={styles.TextInput}
                                                 placeholder="User Name"
                                                 type='clear'
@@ -126,11 +125,11 @@ class UpdateProfileScreen extends Component {
                                                 onChangeText={(fullname) => this.setFullName(fullname)}
                                             />
                                         </View>
-                                        <Text style={{ marginTop: hp('-3%'), marginRight: wp('28%'), color: '#ff0000' }}>{this.state.fullnameError && this.state.fullnameError}</Text>
+                                        <Text style={{ marginTop: hp('-3%'), marginLeft: wp('-20%'), color: '#ff0000' }}>{this.state.fullnameError && this.state.fullnameError}</Text>
                                         <View style={styles.inputView}>
                                             <MaterialCommunityIcons name="email" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
                                             <TextInput
-                                                value={username}
+                                                defaultValue={username}
                                                 style={styles.TextInput}
                                                 placeholder="Email Id"
                                                 type='clear'
@@ -143,11 +142,11 @@ class UpdateProfileScreen extends Component {
                                                 onChangeText={(username) => this.setUserName(username)}
                                             />
                                         </View>
-                                        <Text style={{ marginTop: hp('-3%'), marginRight: wp('13%'), color: '#ff0000' }}>{this.state.usernameError && this.state.usernameError}</Text>
+                                        <Text style={{ marginTop: hp('-3%'), marginLeft: wp('-15%'), color: '#ff0000' }}>{this.state.usernameError && this.state.usernameError}</Text>
                                         <View style={styles.inputView} >
                                             <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('2%') }} />
                                             <TextInput
-                                                value={mobilenumber}
+                                                defaultValue={mobilenumber}
                                                 style={styles.TextInput}
                                                 placeholder="Mobile Number"
                                                 type='clear'
@@ -156,7 +155,7 @@ class UpdateProfileScreen extends Component {
                                                 onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
                                             />
                                         </View>
-                                        <Text style={{ marginTop: hp('-3%'), marginRight: wp('10%'), color: '#ff0000' }}>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
+                                        <Text style={{ marginTop: hp('-3%'), marginLeft: wp('-14%'), color: '#ff0000' }}>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
                                         <TouchableOpacity style={styles.update_Btn} onPress={() => this.onPressSubmit()}>
                                             <Text style={styles.update_text} >Update Profile</Text>
                                         </TouchableOpacity>
@@ -218,12 +217,9 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         width: wp('80%'),
         height: hp('8%'),
-        margin: hp('1%'),
-        // marginBottom: hp('2.5%'),
+        margin: hp('3%'),
         alignItems: "center",
-
     },
-
     TextInput: {
         fontSize: hp('2%'),
         flex: 1,
@@ -233,7 +229,7 @@ const styles = StyleSheet.create({
         width: wp('80%'),
         backgroundColor: "#FFBA00",
         borderRadius: wp('6%'),
-        height: hp('7%'),
+        height: hp('8%'),
         alignItems: "center",
         justifyContent: "center",
         marginTop: hp('5%'),

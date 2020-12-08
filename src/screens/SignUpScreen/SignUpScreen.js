@@ -8,6 +8,7 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
+import Loader from '../../components/Loader/Loader'
 
 class SignUpScreen extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class SignUpScreen extends Component {
             usernameError: null,
             mobilenumber: null,
             mobilenumberError: null,
+            loading: false,
         }
         this.setFullName = this.setFullName.bind(this);
         this.setUserName = this.setUserName.bind(this);
@@ -65,6 +67,7 @@ class SignUpScreen extends Component {
             usernameError: null,
             mobilenumber: null,
             mobilenumberError: null,
+            loading: false,
         })
     }
 
@@ -77,8 +80,8 @@ class SignUpScreen extends Component {
             return;
         }
 
+
         const body = {
-            fullname: fullname,
             property: {
                 fullname: fullname,
                 email: username,
@@ -86,6 +89,7 @@ class SignUpScreen extends Component {
             }
         }
 
+        this.setState({ loading: true })
         await RegisterService(body).then(response => {
             if (response != null) {
                 ToastAndroid.show("SignUp Success!", ToastAndroid.SHORT);
@@ -148,7 +152,7 @@ class SignUpScreen extends Component {
                                 </View>
                                 <Text style={{ marginTop: hp('-3%'), marginLeft: wp('-15%'), color: '#ff0000' }}>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
                                 <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()}>
-                                    <Text style={styles.loginText} >Sign Up</Text>
+                                    {this.state.loading === true ? <Loader /> : <Text style={styles.loginText} >Sign Up</Text>}
                                 </TouchableOpacity>
                             </View>
                             <View style={{ marginTop: hp('5%'), justifyContent: 'center', flexDirection: 'row' }} >

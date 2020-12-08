@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { ImageBackground, View, StyleSheet, Text, TextInput, TouchableOpacity, ScrollView, ToastAndroid } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { Fontisto, MaterialIcons } from '@expo/vector-icons';
+import { Fontisto, MaterialIcons, Entypo } from '@expo/vector-icons';
 import { BookService } from '../../services/BookService/BookService';
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
+import { UserService } from '../../services/UserService/UserService';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment';
 
 class BookServiceScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            userData: null,
             fullname: null,
             fullnameError: null,
             mobilenumber: null,
@@ -22,7 +26,8 @@ class BookServiceScreen extends Component {
             serviceTimeError: null,
             vehicleNumber: null,
             vehicleNumberError: null,
-            serviceID: this.props.route.params.serviceID
+            serviceID: this.props.route.params.serviceID,
+            isDatePickerVisible: false, isTimePickerVisibility: false
         }
         this.setFullName = this.setFullName.bind(this);
         this.setMobileNumber = this.setMobileNumber.bind(this);
@@ -30,6 +35,39 @@ class BookServiceScreen extends Component {
         this.setServiceTime = this.setServiceTime.bind(this);
         this.setVehicleNumber = this.setVehicleNumber.bind(this);
         this.onPressSubmit = this.onPressSubmit.bind(this);
+    }
+
+    showDatePicker = () => {
+        this.setState({ isDatePickerVisible: true });
+    };
+
+    hideDatePicker = () => {
+        this.setState({ isDatePickerVisible: false });
+    };
+
+    handleConfirmDate = (date) => {
+        this.setState({ serviceDate: moment(date).format('YYYY-MM-DD') });
+        this.hideDatePicker();
+    };
+
+    showTimePicker = () => {
+        this.setState({ isTimePickerVisibility: true });
+    };
+
+    hideTimePicker = () => {
+        this.setState({ isTimePickerVisibility: false });
+    };
+
+    handleConfirmTime = (time) => {
+        //console.warn("A time has been picked: ", moment(time).format('HH:mm'));
+        this.setState({ serviceTime: moment(time).format('HH:mm') });
+        this.hideTimePicker();
+    };
+
+    componentDidMount() {
+        UserService().then(data => {
+            this.setState({ userData: data, fullname: data.property.fullname, mobilenumber: data.property.mobile_number })
+        })
     }
 
     setFullName(fullname) {
@@ -65,13 +103,9 @@ class BookServiceScreen extends Component {
     }
 
     setVehicleNumber(vehicleNumber) {
-        //const reg = /^[0]?[789]\d{9}$/;
         if (!vehicleNumber || vehicleNumber.length <= 0) {
             return this.setState({ vehicleNumberError: 'Vehicle Number cannot be empty' });
         }
-        // if (!reg.test(vehicleNumber)) {
-        //     return this.setState({ vehicleNumberError: 'Ooops! We need a valid Vehicle Number' });
-        // }
         return this.setState({ vehicleNumber: vehicleNumber, vehicleNumberError: null })
     }
 
@@ -116,8 +150,6 @@ class BookServiceScreen extends Component {
         }
 
         await BookService(body).then(response => {
-            console.log('body', body)
-            console.log(response);
             if (response != null) {
                 ToastAndroid.show("Book Your Service!", ToastAndroid.SHORT);
                 this.props.navigation.navigate('MyService')
@@ -127,6 +159,7 @@ class BookServiceScreen extends Component {
     }
 
     render() {
+        const { fullname, mobilenumber, serviceTime, serviceDate } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
@@ -139,11 +172,13 @@ class BookServiceScreen extends Component {
                             <View style={styles.inputView}>
                                 <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                 <TextInput
+                                    defaultValue={fullname}
                                     style={styles.TextInput}
                                     placeholder="Enter Full Name"
                                     type='clear'
                                     placeholderTextColor="#737373"
                                     onChangeText={(fullname) => this.setFullName(fullname)}
+                                // editable={false}
                                 />
                             </View>
                             <Text style={{ marginTop: hp('-4%'), marginRight: wp('27%'), color: '#ff0000' }}>{this.state.fullnameError && this.state.fullnameError}</Text>
@@ -153,12 +188,14 @@ class BookServiceScreen extends Component {
                             <View style={styles.inputView}>
                                 <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                 <TextInput
+                                    defaultValue={mobilenumber}
                                     style={styles.TextInput}
                                     placeholder="Mobile Number"
                                     type='clear'
                                     placeholderTextColor="#737373"
                                     keyboardType="numeric"
                                     onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
+                                // editable={false}
                                 />
                             </View>
                             <Text style={{ marginTop: hp('-4%'), marginRight: wp('21%'), color: '#ff0000' }}>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
@@ -171,12 +208,18 @@ class BookServiceScreen extends Component {
                                     style={styles.TextInput}
                                     placeholder="YYYY-MM-DD"
                                     type='clear'
-                                    value={this.state.date}
+                                    defaultValue={serviceDate}
                                     placeholderTextColor="#AAAAAA"
-                                    onChangeText={this.showDatePicker}
+                                    onTouchStart={this.showDatePicker}
                                     onChangeText={(serviceDate) => this.setServiceDate(serviceDate)}
                                 >
                                 </TextInput>
+                                <DateTimePickerModal
+                                    isVisible={this.state.isDatePickerVisible}
+                                    mode="date"
+                                    onConfirm={this.handleConfirmDate}
+                                    onCancel={this.hideDatePicker}
+                                />
                             </View>
                             <Text style={{ marginTop: hp('-4%'), marginRight: wp('27%'), color: '#ff0000' }}>{this.state.serviceDateError && this.state.serviceDateError}</Text>
                         </View>
@@ -188,17 +231,25 @@ class BookServiceScreen extends Component {
                                     style={styles.TextInput}
                                     placeholder="HH-MM"
                                     type='clear'
+                                    defaultValue={serviceTime}
                                     placeholderTextColor="#AAAAAA"
+                                    onTouchStart={this.showTimePicker}
                                     onChangeText={(serviceTime) => this.setServiceTime(serviceTime)}
                                 >
                                 </TextInput>
+                                <DateTimePickerModal
+                                    isVisible={this.state.isTimePickerVisibility}
+                                    mode="time"
+                                    onConfirm={this.handleConfirmTime}
+                                    onCancel={this.hideTimePicker}
+                                />
                             </View>
                             <Text style={{ marginTop: hp('-4%'), marginRight: wp('27%'), color: '#ff0000' }}>{this.state.serviceTimeError && this.state.serviceTimeError}</Text>
                         </View>
                         <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>vehicle Number</Text>
                         <View style={{ alignItems: 'center' }}>
                             <View style={styles.inputView} >
-                                <MaterialIcons name="timer" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
+                                <Entypo name="credit-card" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                 <TextInput
                                     style={styles.TextInput}
                                     placeholder="XX-XX-XX-XX"
