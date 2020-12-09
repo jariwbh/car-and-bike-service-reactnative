@@ -91,8 +91,6 @@ export class MyService extends Component {
                                 />
                             </View>
                         </View>
-                    </> : <ActivityIndicator size="large" color="#AAAAAA" />}
-                    {lastService != null ? <>
                         <View style={{ marginBottom: hp('10%') }}>
                             <View style={styles.lastservice}>
                                 <Text style={styles.lastservicetext}> Last Service </Text>

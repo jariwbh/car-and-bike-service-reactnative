@@ -92,7 +92,7 @@ class SignUpScreen extends Component {
         this.setState({ loading: true })
         await RegisterService(body).then(response => {
             if (response != null) {
-                ToastAndroid.show("SignUp Success!", ToastAndroid.SHORT);
+                ToastAndroid.show("SignUp Success!", ToastAndroid.LONG);
                 this.props.navigation.navigate('SignIn')
                 this.resetScreen()
             }
@@ -114,9 +114,9 @@ class SignUpScreen extends Component {
                                 <View style={styles.inputView}>
                                     <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
-                                        label="User Name"
+                                        label="FullName"
                                         style={styles.TextInput}
-                                        placeholder="User Name"
+                                        placeholder="Full Name"
                                         type='clear'
                                         placeholderTextColor="#737373"
                                         returnKeyType="next"

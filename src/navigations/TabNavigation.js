@@ -15,7 +15,6 @@ import SelectCompanyNameScreen from '../screens/SelectCompanyNameScreen/SelectCo
 import MyServiceScreen from '../screens/MyServiceScreen/MyServiceScreen';
 import BookServiceScreen from '../screens/BookServiceScreen/BookServiceScreen';
 import OffersScreen from '../screens/OffersScreen/OffersScreen';
-import { isAuthenticated } from '../Helpers/Auth';
 
 const ProfileStack = createStackNavigator();
 function ProfileStackScreen() {

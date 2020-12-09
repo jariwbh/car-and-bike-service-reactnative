@@ -10,8 +10,8 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
-import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader/Loader';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class SignInScreen extends Component {
     constructor(props) {
@@ -30,16 +30,9 @@ class SignInScreen extends Component {
     }
 
     setEmail(email) {
-        const re = /\S+@\S+\.\S+/;
-
         if (!email || email.length <= 0) {
-            return this.setState({ usererror: 'Email cannot be empty' });
+            return this.setState({ usererror: 'User Name cannot be empty' });
         }
-        if (!re.test(email)) {
-
-            return this.setState({ usererror: 'Ooops! We need a valid email address' });
-        }
-        console.log('email', email)
         return this.setState({ username: email, usererror: null })
     }
 
@@ -47,7 +40,6 @@ class SignInScreen extends Component {
         if (!password || password.length <= 0) {
             return this.setState({ passworderror: 'Password cannot be empty' });
         }
-        console.log('password', password)
         return this.setState({ password: password, passworderror: null })
     }
 
@@ -60,6 +52,10 @@ class SignInScreen extends Component {
             loading: false,
         })
     }
+
+    authenticateUser = (user) => (
+        AsyncStorage.setItem('@authuser', JSON.stringify(user))
+    )
 
     onPressSubmit = async () => {
         const { username, password } = this.state;
@@ -74,23 +70,29 @@ class SignInScreen extends Component {
             password: password
         }
         this.setState({ loading: true })
-        await LoginService(body).then(response => {
-            if (response != null) {
-                this.authenticateUser(username)
-                ToastAndroid.show("SignIn Success!", ToastAndroid.SHORT);
-                this.props.navigation.navigate('Tabnavigation')
-                this.resetScreen()
-            }
-        })
+        try {
+            await LoginService(body).then(response => {
+                if (response.error) {
+                    this.setState({ loading: false })
+                    ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);
+                    this.resetScreen()
+                    return
+                } else {
+                    this.authenticateUser(response.user)
+                    ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
+                    this.props.navigation.navigate('Tabnavigation')
+                    this.resetScreen()
+                }
+            })
+        }
+        catch (error) {
+            console.log('error', error)
+            this.setState({ loading: false })
+            ToastAndroid.show("SignIn Failed!", ToastAndroid.LONG)
+        }
     }
 
-    authenticateUser = (user) => (
-        console.log('user', user),
-        AsyncStorage.setItem("auth_key", user)
-    )
-
     render() {
-
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage}>
                 <ScrollView>
@@ -105,7 +107,10 @@ class SignInScreen extends Component {
                                 <FontAwesome5 name="user-alt" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                 <TextInput
                                     style={styles.TextInput}
-                                    placeholder="Email"
+                                    placeholder="User Name"
+                                    defaultValue={this.state.username}
+                                    type='clear'
+                                    returnKeyType="next"
                                     placeholderTextColor="#737373"
                                     onChangeText={(email) => this.setEmail(email)}
                                 />
@@ -116,8 +121,12 @@ class SignInScreen extends Component {
                                 <TextInput
                                     style={styles.TextInput}
                                     placeholder="******"
+                                    type='clear'
+                                    defaultValue={this.state.password}
                                     placeholderTextColor="#737373"
                                     secureTextEntry={true}
+                                    returnKeyType="done"
+                                    onSubmitEditing={() => this.onPressSubmit()}
                                     onChangeText={(password) => this.setPassword(password)}
                                 />
                             </View>
@@ -212,5 +221,5 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover'
-    }
+    },
 });

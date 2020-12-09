@@ -4,30 +4,30 @@ import {
     TouchableOpacity, ImageBackground,
     ToastAndroid, ActivityIndicator, Alert
 } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
-import { removeUser } from '../../Helpers/Auth';
-import { UserService } from '../../services/UserService/UserService';
+import { Entypo, FontAwesome5 } from '@expo/vector-icons';
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import AsyncStorage from '@react-native-community/async-storage';
 
-
 export default class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
             companyData: null,
-            companyName: null,
             companyProfile: '',
         }
     }
 
     componentDidMount() {
-        UserService().then(data => {
-            this.setState({ companyData: data, companyName: data.property.fullname, companyProfile: data.branchid.branchlogo })
-        })
+        this.getdata()
+    }
+
+    getdata = async () => {
+        var getUser = await AsyncStorage.getItem('@authuser')
+        console.log('getUser', JSON.parse(getUser))
+        this.setState({ companyData: JSON.parse(getUser) })
     }
 
     onPressUpdateProfile() {
@@ -35,10 +35,6 @@ export default class Profile extends Component {
         if (companyData != null) {
             this.props.navigation.navigate('UpdateProfile', { companyData })
         }
-    }
-
-    removeUser() {
-        AsyncStorage.removeItem("auth_key")
     }
 
     onPressLogout() {
@@ -54,7 +50,7 @@ export default class Profile extends Component {
                 {
                     text: "Yes", onPress: () => {
                         ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT),
-                            removeUser()
+                            AsyncStorage.removeItem('@authuser');
                         this.props.navigation.replace('Auth')
                     }
                 }
@@ -64,7 +60,7 @@ export default class Profile extends Component {
     }
 
     render() {
-        const { companyData, companyName, companyProfile } = this.state;
+        const { companyData, companyProfile } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
@@ -75,7 +71,7 @@ export default class Profile extends Component {
                             <Image style={styles.avatar} source={{ uri: (companyProfile ? companyProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
                             <View style={styles.body}>
                                 <View style={styles.bodyContent}>
-                                    <Text style={styles.name}>{companyName && companyName}</Text>
+                                    <Text style={styles.name}>{companyData && companyData.fullname}</Text>
                                 </View>
                                 <View style={{
                                     flex: 1, flexDirection: 'column', alignItems: 'center'
@@ -125,9 +121,9 @@ const styles = StyleSheet.create({
         fontSize: hp('4%'),
         color: "#737373",
         fontWeight: 'bold',
+        textTransform: 'capitalize'
     },
     buttonContainer: {
-
         marginTop: hp('2%'),
         height: hp('9%'),
         flexDirection: 'row',

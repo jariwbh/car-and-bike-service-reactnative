@@ -12,8 +12,8 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
-import AsyncStorage from '@react-native-community/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class SelectTypeScreen extends Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class SelectTypeScreen extends Component {
             companycity: '',
             companycontactNumber: '',
             userdata: null,
-
+            id: null
         };
         this.onPressToSelectService = this.onPressToSelectService.bind(this);
     }
@@ -41,8 +41,12 @@ class SelectTypeScreen extends Component {
             })
     }
 
-    UserDetails() {
-        UserService().then(data => {
+    UserDetails = async () => {
+        const getUser = await AsyncStorage.getItem('@authuser')
+        console.log('getdatadtadUser', JSON.parse(getUser))
+        const user = JSON.parse(getUser)
+        const id = user.addedby
+        await UserService(id).then(data => {
             this.setState({
                 companydata: data,
                 companyname: data.branchid.branchname, companyicon: data.branchid.branchlogo,
@@ -52,15 +56,9 @@ class SelectTypeScreen extends Component {
         })
     }
 
-    authenticateUser() {
-        AsyncStorage.getItem("auth_key")
-    }
-
-    componentDidMount() {
+    componentDidMount = async () => {
         this.SelectServiceType();
         this.UserDetails();
-        let user = this.authenticateUser()
-        console.log('user', user)
     }
 
     renderRecipes = ({ item, index }) => (

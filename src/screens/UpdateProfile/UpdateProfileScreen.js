@@ -15,12 +15,15 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
+import { UserService } from '../../services/UserService/UserService';
 
 class UpdateProfileScreen extends Component {
     constructor(props) {
         super(props)
+
         this.companyData = this.props.route.params.companyData;
         this.state = {
+            _id: this.companyData._id,
             fullname: this.companyData.property.fullname,
             fullnameError: null,
             username: this.companyData.property.email,
@@ -67,7 +70,7 @@ class UpdateProfileScreen extends Component {
     }
 
     onPressSubmit = async () => {
-        const { fullname, username, mobilenumber } = this.state;
+        const { fullname, username, mobilenumber, _id } = this.state;
         if (!fullname || !username || !mobilenumber) {
             this.setFullName(fullname)
             this.setUserName(username)
@@ -76,6 +79,8 @@ class UpdateProfileScreen extends Component {
         }
 
         const body = {
+            _id: _id,
+            status: "active",
             property: {
                 fullname: fullname,
                 email: username,
@@ -83,12 +88,12 @@ class UpdateProfileScreen extends Component {
             }
         }
 
-        // await UserService(body).then(response => {
-        //     if (response != null) {
-        ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
-        this.props.navigation.navigate('MyProfile')
-        //     }
-        // })
+        await UserService(body).then(response => {
+            if (response != null) {
+                ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
+                this.props.navigation.navigate('MyProfile')
+            }
+        })
     }
 
     render() {
@@ -202,6 +207,7 @@ const styles = StyleSheet.create({
         fontSize: hp('4%'),
         color: "#737373",
         fontWeight: 'bold',
+        textTransform: 'capitalize'
     },
     inputView: {
         flexDirection: 'row',
