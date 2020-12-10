@@ -79,11 +79,14 @@ class SignInScreen extends Component {
                         ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);
                         this.resetScreen()
                         return
-                    } else {
+                    }
+
+                    if (response != null || response != 'undefind') {
                         this.authenticateUser(response.user)
                         ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
                         this.props.navigation.navigate('Tabnavigation')
                         this.resetScreen()
+                        return
                     }
                 })
         }

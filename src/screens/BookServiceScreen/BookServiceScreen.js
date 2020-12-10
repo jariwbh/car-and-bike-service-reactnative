@@ -7,14 +7,16 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
-import { UserService } from '../../services/UserService/UserService';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class BookServiceScreen extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
+            userID: null,
             userData: null,
             fullname: null,
             fullnameError: null,
@@ -59,15 +61,22 @@ class BookServiceScreen extends Component {
     };
 
     handleConfirmTime = (time) => {
-        //console.warn("A time has been picked: ", moment(time).format('HH:mm'));
         this.setState({ serviceTime: moment(time).format('HH:mm') });
         this.hideTimePicker();
     };
 
-    componentDidMount() {
-        UserService().then(data => {
-            this.setState({ userData: data, fullname: data.property.fullname, mobilenumber: data.property.mobile_number })
+    getdata = async () => {
+        var getUser = await AsyncStorage.getItem('@authuser')
+        const user = JSON.parse(getUser)
+        this.setState({
+            fullname: user.property.fullname,
+            mobilenumber: user.property.mobile_number,
+            userID: user.addedby
         })
+    }
+
+    componentDidMount() {
+        this.getdata()
     }
 
     setFullName(fullname) {
@@ -125,8 +134,7 @@ class BookServiceScreen extends Component {
     }
 
     onPressSubmit = async () => {
-        console.log('clicked')
-        const { fullname, mobilenumber, serviceDate, serviceTime, vehicleNumber, serviceID } = this.state;
+        const { fullname, mobilenumber, serviceDate, serviceTime, vehicleNumber, serviceID, userID } = this.state;
         if (!fullname || !mobilenumber || !serviceDate || !serviceTime || !vehicleNumber) {
             this.setFullName(fullname)
             this.setMobileNumber(mobilenumber)
@@ -137,7 +145,7 @@ class BookServiceScreen extends Component {
         }
 
         const body = {
-            attendee: "5fbf8f809c28220330088e84",
+            attendee: userID,
             appointmentdate: serviceDate,
             refid: serviceID,
             refModel: "Service",
