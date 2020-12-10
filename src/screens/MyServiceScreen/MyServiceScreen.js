@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, ImageBackground, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
+import { Text, View, ScrollView, ImageBackground, StyleSheet, FlatList, ActivityIndicator, RefreshControl } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
     heightPercentageToDP as hp,
@@ -13,7 +13,8 @@ export class MyService extends Component {
         super(props);
         this.state = {
             ongoingService: null,
-            lastService: null
+            lastService: null,
+            refreshing: false,
         }
     }
 
@@ -27,6 +28,18 @@ export class MyService extends Component {
             console.log('MyServiceLastService', data)
             this.setState({ lastService: data })
         })
+    }
+
+    wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }
+
+    onRefresh = () => {
+        this.setState({ refreshing: true })
+        this.MyServiceService()
+        this.wait(3000).then(() => this.setState({ refreshing: false }));
     }
 
     componentDidMount() {
@@ -47,7 +60,6 @@ export class MyService extends Component {
                 <MaterialCommunityIcons name="file-pdf" size={20} color="#3357BC" style={{ padding: hp('0.5%') }} />
                 <Text style={{ color: '#FF0045', padding: hp('0.5%') }}>{item.status}</Text>
             </View>
-
         </View>
     );
 
@@ -71,13 +83,14 @@ export class MyService extends Component {
     );
 
     render() {
-        const { ongoingService, lastService } = this.state;
+        const { ongoingService, refreshing } = this.state;
+
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.header}>
                     <Text style={styles.headertext}>My Service</Text>
                 </View>
-                <ScrollView>
+                <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />}>
                     {ongoingService != null ? <>
                         <View>
                             <View style={styles.onservice}>

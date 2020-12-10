@@ -26,7 +26,6 @@ export default class Profile extends Component {
 
     getdata = async () => {
         var getUser = await AsyncStorage.getItem('@authuser')
-        console.log('getUser', JSON.parse(getUser))
         this.setState({ companyData: JSON.parse(getUser) })
     }
 
@@ -44,7 +43,6 @@ export default class Profile extends Component {
             [
                 {
                     text: "Cancel",
-                    onPress: () => { ToastAndroid.show("Log Out cancle!", ToastAndroid.SHORT) },
                     style: "cancel"
                 },
                 {
