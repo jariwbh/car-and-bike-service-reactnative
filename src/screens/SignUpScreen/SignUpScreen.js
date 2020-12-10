@@ -39,7 +39,7 @@ class SignUpScreen extends Component {
     setUserName(email) {
         const re = /\S+@\S+\.\S+/;
         if (!email || email.length <= 0) {
-            return this.setState({ usernameError: 'Email cannot be empty' });
+            return this.setState({ usernameError: 'Email Id can not be empty' });
         }
         if (!re.test(email)) {
 
@@ -51,10 +51,10 @@ class SignUpScreen extends Component {
     setMobileNumber(mobilenumber) {
         const reg = /^[0]?[789]\d{9}$/;
         if (!mobilenumber || mobilenumber.length <= 0) {
-            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty.' });
+            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty' });
         }
         if (!reg.test(mobilenumber)) {
-            return this.setState({ mobilenumberError: 'Ooops! We need a valid Mobile Number.' });
+            return this.setState({ mobilenumberError: 'Ooops! We need a valid Mobile Number' });
         }
         return this.setState({ mobilenumber: mobilenumber, mobilenumberError: null })
     }
@@ -79,7 +79,6 @@ class SignUpScreen extends Component {
             this.setMobileNumber(mobilenumber)
             return;
         }
-
 
         const body = {
             property: {
@@ -138,7 +137,7 @@ class SignUpScreen extends Component {
                                         onChangeText={(username) => this.setUserName(username)}
                                     />
                                 </View>
-                                <Text style={{ marginTop: hp('-3%'), marginLeft: wp('-32%'), color: '#ff0000' }}>{this.state.usernameError && this.state.usernameError}</Text>
+                                <Text style={{ marginTop: hp('-3%'), marginLeft: wp('-15%'), color: '#ff0000' }}>{this.state.usernameError && this.state.usernameError}</Text>
                                 <View style={styles.inputView} >
                                     <FontAwesome name="phone" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput

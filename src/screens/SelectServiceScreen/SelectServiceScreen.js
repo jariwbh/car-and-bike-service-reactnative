@@ -50,7 +50,7 @@ export class SelectServiceScreen extends Component {
                         <Text style={styles.text_header}> Service</Text>
                     </View>
                     <View>
-                        <Text style={styles.text_hedding}>Select Your Servic to Continue</Text>
+                        <Text style={styles.text_hedding}>Select Your Service to Continue</Text>
                     </View>
                     {/* <ScrollView> */}
                     {serviceList === null ?
