@@ -4,7 +4,9 @@ import {
     Image, View, StyleSheet,
     Text, TouchableOpacity,
     ActivityIndicator,
-    SafeAreaView
+    SafeAreaView,
+    BackHandler,
+    Alert,
 } from 'react-native'
 import { SelectTypeService } from '../../services/SelectTypeService/SelectTypeService';
 import { UserService } from '../../services/UserService/UserService';
@@ -19,6 +21,8 @@ class SelectTypeScreen extends Component {
     constructor(props) {
         super(props);
 
+        console.log('route', this.props.route)
+
         this.state = {
             selectServiceType: null,
             serviceTypeList: [],
@@ -32,6 +36,15 @@ class SelectTypeScreen extends Component {
             id: null
         };
         this.onPressToSelectService = this.onPressToSelectService.bind(this);
+
+        this._unsubscribeSiFocus = this.props.navigation.addListener('focus', e => {
+            BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        });
+
+        this._unsubscribeSiBlur = this.props.navigation.addListener('blur', e => {
+            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton,
+            );
+        });
     }
 
     SelectServiceType() {
@@ -59,6 +72,28 @@ class SelectTypeScreen extends Component {
     componentDidMount = async () => {
         this.SelectServiceType();
         this.UserDetails();
+    }
+
+    componentWillUnmount() {
+        this._unsubscribeSiFocus();
+        this._unsubscribeSiBlur();
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    handleBackButton = () => {
+        Alert.alert(
+            'Exit App',
+            'Exiting the application?', [
+            {
+                text: 'Cancel',
+                style: 'cancel'
+            }, {
+                text: 'OK',
+                onPress: () => BackHandler.exitApp()
+            },], {
+        }
+        )
+        return true;
     }
 
     renderRecipes = ({ item, index }) => (

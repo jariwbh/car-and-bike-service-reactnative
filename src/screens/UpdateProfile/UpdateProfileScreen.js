@@ -90,7 +90,7 @@ class UpdateProfileScreen extends Component {
 
         await UserService(body).then(response => {
             if (response != null) {
-                ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
+                ToastAndroid.show("Your Profile Update!", ToastAndroid.LONG);
                 this.props.navigation.navigate('MyProfile')
             }
         })

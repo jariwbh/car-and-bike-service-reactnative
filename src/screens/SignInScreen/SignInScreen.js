@@ -50,6 +50,7 @@ class SignInScreen extends Component {
             password: null,
             passworderror: null,
             loading: false,
+            timePassed: false
         })
     }
 
@@ -71,25 +72,26 @@ class SignInScreen extends Component {
         }
         this.setState({ loading: true })
         try {
-            await LoginService(body).then(response => {
-                if (response.error) {
-                    this.setState({ loading: false })
-                    ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);
-                    this.resetScreen()
-                    return
-                } else {
-                    this.authenticateUser(response.user)
-                    ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
-                    this.props.navigation.navigate('Tabnavigation')
-                    this.resetScreen()
-                }
-            })
+            await LoginService(body)
+                .then(response => {
+                    if (response.error) {
+                        this.setState({ loading: false })
+                        ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);
+                        this.resetScreen()
+                        return
+                    } else {
+                        this.authenticateUser(response.user)
+                        ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
+                        this.props.navigation.navigate('Tabnavigation')
+                        this.resetScreen()
+                    }
+                })
         }
         catch (error) {
-            console.log('error', error)
             this.setState({ loading: false })
             ToastAndroid.show("SignIn Failed!", ToastAndroid.LONG)
         }
+
     }
 
     render() {

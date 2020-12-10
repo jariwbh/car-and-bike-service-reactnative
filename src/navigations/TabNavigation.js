@@ -15,6 +15,7 @@ import SelectCompanyNameScreen from '../screens/SelectCompanyNameScreen/SelectCo
 import MyServiceScreen from '../screens/MyServiceScreen/MyServiceScreen';
 import BookServiceScreen from '../screens/BookServiceScreen/BookServiceScreen';
 import OffersScreen from '../screens/OffersScreen/OffersScreen';
+import { BackHandler } from 'react-native';
 
 const ProfileStack = createStackNavigator();
 function ProfileStackScreen() {
@@ -92,6 +93,7 @@ export default function TabNavigation() {
                 activeTintColor: '#FFBA00',
                 inactiveTintColor: '#808B96',
                 keyboardHidesTabBar: true,
+                backBehavior: "history",
             }}
         >
             <Tab.Screen name="Home" component={HomeStackScreen} />
