@@ -5,18 +5,22 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "stretch",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "bundleIdentifier": "com.app.carandbikeservice",
       "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.app.carandbikeservice",
-      "versionCode": 1
+      "versionCode": 1,
+      "splash": {
+        "ldpi": "./assets/drawable_ldpi/1.png",
+        "mdpi": "./assets/drawable_mdpi/1.png",
+        "hdpi": "./assets/drawable_hdpi/1.png",
+        "xhdpi": "./assets/drawable_xhdpi/1.png",
+        "xxhdpi": "./assets/drawable_xxhdpi/1.png",
+        "xxxhdpi": "./assets/drawable_xxxhdpi/1.png",
+        "resizeMode": "cover"
+      }
     }
   }
 }
