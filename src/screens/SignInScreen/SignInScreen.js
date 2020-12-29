@@ -6,12 +6,10 @@ import {
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { LoginService } from '../../services/LoginService/LoginService';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import Loader from '../../components/Loader/Loader';
 import AsyncStorage from '@react-native-community/async-storage';
+import appConfig from '../../Helpers/appConfig'
 
 class SignInScreen extends Component {
     constructor(props) {
@@ -83,6 +81,7 @@ class SignInScreen extends Component {
 
                     if (response != null || response != 'undefind') {
                         this.authenticateUser(response.user)
+                        appConfig.headers["authkey"] = response.user.addedby;
                         ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
                         this.props.navigation.navigate('Tabnavigation')
                         this.resetScreen()
@@ -94,7 +93,6 @@ class SignInScreen extends Component {
             this.setState({ loading: false })
             ToastAndroid.show("SignIn Failed!", ToastAndroid.LONG)
         }
-
     }
 
     render() {
