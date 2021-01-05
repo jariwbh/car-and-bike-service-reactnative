@@ -20,9 +20,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 class SelectTypeScreen extends Component {
     constructor(props) {
         super(props);
-
-        console.log('route', this.props.route)
-
         this.state = {
             selectServiceType: null,
             serviceTypeList: [],
@@ -56,7 +53,6 @@ class SelectTypeScreen extends Component {
 
     UserDetails = async () => {
         const getUser = await AsyncStorage.getItem('@authuser')
-        console.log('getdatadtadUser', JSON.parse(getUser))
         const user = JSON.parse(getUser)
         const id = user.addedby
         await UserService(id).then(data => {
@@ -99,7 +95,7 @@ class SelectTypeScreen extends Component {
     renderRecipes = ({ item, index }) => (
         <TouchableOpacity style={{ flexDirection: 'column' }} onPress={() => { this.onPressToSelectService(item._id, index) }}>
             <View style={styles.carBtn}>
-                <Text style={item.selected ? styles.carbtnText : styles.bikebtnText}>{item && item.property.title}</Text>
+                <Text style={item.selected ? styles.carbtnText : styles.bikebtnText}>{item && item.property.name}</Text>
             </View>
             <View style={{ alignItems: "center", justifyContent: "center", marginTop: hp('2.5%') }}>
                 <Image source={{ uri: item && item.property.img[0]['attachment'] }} style={{ height: hp('15%'), width: wp('25%'), marginLeft: wp('9%') }} />
@@ -134,7 +130,7 @@ class SelectTypeScreen extends Component {
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <SafeAreaView style={{ flex: 1 }}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={styles.container}>
                             <View style={styles.header}>
                                 <Text style={styles.text_header}>Select Service Type</Text>

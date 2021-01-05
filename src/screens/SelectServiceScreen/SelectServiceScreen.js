@@ -11,14 +11,14 @@ export class SelectServiceScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            serviceList: null,
+            serviceList: [],
         }
         this.serviceType = this.props.route.params.selectServiceType
     }
 
     SelectService(serviceType) {
         SelectService(serviceType).then(data => {
-            this.setState({ serviceList: data })
+            this.setState({ serviceList: data });
         })
     }
 
@@ -33,7 +33,7 @@ export class SelectServiceScreen extends Component {
     renderService = ({ item }) => (
         <TouchableOpacity style={styles.inputView} onPress={() => { this.onPressToSelectService(item) }}>
             <View style={styles.categoryIcon}>
-                <Image source={{ uri: item.property && item.property.icon_logo }} style={{ height: 60, width: 60 }} />
+                <Image source={{ uri: item.gallery && item.gallery[0]['attachment'] }} style={{ height: 60, width: 60 }} />
             </View>
             <View style={styles.inputText}>
                 <Text >{item && item.title}</Text>
@@ -53,7 +53,7 @@ export class SelectServiceScreen extends Component {
                         <Text style={styles.text_hedding}>Select Your Service to Continue</Text>
                     </View>
                     {/* <ScrollView> */}
-                    {serviceList === null ?
+                    {(serviceList === null) || (serviceList && serviceList.length == 0) ?
                         <ActivityIndicator size="large" color="#AAAAAA" />
                         : <>
                             <View>

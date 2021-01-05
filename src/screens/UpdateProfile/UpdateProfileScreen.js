@@ -104,7 +104,7 @@ class UpdateProfileScreen extends Component {
                     <View style={styles.header}>
                         <Text style={styles.text_header}>Update Profile</Text>
                     </View>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         {this.companyData === null ?
                             <ActivityIndicator size="large" color="#AAAAAA" />
                             : <>
@@ -182,7 +182,9 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         flex: 1,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+        height: hp('100%'),
+        width: wp('100%')
     },
     text_header: {
         marginTop: wp('15%'),

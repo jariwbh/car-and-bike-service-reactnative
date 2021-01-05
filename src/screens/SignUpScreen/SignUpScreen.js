@@ -105,7 +105,7 @@ class SignUpScreen extends Component {
                     <Animatable.View
                         animation="fadeInUpBig"
                     >
-                        <ScrollView>
+                        <ScrollView showsVerticalScrollIndicator={false}>
                             <View style={styles.header}>
                                 <Text style={styles.text_header}>Register Now!</Text>
                             </View>
@@ -233,6 +233,8 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         flex: 1,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+        height: hp('100%'),
+        width: wp('100%')
     }
 });

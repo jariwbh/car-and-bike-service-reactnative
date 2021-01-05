@@ -14,9 +14,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 class BookServiceScreen extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             userID: null,
+            memberID: null,
             userData: null,
             fullname: null,
             fullnameError: null,
@@ -28,7 +28,9 @@ class BookServiceScreen extends Component {
             serviceTimeError: null,
             vehicleNumber: null,
             vehicleNumberError: null,
-            serviceID: this.props.route.params.serviceID,
+            serviceID: this.props.route.params.serviceID._id,
+            charges: this.props.route.params.serviceID.charges,
+            duration: this.props.route.params.serviceID.duration,
             isDatePickerVisible: false, isTimePickerVisibility: false
         }
         this.setFullName = this.setFullName.bind(this);
@@ -71,7 +73,8 @@ class BookServiceScreen extends Component {
         this.setState({
             fullname: user.property.fullname,
             mobilenumber: user.property.mobile_number,
-            userID: user.addedby
+            userID: user.addedby,
+            memberID: user._id
         })
     }
 
@@ -134,7 +137,7 @@ class BookServiceScreen extends Component {
     }
 
     onPressSubmit = async () => {
-        const { fullname, mobilenumber, serviceDate, serviceTime, vehicleNumber, serviceID, userID } = this.state;
+        const { fullname, mobilenumber, serviceDate, serviceTime, vehicleNumber, serviceID, userID, memberID, charges, duration } = this.state;
         if (!fullname || !mobilenumber || !serviceDate || !serviceTime || !vehicleNumber) {
             this.setFullName(fullname)
             this.setMobileNumber(mobilenumber)
@@ -145,10 +148,13 @@ class BookServiceScreen extends Component {
         }
 
         const body = {
-            attendee: userID,
+            attendee: memberID,
             appointmentdate: serviceDate,
+            onModel: "Member",
             refid: serviceID,
-            refModel: "Service",
+            host: userID,
+            charges: charges,
+            duration: duration,
             timeslot: {
                 starttime: serviceTime
             },
@@ -157,7 +163,9 @@ class BookServiceScreen extends Component {
             }
         }
 
+        console.log('body', body)
         await BookService(body).then(response => {
+            console.log('response', response)
             if (response != null) {
                 ToastAndroid.show("Book Your Service!", ToastAndroid.SHORT);
                 this.props.navigation.navigate('MyService')
@@ -174,7 +182,7 @@ class BookServiceScreen extends Component {
                     <View style={styles.header}>
                         <Text style={styles.text_header}>Book Service</Text>
                     </View>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <Text style={{ marginLeft: hp('7%'), paddingBottom: hp('1%') }}>Name</Text>
                         <View style={{ alignItems: 'center' }}>
                             <View style={styles.inputView}>

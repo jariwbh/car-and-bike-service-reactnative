@@ -5,10 +5,13 @@ const SelectTypeService = () => {
     {
         "search": [{
             "searchfield": "formid",
-            "searchvalue": "5fc7438c99e17f020480ac01",
+            "searchvalue": "5e426741d466f1115c2e7d50",
             "criteria": "eq",
             "datatype": "ObjectId"
-        }]
+        },
+        { "searchfield": "addedby", "searchvalue": "5fbf8f809c28220330088e84", "criteria": "eq" },
+        { "searchfield": "status", "searchvalue": "active", "criteria": "eq" }
+        ]
     }
 
     const requestOptions = {

@@ -10,10 +10,9 @@ import {
 export class SelectCompanyNameScreen extends Component {
     constructor(props) {
         super(props);
-        console.log('this.props.route.params.item', this.props.route.params.item)
         this.serviceDetails = this.props.route.params.item
         this.state = {
-            serviceID: this.props.route.params.item._id
+            serviceID: this.props.route.params.item
         }
     }
 
@@ -21,7 +20,7 @@ export class SelectCompanyNameScreen extends Component {
         const { serviceID } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.container}>
 
                         {this.serviceDetails === null ? <ActivityIndicator size="large" color="#AAAAAA" /> :
@@ -38,7 +37,7 @@ export class SelectCompanyNameScreen extends Component {
                                     <View style={styles.inputineerView}>
                                         <View >
                                             <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', color: '#FFBA00', }}> Service Name </Text>
-                                            <Text style={{ fontSize: hp('3%'), fontWeight: 'bold', }}> {this.serviceDetails.property.title}</Text>
+                                            <Text style={{ fontSize: hp('3%'), fontWeight: 'bold', }}> {this.serviceDetails.title}</Text>
                                             <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', }}>  Expected Price - $ {this.serviceDetails.charges}</Text>
                                             <Text style={{ fontSize: hp('2%'), fontWeight: 'bold', }}>  Time : {this.serviceDetails.availability.starttime + ' - ' + this.serviceDetails.availability.endtime}</Text>
                                         </View>
@@ -47,7 +46,7 @@ export class SelectCompanyNameScreen extends Component {
                                         <View style={styles.inputservice}>
                                             <Text style={styles.inputservicetext}>Service Includes</Text>
                                             <Text style={styles.inputinnerservice}>
-                                                <HTML html={this.serviceDetails.property.description} />
+                                                <HTML html={this.serviceDetails.description} />
                                             </Text>
                                         </View>
                                         <View>

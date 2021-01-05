@@ -16,9 +16,9 @@ class SignInScreen extends Component {
         super(props);
 
         this.state = {
-            username: null,
+            username: 'CARBI-853-10001',
             usererror: null,
-            password: null,
+            password: 'CARBI-853-10001',
             passworderror: null,
             loading: false,
         }
@@ -98,7 +98,7 @@ class SignInScreen extends Component {
     render() {
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.container}>
                         <Animatable.View
                             animation="fadeInUpBig"
@@ -188,7 +188,6 @@ const styles = StyleSheet.create({
         width: wp('80%'),
         height: hp('8%'),
         margin: hp('3%'),
-        // marginBottom: hp('4%'),
         alignItems: "center",
     },
     TextInput: {
@@ -223,6 +222,8 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         flex: 1,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+        height: hp('100%'),
+        width: wp('100%')
     },
 });

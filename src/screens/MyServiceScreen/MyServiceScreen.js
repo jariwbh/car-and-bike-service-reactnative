@@ -12,20 +12,18 @@ export class MyService extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ongoingService: null,
-            lastService: null,
+            ongoingService: [],
+            lastService: [],
             refreshing: false,
         }
     }
 
     MyServiceService() {
         MyServiceOngoingService().then(data => {
-            console.log('MyServiceOngoingService', data)
             this.setState({ ongoingService: data })
         })
 
         MyServiceLastService().then(data => {
-            console.log('MyServiceLastService', data)
             this.setState({ lastService: data })
         })
     }
@@ -90,31 +88,33 @@ export class MyService extends Component {
                 <View style={styles.header}>
                     <Text style={styles.headertext}>My Service</Text>
                 </View>
-                <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />}>
-                    {ongoingService != null ? <>
-                        <View>
-                            <View style={styles.onservice}>
-                                <Text style={styles.onservicetext}> Ongoing Service </Text>
+                <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />} showsVerticalScrollIndicator={false}>
+                    {(ongoingService === null) || (ongoingService && ongoingService.length == 0)
+                        ? <ActivityIndicator size="large" color="#AAAAAA" /> :
+                        <>
+                            <View>
+                                <View style={styles.onservice}>
+                                    <Text style={styles.onservicetext}> Ongoing Service </Text>
+                                </View>
+                                <View style={{ alignItems: 'center', justifyContent: 'space-between', flex: 1 }}>
+                                    <FlatList
+                                        data={this.state.ongoingService}
+                                        renderItem={this.renderOngoingService}
+                                        keyExtractor={item => `${item._id}`}
+                                    />
+                                </View>
                             </View>
-                            <View style={{ alignItems: 'center', justifyContent: 'space-between', flex: 1 }}>
+                            <View style={{ marginBottom: hp('10%') }}>
+                                <View style={styles.lastservice}>
+                                    <Text style={styles.lastservicetext}> Last Service </Text>
+                                </View>
                                 <FlatList
-                                    data={this.state.ongoingService}
-                                    renderItem={this.renderOngoingService}
+                                    data={this.state.lastService}
+                                    renderItem={this.renderLastService}
                                     keyExtractor={item => `${item._id}`}
                                 />
                             </View>
-                        </View>
-                        <View style={{ marginBottom: hp('10%') }}>
-                            <View style={styles.lastservice}>
-                                <Text style={styles.lastservicetext}> Last Service </Text>
-                            </View>
-                            <FlatList
-                                data={this.state.lastService}
-                                renderItem={this.renderLastService}
-                                keyExtractor={item => `${item._id}`}
-                            />
-                        </View>
-                    </> : <ActivityIndicator size="large" color="#AAAAAA" />}
+                        </>}
                 </ScrollView>
             </ImageBackground>
         )
@@ -127,7 +127,6 @@ export default MyService
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: 'center'
     },
     backgroundImage: {
         flex: 1,
@@ -170,9 +169,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     servicetext: {
-
         fontSize: hp('2.5%'),
-
     },
     bookingtext: {
         color: "#999999",
@@ -190,9 +187,5 @@ const styles = StyleSheet.create({
     },
     lastservicetext: {
         fontSize: hp('2.5%'),
-
-
     },
-
-
 })
