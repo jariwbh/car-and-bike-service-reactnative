@@ -15,12 +15,14 @@ export class MyService extends Component {
             ongoingService: [],
             lastService: [],
             refreshing: false,
+            loader: true,
         }
     }
 
     MyServiceService() {
         MyServiceOngoingService().then(data => {
             this.setState({ ongoingService: data })
+            this.wait(1000).then(() => this.setState({ loader: false }));
         })
 
         MyServiceLastService().then(data => {
@@ -48,8 +50,7 @@ export class MyService extends Component {
         <View style={styles.servicename}>
             <View style={{ flexDirection: 'column' }}>
                 <Text style={styles.servicetext}>Service Provider Name</Text>
-                <Text style={styles.bookingtext}> Booking ID -</Text>
-                <Text style={styles.bookingtext}> {item._id} </Text>
+                <Text style={styles.bookingtext}> Booking ID - {item.docnumber}</Text>
                 <Text style={styles.genreltext}>{item.refid.title}</Text>
                 <Text>Vehicle Number - {item.property.vehicleno}</Text>
             </View>
@@ -66,8 +67,7 @@ export class MyService extends Component {
             <View style={styles.servicename}>
                 <View style={{ flexDirection: 'column' }}>
                     <Text style={styles.servicetext}>Service Provider Name</Text>
-                    <Text style={styles.bookingtext}> Booking ID -</Text>
-                    <Text style={styles.bookingtext}> {item._id} </Text>
+                    <Text style={styles.bookingtext}> Booking ID - {item.docnumber}</Text>
                     <Text style={styles.genreltext}>{item.refid.title}</Text>
                     <Text>Vehicle Number - {item.property.vehicleno}</Text>
                 </View>
@@ -81,7 +81,8 @@ export class MyService extends Component {
     );
 
     render() {
-        const { ongoingService, refreshing } = this.state;
+        const { ongoingService, refreshing, loader, lastService } = this.state;
+        this.wait(3000).then(() => this.setState({ refreshing: false }));
 
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
@@ -90,7 +91,23 @@ export class MyService extends Component {
                 </View>
                 <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />} showsVerticalScrollIndicator={false}>
                     {(ongoingService === null) || (ongoingService && ongoingService.length == 0)
-                        ? <ActivityIndicator size="large" color="#AAAAAA" /> :
+                        ?
+                        (loader == false ?
+                            <View>
+                                <View style={styles.onservice}>
+                                    <Text style={styles.onservicetext}> Ongoing Service </Text>
+                                </View>
+                                <View style={{ alignItems: "center", justifyContent: 'center' }}>
+                                    <View style={styles.servicename}>
+                                        <View style={{ alignItems: "center", justifyContent: 'center' }}>
+                                            <Text style={{ alignItems: "center", justifyContent: 'center', fontSize: hp('2%'), marginLeft: hp('15%'), color: '#595959' }}>Data Not Available</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                            : <ActivityIndicator size="large" color="#AAAAAA" />
+                        )
+                        :
                         <>
                             <View>
                                 <View style={styles.onservice}>
@@ -104,6 +121,25 @@ export class MyService extends Component {
                                     />
                                 </View>
                             </View>
+                        </>}
+                    {(lastService === null) || (lastService && lastService.length == 0)
+                        ?
+                        (loader == false &&
+                            <View>
+                                <View style={styles.onservice}>
+                                    <Text style={styles.onservicetext}> Last Service </Text>
+                                </View>
+                                <View style={{ alignItems: "center", justifyContent: 'center' }}>
+                                    <View style={styles.servicename}>
+                                        <View style={{ alignItems: "center", justifyContent: 'center' }}>
+                                            <Text style={{ alignItems: "center", justifyContent: 'center', fontSize: hp('2%'), marginLeft: hp('15%'), color: '#595959' }}>Data Not Available</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        )
+                        :
+                        <>
                             <View style={{ marginBottom: hp('10%') }}>
                                 <View style={styles.lastservice}>
                                     <Text style={styles.lastservicetext}> Last Service </Text>
@@ -122,7 +158,6 @@ export class MyService extends Component {
 }
 
 export default MyService
-
 
 const styles = StyleSheet.create({
     container: {
