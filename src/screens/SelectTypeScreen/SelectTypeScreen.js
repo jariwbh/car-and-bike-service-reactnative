@@ -119,7 +119,7 @@ class SelectTypeScreen extends Component {
         const { selectServiceType } = this.state;
         if (selectServiceType != null && selectServiceType != 'undefine') {
             this.props.navigation.navigate('SelectService', { selectServiceType })
-            this.setState({ selectServiceType: null })
+            // this.setState({ selectServiceType: null })
         } else {
             alert("Please Select your Service Type")
         }
@@ -134,7 +134,7 @@ class SelectTypeScreen extends Component {
                         <View style={styles.container}>
                             <View style={styles.header}>
                                 <Text style={styles.text_header}>Select Service Type</Text>
-                                <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text>
+                                {/* <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text> */}
                             </View>
                             {serviceTypeList != null ? <>
                                 <View style={styles.Image_view}>
@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
         color: '#000',
         textAlign: 'center',
         fontSize: hp('3.5%'),
+        marginBottom: hp('1%'),
     },
     text_header2: {
         color: '#000',
