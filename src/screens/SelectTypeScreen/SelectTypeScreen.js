@@ -3,19 +3,16 @@ import {
     ImageBackground, FlatList,
     Image, View, StyleSheet,
     Text, TouchableOpacity,
-    ActivityIndicator,
     SafeAreaView,
     BackHandler,
     Alert,
 } from 'react-native'
 import { SelectTypeService } from '../../services/SelectTypeService/SelectTypeService';
 import { UserService } from '../../services/UserService/UserService';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loading from '../../components/Loader/Loading'
 
 class SelectTypeScreen extends Component {
     constructor(props) {
@@ -30,7 +27,8 @@ class SelectTypeScreen extends Component {
             companycity: '',
             companycontactNumber: '',
             userdata: null,
-            id: null
+            id: null,
+            loader: true,
         };
         this.onPressToSelectService = this.onPressToSelectService.bind(this);
 
@@ -44,10 +42,17 @@ class SelectTypeScreen extends Component {
         });
     }
 
+    wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }
+
     SelectServiceType() {
         SelectTypeService()
             .then(data => {
                 this.setState({ serviceTypeList: data });
+                this.wait(1000).then(() => this.setState({ loader: false }));
             })
     }
 
@@ -77,18 +82,7 @@ class SelectTypeScreen extends Component {
     }
 
     handleBackButton = () => {
-        Alert.alert(
-            'Exit App',
-            'Exiting the application?', [
-            {
-                text: 'Cancel',
-                style: 'cancel'
-            }, {
-                text: 'OK',
-                onPress: () => BackHandler.exitApp()
-            },], {
-        }
-        )
+        BackHandler.exitApp();
         return true;
     }
 
@@ -126,7 +120,7 @@ class SelectTypeScreen extends Component {
     }
 
     render() {
-        const { serviceTypeList, companyname, companydata, companyicon, companyaddress, companycountry, companycity, companycontactNumber } = this.state;
+        const { serviceTypeList, companyname, companydata, companyicon, companyaddress, companycountry, companycity, companycontactNumber, loader } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <SafeAreaView style={{ flex: 1 }}>
@@ -134,7 +128,6 @@ class SelectTypeScreen extends Component {
                         <View style={styles.container}>
                             <View style={styles.header}>
                                 <Text style={styles.text_header}>Select Service Type</Text>
-                                {/* <Text style={styles.text_header2}> Lorem Ipsum is simply dummy text </Text> */}
                             </View>
                             {serviceTypeList != null ? <>
                                 <View style={styles.Image_view}>
@@ -160,9 +153,9 @@ class SelectTypeScreen extends Component {
                                     <TouchableOpacity style={styles.next_Btn} onPress={() => this.onNextStep()}>
                                         <Text style={styles.next_text} >Next Step</Text>
                                     </TouchableOpacity>
-                                </> : <ActivityIndicator size="large" color="#AAAAAA" />}
+                                </> : <Loading />}
                             </>
-                                : <ActivityIndicator size="large" color="#AAAAAA" />}
+                                : <Loading />}
                         </View>
                     </ScrollView>
                 </SafeAreaView>
@@ -262,7 +255,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         paddingHorizontal: wp('8%'),
-
     },
     company_name: {
         fontSize: hp('2.5%'),

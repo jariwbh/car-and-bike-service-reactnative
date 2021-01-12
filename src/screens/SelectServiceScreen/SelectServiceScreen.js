@@ -2,16 +2,15 @@ import React, { Component } from 'react'
 import { Text, View, ScrollView, StyleSheet, ImageBackground, TouchableOpacity, FlatList, Image, ActivityIndicator } from 'react-native'
 import SliderScreen from '../../components/Slider/SliderScreen'
 import { SelectService } from '../../services/SelectService/SelectService';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
+import Loading from '../../components/Loader/Loading'
 
 export class SelectServiceScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             serviceList: [],
+            loader: true,
         }
         this.serviceType = this.props.route.params.selectServiceType
     }
@@ -19,7 +18,14 @@ export class SelectServiceScreen extends Component {
     SelectService(serviceType) {
         SelectService(serviceType).then(data => {
             this.setState({ serviceList: data });
+            this.wait(1000).then(() => this.setState({ loader: false }));
         })
+    }
+
+    wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
     }
 
     componentDidMount() {
@@ -42,7 +48,7 @@ export class SelectServiceScreen extends Component {
     );
 
     render() {
-        const { serviceList } = this.state;
+        const { serviceList, loader } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
@@ -52,9 +58,15 @@ export class SelectServiceScreen extends Component {
                     <View>
                         <Text style={styles.text_hedding}>Select Your Service to Continue</Text>
                     </View>
-                    {/* <ScrollView> */}
                     {(serviceList === null) || (serviceList && serviceList.length == 0) ?
-                        <ActivityIndicator size="large" color="#AAAAAA" />
+                        (loader == false ?
+                            <View style={{ alignItems: "center", justifyContent: 'center', marginTop: hp('25%') }}>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#595959' }}>Service Not Available</Text>
+                            </View>
+                            : <View style={{ marginTop: hp('10%') }}>
+                                <Loading />
+                            </View>
+                        )
                         : <>
                             <View>
                                 <SliderScreen />
@@ -72,7 +84,6 @@ export class SelectServiceScreen extends Component {
                                 </View>
                             </View>
                         </>}
-                    {/* </ScrollView> */}
                 </View>
             </ImageBackground>
         )

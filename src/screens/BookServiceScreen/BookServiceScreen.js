@@ -163,10 +163,9 @@ class BookServiceScreen extends Component {
             }
         }
 
-        console.log('body', body)
         await BookService(body).then(response => {
-            console.log('response', response)
             if (response != null) {
+                alert('Book Your Service!');
                 ToastAndroid.show("Book Your Service!", ToastAndroid.SHORT);
                 this.props.navigation.navigate('MyService')
                 this.resetScreen()

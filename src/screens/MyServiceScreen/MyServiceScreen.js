@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, ImageBackground, StyleSheet, FlatList, ActivityIndicator, RefreshControl } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { MyServiceLastService, MyServiceOngoingService } from '../../services/MyService/MyService';
 import moment from 'moment'
+import Loading from '../../components/Loader/Loading'
 
 export class MyService extends Component {
     constructor(props) {
@@ -50,7 +48,7 @@ export class MyService extends Component {
         <View style={styles.servicename}>
             <View style={{ flexDirection: 'column' }}>
                 <Text style={styles.servicetext}>Service Provider Name</Text>
-                <Text style={styles.bookingtext}> Booking ID - {item.docnumber}</Text>
+                <Text style={styles.bookingtext}> Booking ID - {item.prefix + item.number}</Text>
                 <Text style={styles.genreltext}>{item.refid.title}</Text>
                 <Text>Vehicle Number - {item.property.vehicleno}</Text>
             </View>
@@ -67,7 +65,7 @@ export class MyService extends Component {
             <View style={styles.servicename}>
                 <View style={{ flexDirection: 'column' }}>
                     <Text style={styles.servicetext}>Service Provider Name</Text>
-                    <Text style={styles.bookingtext}> Booking ID - {item.docnumber}</Text>
+                    <Text style={styles.bookingtext}> Booking ID - {item.prefix + item.number}</Text>
                     <Text style={styles.genreltext}>{item.refid.title}</Text>
                     <Text>Vehicle Number - {item.property.vehicleno}</Text>
                 </View>
@@ -90,7 +88,7 @@ export class MyService extends Component {
                     <Text style={styles.headertext}>My Service</Text>
                 </View>
                 <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />} showsVerticalScrollIndicator={false}>
-                    {(ongoingService === null) || (ongoingService && ongoingService.length == 0)
+                    {(ongoingService == null) || (ongoingService && ongoingService.length == 0)
                         ?
                         (loader == false ?
                             <View>
@@ -98,14 +96,14 @@ export class MyService extends Component {
                                     <Text style={styles.onservicetext}> Ongoing Service </Text>
                                 </View>
                                 <View style={{ alignItems: "center", justifyContent: 'center' }}>
-                                    <View style={styles.servicename}>
+                                    <View style={styles.ErrorMsgstyle}>
                                         <View style={{ alignItems: "center", justifyContent: 'center' }}>
                                             <Text style={{ alignItems: "center", justifyContent: 'center', fontSize: hp('2%'), marginLeft: hp('15%'), color: '#595959' }}>Data Not Available</Text>
                                         </View>
                                     </View>
                                 </View>
                             </View>
-                            : <ActivityIndicator size="large" color="#AAAAAA" />
+                            : <View style={{ marginTop: hp('15%') }}><Loading /></View>
                         )
                         :
                         <>
@@ -122,7 +120,7 @@ export class MyService extends Component {
                                 </View>
                             </View>
                         </>}
-                    {(lastService === null) || (lastService && lastService.length == 0)
+                    {(lastService == null) || (lastService && lastService.length == 0)
                         ?
                         (loader == false &&
                             <View>
@@ -130,7 +128,7 @@ export class MyService extends Component {
                                     <Text style={styles.onservicetext}> Last Service </Text>
                                 </View>
                                 <View style={{ alignItems: "center", justifyContent: 'center' }}>
-                                    <View style={styles.servicename}>
+                                    <View style={styles.ErrorMsgstyle}>
                                         <View style={{ alignItems: "center", justifyContent: 'center' }}>
                                             <Text style={{ alignItems: "center", justifyContent: 'center', fontSize: hp('2%'), marginLeft: hp('15%'), color: '#595959' }}>Data Not Available</Text>
                                         </View>
@@ -202,6 +200,17 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 2,
+    },
+    ErrorMsgstyle: {
+        aspectRatio: 2.5,
+        paddingHorizontal: hp('2%'),
+        width: wp("90%"),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: hp('2.5%'),
+        borderRadius: wp('6%'),
+        alignItems: "center",
+        position: 'relative',
     },
     servicetext: {
         fontSize: hp('2.5%'),

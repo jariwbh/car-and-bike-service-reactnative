@@ -5,10 +5,7 @@ import {
     ToastAndroid, ActivityIndicator, Alert
 } from 'react-native';
 import { Entypo, FontAwesome5 } from '@expo/vector-icons';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default class Profile extends Component {
@@ -16,7 +13,7 @@ export default class Profile extends Component {
         super(props);
         this.state = {
             companyData: null,
-            companyProfile: '',
+            userProfile: null,
         }
     }
 
@@ -26,7 +23,18 @@ export default class Profile extends Component {
 
     getdata = async () => {
         var getUser = await AsyncStorage.getItem('@authuser')
-        this.setState({ companyData: JSON.parse(getUser) })
+        if (getUser == null) {
+            setTimeout(() => {
+                this.props.navigation.replace('SignIn')
+            }, 5000);
+        } else {
+            var userData;
+            userData = JSON.parse(getUser)
+            this.setState({
+                companyData: userData,
+                userProfile: userData.profilepic
+            })
+        }
     }
 
     onPressUpdateProfile() {
@@ -58,7 +66,7 @@ export default class Profile extends Component {
     }
 
     render() {
-        const { companyData, companyProfile } = this.state;
+        const { companyData, userProfile } = this.state;
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage} >
                 <View style={styles.container}>
@@ -66,7 +74,7 @@ export default class Profile extends Component {
                     {companyData === null ?
                         <ActivityIndicator size="large" color="#AAAAAA" style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }} />
                         : <>
-                            <Image style={styles.avatar} source={{ uri: (companyProfile ? companyProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
+                            <Image style={styles.avatar} source={{ uri: userProfile && userProfile !== null ? userProfile : "https://res.cloudinary.com/dnogrvbs2/image/upload/v1610428971/userimage_qif8wv.jpg" }} />
                             <View style={styles.body}>
                                 <View style={styles.bodyContent}>
                                     <Text style={styles.name}>{companyData && companyData.fullname}</Text>

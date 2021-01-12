@@ -21,17 +21,17 @@ class UpdateProfileScreen extends Component {
     constructor(props) {
         super(props)
 
-        this.companyData = this.props.route.params.companyData;
+        this.userData = this.props.route.params.companyData;
         this.state = {
-            _id: this.companyData._id,
-            fullname: this.companyData.property.fullname,
+            _id: this.userData._id,
+            fullname: this.userData.property.fullname,
             fullnameError: null,
-            username: this.companyData.property.email,
+            username: this.userData.property.email,
             usernameError: null,
-            mobilenumber: this.companyData.property.mobile_number,
+            mobilenumber: this.userData.property.mobile_number,
             mobilenumberError: null,
-            userProfile: this.companyData.branchid.branchlogo,
-            profileName: this.companyData.fullname
+            userProfile: this.userData.profilepic,
+            profileName: this.userData.fullname
         }
         this.setFullName = this.setFullName.bind(this);
         this.setUserName = this.setUserName.bind(this);
@@ -105,10 +105,10 @@ class UpdateProfileScreen extends Component {
                         <Text style={styles.text_header}>Update Profile</Text>
                     </View>
                     <ScrollView showsVerticalScrollIndicator={false}>
-                        {this.companyData === null ?
+                        {this.userData === null ?
                             <ActivityIndicator size="large" color="#AAAAAA" />
                             : <>
-                                <Image style={styles.avatar} source={{ uri: (userProfile ? userProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
+                                <Image style={styles.avatar} source={{ uri: userProfile && userProfile !== null ? userProfile : "https://res.cloudinary.com/dnogrvbs2/image/upload/v1610428971/userimage_qif8wv.jpg" }} />
                                 <View style={styles.body}>
                                     <View style={styles.bodyContent}>
                                         <Text style={styles.name}>{profileName && profileName}</Text>
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     bodyContent: {
         flex: 1,
         alignItems: 'center',
+        marginTop: hp('1%'),
         paddingBottom: hp('3%')
     },
     name: {
