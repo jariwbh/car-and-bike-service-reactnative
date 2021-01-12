@@ -89,13 +89,25 @@ class SignUpScreen extends Component {
         }
 
         this.setState({ loading: true })
-        await RegisterService(body).then(response => {
-            if (response != null) {
-                ToastAndroid.show("SignUp Success!", ToastAndroid.LONG);
-                this.props.navigation.navigate('SignIn')
-                this.resetScreen()
-            }
-        })
+        try {
+            await RegisterService(body).then(response => {
+                if (response.error) {
+                    this.setState({ loading: false })
+                    ToastAndroid.show("SignUp Failed!", ToastAndroid.LONG);
+                    this.resetScreen()
+                    return
+                }
+                if (response != null) {
+                    ToastAndroid.show("SignUp Success!", ToastAndroid.LONG);
+                    this.props.navigation.navigate('SignIn')
+                    this.resetScreen()
+                }
+            })
+        }
+        catch (error) {
+            this.setState({ loading: false })
+            ToastAndroid.show("SignUp Failed!", ToastAndroid.LONG)
+        }
     }
 
     render() {
