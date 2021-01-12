@@ -16,9 +16,9 @@ class SignInScreen extends Component {
         super(props);
 
         this.state = {
-            username: 'CARBI-853-10004',
+            username: null,
             usererror: null,
-            password: 'CARBI-853-10004',
+            password: null,
             passworderror: null,
             loading: false,
         }
