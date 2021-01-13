@@ -27,6 +27,8 @@ class SignUpScreen extends Component {
         this.setUserName = this.setUserName.bind(this);
         this.setMobileNumber = this.setMobileNumber.bind(this);
         this.onPressSubmit = this.onPressSubmit.bind(this);
+        this.secondTextInputRef = React.createRef();
+        this.thirdTextInputRef = React.createRef();
     }
 
     setFullName(fullname) {
@@ -117,20 +119,21 @@ class SignUpScreen extends Component {
                     <Animatable.View
                         animation="fadeInUpBig"
                     >
-                        <ScrollView showsVerticalScrollIndicator={false}>
-                            <View style={styles.header}>
-                                <Text style={styles.text_header}>Register Now!</Text>
-                            </View>
+                        <View style={styles.header}>
+                            <Text style={styles.text_header}>Register Now!</Text>
+                        </View>
+                        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                             <View style={{ alignItems: 'center' }}>
                                 <View style={styles.inputView}>
                                     <FontAwesome name="user" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                     <TextInput
-                                        label="FullName"
                                         style={styles.TextInput}
                                         placeholder="Full Name"
                                         type='clear'
                                         placeholderTextColor="#737373"
                                         returnKeyType="next"
+                                        blurOnSubmit={false}
+                                        onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
                                         onChangeText={(fullname) => this.setFullName(fullname)}
                                     />
                                 </View>
@@ -142,10 +145,12 @@ class SignUpScreen extends Component {
                                         placeholder="Email Id"
                                         type='clear'
                                         placeholderTextColor="#737373"
-                                        autoCapitalize="none"
                                         autoCompleteType="email"
                                         textContentType="emailAddress"
                                         keyboardType="email-address"
+                                        ref={this.secondTextInputRef}
+                                        blurOnSubmit={false}
+                                        onSubmitEditing={() => { this.thirdTextInputRef.current.focus() }}
                                         onChangeText={(username) => this.setUserName(username)}
                                     />
                                 </View>
@@ -157,7 +162,10 @@ class SignUpScreen extends Component {
                                         placeholder="Mobile Number"
                                         type='clear'
                                         placeholderTextColor="#737373"
-                                        keyboardType="numeric"
+                                        keyboardType="number-pad"
+                                        returnKeyType="done"
+                                        ref={this.thirdTextInputRef}
+                                        onSubmitEditing={() => this.onPressSubmit()}
                                         onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
                                     />
                                 </View>
@@ -188,8 +196,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     header: {
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         paddingBottom: hp('5%'),
+        marginTop: hp('10%')
     },
     text_header: {
         color: '#000',

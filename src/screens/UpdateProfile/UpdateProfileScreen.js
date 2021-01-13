@@ -37,19 +37,22 @@ class UpdateProfileScreen extends Component {
         this.setUserName = this.setUserName.bind(this);
         this.setMobileNumber = this.setMobileNumber.bind(this);
         this.onPressSubmit = this.onPressSubmit.bind(this);
+        this.secondTextInputRef = React.createRef();
+        this.thirdTextInputRef = React.createRef();
     }
 
     setFullName(fullname) {
         if (!fullname || fullname.length <= 0) {
-            return this.setState({ fullnameError: 'User Name cannot be empty' });
+            return this.setState({ fullnameError: 'User Name cannot be empty', fullname: null });
         }
+        console.log('fullname', fullname)
         return this.setState({ fullname: fullname, fullnameError: null })
     }
 
     setUserName(email) {
         const re = /\S+@\S+\.\S+/;
         if (!email || email.length <= 0) {
-            return this.setState({ usernameError: 'Email cannot be empty' });
+            return this.setState({ usernameError: 'Email cannot be empty', username: null });
         }
         if (!re.test(email)) {
 
@@ -61,7 +64,7 @@ class UpdateProfileScreen extends Component {
     setMobileNumber(mobilenumber) {
         const reg = /^[0]?[789]\d{9}$/;
         if (!mobilenumber || mobilenumber.length <= 0) {
-            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty' });
+            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty', mobilenumber: null });
         }
         if (!reg.test(mobilenumber)) {
             return this.setState({ mobilenumberError: 'Ooops! We need a valid Mobile Number' });
@@ -104,7 +107,7 @@ class UpdateProfileScreen extends Component {
                     <View style={styles.header}>
                         <Text style={styles.text_header}>Update Profile</Text>
                     </View>
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                    <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                         {this.userData === null ?
                             <ActivityIndicator size="large" color="#AAAAAA" />
                             : <>
@@ -127,6 +130,8 @@ class UpdateProfileScreen extends Component {
                                                 type='clear'
                                                 placeholderTextColor="#737373"
                                                 returnKeyType="next"
+                                                blurOnSubmit={false}
+                                                onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
                                                 onChangeText={(fullname) => this.setFullName(fullname)}
                                             />
                                         </View>
@@ -139,11 +144,13 @@ class UpdateProfileScreen extends Component {
                                                 placeholder="Email Id"
                                                 type='clear'
                                                 placeholderTextColor="#737373"
-                                                autoCapitalize="none"
                                                 autoCompleteType="email"
                                                 textContentType="emailAddress"
                                                 keyboardType="email-address"
                                                 returnKeyType="next"
+                                                ref={this.secondTextInputRef}
+                                                blurOnSubmit={false}
+                                                onSubmitEditing={() => { this.thirdTextInputRef.current.focus() }}
                                                 onChangeText={(username) => this.setUserName(username)}
                                             />
                                         </View>
@@ -157,6 +164,9 @@ class UpdateProfileScreen extends Component {
                                                 type='clear'
                                                 placeholderTextColor="#737373"
                                                 keyboardType="numeric"
+                                                returnKeyType="done"
+                                                ref={this.thirdTextInputRef}
+                                                onSubmitEditing={() => this.onPressSubmit()}
                                                 onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
                                             />
                                         </View>
@@ -241,7 +251,7 @@ const styles = StyleSheet.create({
         height: hp('8%'),
         alignItems: "center",
         justifyContent: "center",
-        marginTop: hp('5%'),
+        marginTop: hp('3%'),
         marginBottom: hp('15%')
     },
     update_text: {

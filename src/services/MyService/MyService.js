@@ -1,6 +1,6 @@
 import appConfig from '../../Helpers/appConfig'
 
-const MyServiceOngoingService = () => {
+const MyServiceOngoingService = (id) => {
     const body =
     {
         "search": [{
@@ -8,7 +8,14 @@ const MyServiceOngoingService = () => {
             "searchvalue": "pending",
             "criteria": "eq",
             "datatype": "text"
-        }]
+        },
+        {
+            "searchfield": "attendee",
+            "searchvalue": id,
+            "criteria": "eq",
+            "datatype": "Objectid"
+        }
+        ]
     }
 
     const requestOptions = {
@@ -23,7 +30,7 @@ const MyServiceOngoingService = () => {
         });
 }
 
-const MyServiceLastService = () => {
+const MyServiceLastService = (id) => {
     const body =
     {
         "search": [{
@@ -31,6 +38,12 @@ const MyServiceLastService = () => {
             "searchvalue": "paid",
             "criteria": "eq",
             "datatype": "text"
+        },
+        {
+            "searchfield": "attendee",
+            "searchvalue": id,
+            "criteria": "eq",
+            "datatype": "Objectid"
         }]
     }
 

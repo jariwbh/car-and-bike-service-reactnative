@@ -5,11 +5,14 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import { MyServiceLastService, MyServiceOngoingService } from '../../services/MyService/MyService';
 import moment from 'moment'
 import Loading from '../../components/Loader/Loading'
+import AsyncStorage from '@react-native-community/async-storage';
 
 export class MyService extends Component {
     constructor(props) {
         super(props);
+        this.userid = null;
         this.state = {
+            _id: null,
             ongoingService: [],
             lastService: [],
             refreshing: false,
@@ -17,15 +20,28 @@ export class MyService extends Component {
         }
     }
 
-    MyServiceService() {
-        MyServiceOngoingService().then(data => {
+    MyServiceService(id) {
+        MyServiceOngoingService(id).then(data => {
             this.setState({ ongoingService: data })
             this.wait(1000).then(() => this.setState({ loader: false }));
         })
 
-        MyServiceLastService().then(data => {
+        MyServiceLastService(id).then(data => {
             this.setState({ lastService: data })
         })
+    }
+
+    getdata = async () => {
+        var getUser = await AsyncStorage.getItem('@authuser')
+        if (getUser == null) {
+            setTimeout(() => {
+                this.props.navigation.replace('LoginScreen')
+            }, 5000);
+        } else {
+            this.userid = JSON.parse(getUser)
+            this.MyServiceService(this.userid._id)
+            this.setState({ _id: this.userid._id })
+        }
     }
 
     wait = (timeout) => {
@@ -35,13 +51,14 @@ export class MyService extends Component {
     }
 
     onRefresh = () => {
+        const { _id } = this.state;
         this.setState({ refreshing: true })
-        this.MyServiceService()
+        this.MyServiceService(_id)
         this.wait(3000).then(() => this.setState({ refreshing: false }));
     }
 
     componentDidMount() {
-        this.MyServiceService()
+        this.getdata();
     }
 
     renderOngoingService = ({ item }) => (

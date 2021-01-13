@@ -150,6 +150,7 @@ class BookServiceScreen extends Component {
         const body = {
             attendee: memberID,
             appointmentdate: serviceDate,
+            status: 'pending',
             onModel: "Member",
             refid: serviceID,
             host: userID,

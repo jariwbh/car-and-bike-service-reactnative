@@ -17,7 +17,9 @@ import Loading from '../../components/Loader/Loading'
 class SelectTypeScreen extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
+            _id: null,
             selectServiceType: null,
             serviceTypeList: [],
             companyname: [],
@@ -48,8 +50,8 @@ class SelectTypeScreen extends Component {
         });
     }
 
-    SelectServiceType() {
-        SelectTypeService()
+    SelectServiceType(id) {
+        SelectTypeService(id)
             .then(data => {
                 this.setState({ serviceTypeList: data });
                 this.wait(1000).then(() => this.setState({ loader: false }));
@@ -67,12 +69,12 @@ class SelectTypeScreen extends Component {
                 companyaddress: data.branchid.address, companycity: data.branchid.city,
                 companycontactNumber: data.property.mobile_number, companycountry: data.property.country
             });
+            this.SelectServiceType(id);
         })
     }
 
     componentDidMount = async () => {
-        this.SelectServiceType();
-        this.UserDetails();
+        await this.UserDetails()
     }
 
     componentWillUnmount() {
@@ -129,7 +131,7 @@ class SelectTypeScreen extends Component {
                             <View style={styles.header}>
                                 <Text style={styles.text_header}>Select Service Type</Text>
                             </View>
-                            {serviceTypeList != null ? <>
+                            {serviceTypeList != null || selectServiceType && selectServiceType.length > 0 ? <>
                                 <View style={styles.Image_view}>
                                     <FlatList
                                         vertical

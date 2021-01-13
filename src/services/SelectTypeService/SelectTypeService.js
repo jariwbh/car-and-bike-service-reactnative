@@ -1,6 +1,6 @@
 import appConfig from '../../Helpers/appConfig'
 
-const SelectTypeService = () => {
+const SelectTypeService = (id) => {
     const body =
     {
         "search": [{
@@ -9,7 +9,7 @@ const SelectTypeService = () => {
             "criteria": "eq",
             "datatype": "ObjectId"
         },
-        { "searchfield": "addedby", "searchvalue": "5fbf8f809c28220330088e84", "criteria": "eq" },
+        { "searchfield": "addedby", "searchvalue": id, "criteria": "eq", "datatype": "Objectid" },
         { "searchfield": "status", "searchvalue": "active", "criteria": "eq" }
         ]
     }

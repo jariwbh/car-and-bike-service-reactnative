@@ -14,11 +14,11 @@ import appConfig from '../../Helpers/appConfig'
 class SignInScreen extends Component {
     constructor(props) {
         super(props);
-
+        this.secondTextInputRef = React.createRef()
         this.state = {
-            username: null,
+            username: 'CARBI-853-10005',
             usererror: null,
-            password: null,
+            password: 'CARBI-853-10005',
             passworderror: null,
             loading: false,
         }
@@ -98,14 +98,14 @@ class SignInScreen extends Component {
     render() {
         return (
             <ImageBackground source={require('../../../assets/images/background.png')} style={styles.backgroundImage}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.container}>
-                        <Animatable.View
-                            animation="fadeInUpBig"
-                        >
-                            <View style={styles.header}>
-                                <Text style={styles.text_header}>Welcome Back!</Text>
-                            </View>
+                <View style={styles.container}>
+                    <Animatable.View
+                        animation="fadeInUpBig"
+                    >
+                        <View style={styles.header}>
+                            <Text style={styles.text_header}>Welcome Back!</Text>
+                        </View>
+                        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                             <View style={styles.inputView}>
                                 <FontAwesome5 name="user-alt" size={27} color="#737373" style={{ paddingLeft: hp('3%') }} />
                                 <TextInput
@@ -114,8 +114,10 @@ class SignInScreen extends Component {
                                     defaultValue={this.state.username}
                                     type='clear'
                                     returnKeyType="next"
+                                    blurOnSubmit={false}
                                     placeholderTextColor="#737373"
                                     onChangeText={(email) => this.setEmail(email)}
+                                    onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
                                 />
                             </View>
                             <Text style={{ marginTop: hp('-3%'), marginLeft: wp('10%'), color: '#ff0000' }}>{this.state.usererror && this.state.usererror}</Text>
@@ -129,6 +131,7 @@ class SignInScreen extends Component {
                                     placeholderTextColor="#737373"
                                     secureTextEntry={true}
                                     returnKeyType="done"
+                                    ref={this.secondTextInputRef}
                                     onSubmitEditing={() => this.onPressSubmit()}
                                     onChangeText={(password) => this.setPassword(password)}
                                 />
@@ -148,9 +151,9 @@ class SignInScreen extends Component {
                                     <Text style={styles.baseText}>Need Help</Text>
                                 </TouchableOpacity>
                             </View>
-                        </Animatable.View>
-                    </View>
-                </ScrollView>
+                        </ScrollView>
+                    </Animatable.View>
+                </View>
             </ImageBackground>
         );
     }
