@@ -2,16 +2,16 @@
   "expo": {
     "name": "Car And Bike Service",
     "slug": "car-and-bike-service",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "ios": {
       "bundleIdentifier": "com.app.carandbikeservice",
-      "buildNumber": "1.0.1"
+      "buildNumber": "1.0.2"
     },
     "android": {
       "package": "com.app.carandbikeservice",
-      "versionCode": 2,
+      "versionCode": 3,
       "splash": {
         "ldpi": "./assets/drawable_ldpi/1.png",
         "mdpi": "./assets/drawable_mdpi/1.png",
