@@ -16,9 +16,9 @@ class SignInScreen extends Component {
         super(props);
         this.secondTextInputRef = React.createRef()
         this.state = {
-            username: 'CARBI-853-10005',
+            username: null,
             usererror: null,
-            password: 'CARBI-853-10005',
+            password: null,
             passworderror: null,
             loading: false,
         }
